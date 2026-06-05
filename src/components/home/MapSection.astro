@@ -1,0 +1,218 @@
+---
+import mapSvgRaw from "../../assets/img/map.svg?raw";
+import LinkMore from "../LinkMore.astro";
+
+/* Location marker centers (from SVG coordinate space 1684×819) */
+const pulseCenter = { x: 445, y: 393 };
+
+const locations = [
+  { name: "Panamá", x: 421, y: 422, labelX: 180, side: "left" },
+  { name: "Bahamas", x: 445, y: 359, labelX: 570, side: "right" },
+  { name: "Puerto Rico", x: 494, y: 399, labelX: 570, side: "right" },
+];
+
+const legend = [
+  {
+    label: "Licencia bancarias",
+    fill: "var(--color-primary)",
+    stroke: null,
+  },
+  {
+    label: "Custodio y Partners",
+    fill: "var(--color-primary)",
+    stroke: "var(--color-light-green)",
+  },
+  {
+    label: "Clientes",
+    fill: "var(--color-darker-green)",
+    stroke: "var(--color-light-green)",
+  },
+];
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <!-- Header -->
+  <div class="container-custom">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12 lg:mb-16"
+    >
+      <div class="lg:col-span-7">
+        <h2 class="text-primary">
+          Soluciones globales<br />para clientes ambiciosos.
+        </h2>
+      </div>
+      <div class="lg:col-span-5 flex items-start lg:justify-end">
+        <p class="text-p-small max-w-[380px]">
+          Nuestra propia sólida trayectoria nos permite operar en tres
+          territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>,
+          conectándote con mercados estratégicos para que tú y tu patrimonio
+          sigan cruzando fronteras.
+        </p>
+      </div>
+    </div>
+
+    <!-- Map area -->
+    <div class="map-wrapper">
+      <!-- Base dotted map -->
+      <div class="map-svg" set:html={mapSvgRaw} />
+
+      <!-- Pulse + labels overlay (same viewBox as the map SVG) -->
+      <svg
+        class="map-overlay"
+        viewBox="0 0 1684 819"
+        preserveAspectRatio="xMidYMid meet"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- Pulse rings -->
+        {
+          [1, 2, 3].map((i) => (
+            <circle
+              class={`pulse-ring pulse-ring-${i}`}
+              cx={pulseCenter.x}
+              cy={pulseCenter.y}
+              r="20"
+            />
+          ))
+        }
+
+        <!-- Label lines + text -->
+        {
+          locations.map((loc) => (
+            <>
+              <line
+                x1={loc.x}
+                y1={loc.y}
+                x2={loc.labelX}
+                y2={loc.y}
+                stroke="var(--color-black)"
+                stroke-width="0.8"
+                opacity="0.4"
+              />
+              <text
+                x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
+                y={loc.y + 5}
+                text-anchor={loc.side === "left" ? "end" : "start"}
+                font-family="var(--font-bornia)"
+                font-size="var(--fs-p-large)"
+                fill="var(--color-black)"
+              >
+                {loc.name}
+              </text>
+            </>
+          ))
+        }
+      </svg>
+
+      <!-- Legend -->
+      <div class="map-legend">
+        {
+          legend.map((item) => (
+            <div class="legend-item">
+              <span class="text-p-small uppercase font-bold">{item.label}</span>
+              <span
+                class="legend-swatch"
+                style={`background-color: ${item.fill}; ${item.stroke ? `border: 5px solid ${item.stroke};` : ""}`}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ── Map wrapper ─────────────────────────────── */
+  .map-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5.5rem;
+  }
+
+  /* Make the inlined SVG responsive */
+  .map-svg :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Overlay sits exactly on top of the map */
+  .map-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* ── Pulse rings ─────────────────────────────── */
+  .pulse-ring {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 1;
+    opacity: 0;
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: pulse-expand 4s ease-out infinite;
+  }
+
+  .pulse-ring-2 {
+    animation-delay: 1.3s;
+  }
+  .pulse-ring-3 {
+    animation-delay: 2.6s;
+  }
+
+  @keyframes pulse-expand {
+    0% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(12);
+      opacity: 0;
+    }
+  }
+
+  /* ── Legend ───────────────────────────────────── */
+  .map-legend {
+    position: absolute;
+    bottom: -4.5rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .legend-swatch {
+    width: 24px;
+    height: 24px;
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  /* ── Responsive adjustments ──────────────────── */
+  @media (max-width: 639px) {
+    .map-wrapper {
+      margin-bottom: 4.5rem;
+    }
+
+    .map-legend {
+      bottom: -3.5rem;
+      right: 1rem;
+    }
+
+    .label-text {
+      font-size: 14px;
+    }
+  }
+</style>
