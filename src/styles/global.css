@@ -120,27 +120,70 @@
  * Responsive CSS Custom Properties
  * ------------------------------------------------------------- */
 :root {
-  --section-gap: 3rem;       /* Mobile section gap */
-  --element-padding: 1rem;   /* Mobile element padding */
+  /* Layout */
+  --section-gap: 3rem;
+  --element-padding: 1rem;
+
+  /* Colors */
   --color-cream: #F2EFEE;
   --color-light-green: #A6E2B9;
   --color-primary: #00AC69;
   --color-darker-green: #124734;
   --color-black: #0D0D0D;
   --color-white: #FFFFFF;
+
+  /* Type Scale — Mobile */
+  --fs-h1: 2.5rem;      /* 40px */
+  --fs-h2: 2rem;        /* 32px */
+  --fs-h3: 1.5rem;      /* 24px */
+  --fs-h4: 1.125rem;    /* 18px */
+  --fs-p-large: 1.125rem; /* 18px */
+  --fs-p: 1rem;         /* 16px */
+  --fs-p-small: 0.8125rem; /* 13px */
+  --fs-btn: 0.875rem;   /* 14px */
+
+  /* Line heights */
+  --lh-heading: 1.1;
+  --lh-body: 1.6;
+  --lh-btn: 1;
+
+  /* Letter spacing */
+  --ls-btn: 0.05em;
 }
 
 @media (min-width: 640px) {
   :root {
-    --section-gap: 5rem;     /* Tablet section gap */
-    --element-padding: 1.5rem; /* Tablet element padding */
+    /* Layout */
+    --section-gap: 5rem;
+    --element-padding: 1.5rem;
+
+    /* Type Scale — Tablet */
+    --fs-h1: 3.5rem;      /* 56px */
+    --fs-h2: 2.75rem;     /* 44px */
+    --fs-h3: 2rem;        /* 32px */
+    --fs-h4: 1.5rem;      /* 24px */
+    --fs-p-large: 1.25rem; /* 20px */
+    --fs-p: 1rem;         /* 16px */
+    --fs-p-small: 0.875rem; /* 14px */
+    --fs-btn: 0.875rem;   /* 14px */
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --section-gap: 8rem;     /* Desktop section gap */
-    --element-padding: 2.5rem; /* Desktop element padding */
+    /* Layout */
+    --section-gap: 8rem;
+    --element-padding: 2.5rem;
+
+    /* Type Scale — Desktop */
+    --fs-h1: 5rem;        /* 80px */
+    --fs-h2: 3.75rem;     /* 60px */
+    --fs-h3: 2.75rem;     /* 44px */
+    --fs-h4: 2rem;        /* 32px */
+    --fs-p-large: 1.375rem; /* 22px */
+    --fs-p: 1.125rem;     /* 18px */
+    --fs-p-small: 0.875rem; /* 14px */
+    --fs-btn: 0.9375rem;  /* 15px */
   }
 }
 
@@ -156,12 +199,65 @@
   --color-black: var(--color-black);
   --color-white: var(--color-white);
 
-  /* Typography */
+  /* Typography — font family */
   --font-bornia: "Bornia", sans-serif;
 
   /* Spacing System */
   --spacing-section-gap: var(--section-gap);
   --spacing-element-padding: var(--element-padding);
+}
+
+/* -------------------------------------------------------------
+ * Semantic Typography Utilities
+ * Use these classes instead of raw Tailwind text-* size classes
+ * to keep type consistent across the site.
+ * ------------------------------------------------------------- */
+
+/* h1 / h2 — Regular (400). Large display text; weight is set by the font itself */
+.text-h1 {
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+}
+.text-h2 {
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+}
+
+/* h3 / h4 — no weight enforced; set font-bold or font-normal at usage site */
+.text-h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+}
+.text-h4 {
+  font-size: var(--fs-h4);
+  line-height: 1.25;
+}
+
+/* Body — Regular (400) */
+.text-p-large {
+  font-size: var(--fs-p-large);
+  font-weight: 400;
+  line-height: var(--lh-body);
+}
+.text-p {
+  font-size: var(--fs-p);
+  font-weight: 400;
+  line-height: var(--lh-body);
+}
+.text-p-small {
+  font-size: var(--fs-p-small);
+  font-weight: 400;
+  line-height: var(--lh-body);
+}
+
+/* Button — Extra Bold (800) */
+.text-btn {
+  font-size: var(--fs-btn);
+  font-weight: 800;
+  line-height: var(--lh-btn);
+  letter-spacing: var(--ls-btn);
 }
 
 /* -------------------------------------------------------------
@@ -176,6 +272,38 @@ body {
   background-color: var(--color-cream);
   color: var(--color-black);
 }
+
+/* -------------------------------------------------------------
+ * Base HTML Element Default Typography
+ * ------------------------------------------------------------- */
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: var(--lh-heading);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  line-height: 1.25;
+}
+
+p {
+  font-size: var(--fs-p);
+  font-weight: 400;
+  line-height: var(--lh-body);
+}
+
 
 /* Centered content container system */
 .container-custom {
@@ -195,6 +323,6 @@ body {
 
 @media (min-width: 1024px) {
   .container-custom {
-    max-width: 1200px; /* Desktop */
+    max-width: 1400px; /* Desktop */
   }
 }

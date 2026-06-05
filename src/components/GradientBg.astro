@@ -1,0 +1,424 @@
+---
+/**
+ * GradientBg — Animated gradient background using CSS Custom Properties (@property).
+ * Uses colors: #08291C, #00AC69, and #A6E2B9.
+ *
+ * Props:
+ *   class  — Extra classes appended to the wrapper
+ *   as     — HTML tag to render (default: "div")
+ */
+interface Props {
+  as?: keyof HTMLElementTagNameMap;
+  class?: string;
+}
+
+const { as: Tag = "div", class: className } = Astro.props;
+---
+
+<Tag class:list={["gradient-bg", className]}>
+  <div class="gradient-bg__canvas" aria-hidden="true"></div>
+  <div class="gradient-bg__content">
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  /* ── Custom Properties Registration ─────────────────────────────────── */
+  @property --x-0 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 95%;
+  }
+
+  @property --c-0 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #00AC69;
+  }
+
+  @property --s-start-0 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 8%;
+  }
+
+  @property --s-end-0 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 56.590226783981535%;
+  }
+
+  @property --y-0 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 75%;
+  }
+
+  @property --x-1 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 95%;
+  }
+
+  @property --s-start-1 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 1%;
+  }
+
+  @property --s-end-1 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 62.39165434620126%;
+  }
+
+  @property --y-1 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 15%;
+  }
+
+  @property --c-1 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #08291C;
+  }
+
+  @property --c-2 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #00AC69;
+  }
+
+  @property --y-2 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 86%;
+  }
+
+  @property --s-start-2 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 8.392121895570533%;
+  }
+
+  @property --s-end-2 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 48.52567687605722%;
+  }
+
+  @property --x-2 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 2%;
+  }
+
+  @property --x-3 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 93%;
+  }
+
+  @property --y-3 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 94%;
+  }
+
+  @property --s-start-3 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 8.392121895570533%;
+  }
+
+  @property --s-end-3 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 48.52567687605722%;
+  }
+
+  @property --c-3 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #00AC69;
+  }
+
+  @property --x-4 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 55%;
+  }
+
+  @property --s-start-4 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 18%;
+  }
+
+  @property --s-end-4 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 49.94408311488525%;
+  }
+
+  @property --y-4 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 101%;
+  }
+
+  @property --c-4 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #A6E2B9;
+  }
+
+  @property --x-5 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 90%;
+  }
+
+  @property --c-5 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #00AC69;
+  }
+
+  @property --s-start-5 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 11.133917156423086%;
+  }
+
+  @property --s-end-5 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 51.76366794121349%;
+  }
+
+  @property --y-5 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 47%;
+  }
+
+  @property --s-start-6 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 6%;
+  }
+
+  @property --s-end-6 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 36.01800730950539%;
+  }
+
+  @property --y-6 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 72%;
+  }
+
+  @property --c-6 {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #A6E2B9;
+  }
+
+  @property --x-6 {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 46%;
+  }
+
+  /* ── Keyframe Animation ─────────────────────────────────────────────── */
+  @keyframes ani-gradient-canvas {
+    0% {
+      --x-0: 95%;
+      --c-0: #00AC69;
+      --s-start-0: 8%;
+      --s-end-0: 56.590226783981535%;
+      --y-0: 75%;
+      --x-1: 95%;
+      --s-start-1: 1%;
+      --s-end-1: 62.39165434620126%;
+      --y-1: 15%;
+      --c-1: #08291C;
+      --c-2: #00AC69;
+      --y-2: 86%;
+      --s-start-2: 8.392121895570533%;
+      --s-end-2: 48.52567687605722%;
+      --x-2: 2%;
+      --x-3: 93%;
+      --y-3: 94%;
+      --s-start-3: 8.392121895570533%;
+      --s-end-3: 48.52567687605722%;
+      --c-3: #00AC69;
+      --x-4: 55%;
+      --s-start-4: 18%;
+      --s-end-4: 49.94408311488525%;
+      --y-4: 101%;
+      --c-4: #A6E2B9;
+      --x-5: 90%;
+      --c-5: #00AC69;
+      --s-start-5: 11.133917156423086%;
+      --s-end-5: 51.76366794121349%;
+      --y-5: 47%;
+      --s-start-6: 6%;
+      --s-end-6: 36.01800730950539%;
+      --y-6: 72%;
+      --c-6: #A6E2B9;
+      --x-6: 46%;
+    }
+
+    50% {
+      --x-0: 25%;
+      --c-0: #00AC69;
+      --s-start-0: 9%;
+      --s-end-0: 47.631590766043374%;
+      --y-0: 90%;
+      --x-1: 3%;
+      --s-start-1: 9%;
+      --s-end-1: 73%;
+      --y-1: 12%;
+      --c-1: #08291C;
+      --c-2: #00AC69;
+      --y-2: 71%;
+      --s-start-2: 9%;
+      --s-end-2: 49.05074977970796%;
+      --x-2: 75%;
+      --x-3: 51%;
+      --y-3: 97%;
+      --s-start-3: 9%;
+      --s-end-3: 49.05074977970796%;
+      --c-3: #00AC69;
+      --x-4: 28%;
+      --s-start-4: 9%;
+      --s-end-4: 49.07325835290392%;
+      --y-4: 75%;
+      --c-4: #A6E2B9;
+      --x-5: 42%;
+      --c-5: #00AC69;
+      --s-start-5: 9%;
+      --s-end-5: 49.48618142677546%;
+      --y-5: 102%;
+      --s-start-6: 9%;
+      --s-end-6: 47.075992875412794%;
+      --y-6: 97%;
+      --c-6: #00AC69;
+      --x-6: 42%;
+    }
+
+    100% {
+      --x-1: 54%;
+      --s-start-1: 9%;
+      --s-end-1: 38.76465783663554%;
+      --y-1: 14%;
+      --c-1: #08291C;
+      --c-2: #00AC69;
+      --y-2: 95%;
+      --s-start-2: 10.200720718860145%;
+      --s-end-2: 50.46456494288142%;
+      --x-2: 98%;
+      --x-3: 25%;
+      --y-3: 74%;
+      --s-start-3: 10.200720718860145%;
+      --s-end-3: 50.46456494288142%;
+      --c-3: #00AC69;
+      --s-start-6: 9%;
+      --s-end-6: 47.075992875412794%;
+      --y-6: 93%;
+      --c-6: #0a3323;
+      --x-6: 90%;
+    }
+  }
+
+  /* ── Container ──────────────────────────────────────────────────────── */
+  .gradient-bg {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  /* ── Canvas Layer with animated properties ─────────────────────────── */
+  .gradient-bg__canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    --x-0: 95%;
+    --c-0: #00AC69;
+    --y-0: 75%;
+    --x-1: 95%;
+    --y-1: 15%;
+    --c-1: #08291C;
+    --c-2: #00AC69;
+    --y-2: 86%;
+    --x-2: 2%;
+    --x-3: 93%;
+    --y-3: 94%;
+    --c-3: #00AC69;
+    --x-4: 55%;
+    --y-4: 101%;
+    --c-4: #A6E2B9;
+    --x-5: 90%;
+    --c-5: #00AC69;
+    --y-5: 47%;
+    --y-6: 72%;
+    --c-6: #A6E2B9;
+    --x-6: 46%;
+
+    background-color: #08291C;
+    background-image:
+      radial-gradient(
+        circle at var(--x-0) var(--y-0),
+        var(--c-0) var(--s-start-0),
+        transparent var(--s-end-0)
+      ),
+      radial-gradient(
+        circle at var(--x-1) var(--y-1),
+        var(--c-1) var(--s-start-1),
+        transparent var(--s-end-1)
+      ),
+      radial-gradient(
+        circle at var(--x-2) var(--y-2),
+        var(--c-2) var(--s-start-2),
+        transparent var(--s-end-2)
+      ),
+      radial-gradient(
+        circle at var(--x-3) var(--y-3),
+        var(--c-3) var(--s-start-3),
+        transparent var(--s-end-3)
+      ),
+      radial-gradient(
+        circle at var(--x-4) var(--y-4),
+        var(--c-4) var(--s-start-4),
+        transparent var(--s-end-4)
+      ),
+      radial-gradient(
+        circle at var(--x-5) var(--y-5),
+        var(--c-5) var(--s-start-5),
+        transparent var(--s-end-5)
+      ),
+      radial-gradient(
+        circle at var(--x-6) var(--y-6),
+        var(--c-6) var(--s-start-6),
+        transparent var(--s-end-6)
+      );
+    animation: ani-gradient-canvas 15s linear infinite alternate;
+    background-blend-mode:
+      normal, normal, normal, normal, normal, normal, normal;
+    will-change: transform, opacity;
+    contain: paint;
+  }
+
+  /* ── Content sits above the gradient ────────────────────────────────── */
+  .gradient-bg__content {
+    position: relative;
+    z-index: 1;
+  }
+</style>

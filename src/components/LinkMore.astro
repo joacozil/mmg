@@ -1,0 +1,30 @@
+---
+interface Props {
+  href: string;
+  color?: "primary" | "black" | "white";
+  class?: string;
+  [key: string]: any; // Allow passing extra HTML anchor attributes
+}
+
+const { href, color = "primary", class: className, ...rest } = Astro.props;
+
+const colorClasses = {
+  primary: "text-primary hover:text-darker-green",
+  black: "text-black hover:text-primary",
+  white: "text-white hover:text-primary",
+};
+
+const activeColorClass = colorClasses[color] || colorClasses.primary;
+---
+
+<a
+  href={href}
+  class:list={[
+    "text-btn inline-flex items-center gap-1 tracking-wider uppercase transition-colors duration-200",
+    activeColorClass,
+    className
+  ]}
+  {...rest}
+>
+  <slot>VER MÁS +</slot>
+</a>

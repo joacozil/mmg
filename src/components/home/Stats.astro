@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import textureImage from "../../assets/img/building-texture.png";
+import LinkMore from "../LinkMore.astro";
+
+const metrics = [
+  { value: "+ 210", label: "Profesionales" },
+  { value: "+ 3425", label: "Clientes" },
+  { value: "+ 32", label: "Emisores representados en la bolsa" },
+  { value: "+ $ 5.2 mm USD", label: "Activos bajo administración" },
+  { value: "+ $ 512 mm USD", label: "Activos en cartera administrada" },
+];
+---
+
+<section class="w-full bg-light-green py-section-gap relative overflow-hidden">
+  <!-- Absolute texture image in bottom-left -->
+  <Image
+    src={textureImage}
+    alt="Textura de arquitectura de fondo"
+    class="absolute bottom-0 left-0 w-[100px] sm:w-[150px] md:w-[200px] h-auto object-contain pointer-events-none z-0 select-none"
+  />
+
+  <div class="container-custom relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <!-- Left Column: Copy & Link -->
+      <div class="lg:col-span-5 flex flex-col justify-start max-w-[480px]">
+        <p class="font-bold! text-black">
+          En MMG Bank somos tu socio estratégico en asesoría financiera,
+          diseñados para acompañarte en tu evolución y expansión.
+        </p>
+        <p class="text-black/80 mt-4">
+          Como sus gestores de activos, en MMG Bank nos enfocamos en optimizar
+          sus portafolios y resguardar su capital mediante estrategias sólidas y
+          diversificadas.
+        </p>
+        <div>
+          <LinkMore href="/asesores-externos" class="mt-6" />
+        </div>
+      </div>
+
+      <!-- Right Column: Metrics Stack -->
+      <div class="lg:col-span-7 w-full space-y-6 lg:pl-8">
+        {
+          metrics.map((metric) => (
+            <div class="relative pt-6 border-t border-white/40 flex flex-row justify-between items-center gap-4">
+              <span class="absolute top-[-5px] left-0 w-2 h-2 bg-white" />
+              <span class="text-h3 font-light text-black font-bornia leading-none whitespace-nowrap shrink-0">
+                {metric.value}
+              </span>
+              <span class="text-p-large! font-bold! text-black text-right uppercase">
+                {metric.label}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
