@@ -30,7 +30,7 @@ const legend = [
 ];
 ---
 
-<section class="w-full bg-cream py-section-gap overflow-hidden">
+<section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
   <!-- Header -->
   <div class="container-custom">
     <div
@@ -42,7 +42,7 @@ const legend = [
         </h2>
       </div>
       <div class="lg:col-span-5 flex items-start lg:justify-end">
-        <p class="text-p-small max-w-[380px]">
+        <p class="max-w-[500px]">
           Nuestra propia sólida trayectoria nos permite operar en tres
           territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>,
           conectándote con mercados estratégicos para que tú y tu patrimonio
@@ -93,7 +93,6 @@ const legend = [
                 x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
                 y={loc.y + 5}
                 text-anchor={loc.side === "left" ? "end" : "start"}
-                font-family="var(--font-bornia)"
                 font-size="var(--fs-p-large)"
                 fill="var(--color-black)"
               >
@@ -109,7 +108,7 @@ const legend = [
         {
           legend.map((item) => (
             <div class="legend-item">
-              <span class="text-p-small uppercase font-bold">{item.label}</span>
+              <span class="uppercase">{item.label}</span>
               <span
                 class="legend-swatch"
                 style={`background-color: ${item.fill}; ${item.stroke ? `border: 5px solid ${item.stroke};` : ""}`}

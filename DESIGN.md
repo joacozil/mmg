@@ -53,6 +53,11 @@ A natural, high-prestige color palette of greens, warm neutrals, and stark contr
 - **Display Type**: Bornia (Medium to Black weights for headers). Recommended styling uses `text-wrap: balance` to maintain clean header layouts.
 - **Body Type**: Bornia (Regular weight). Keep line lengths under 75ch to ensure reading comfort.
 
+### Named Rules
+**The Clean Body Text Rule.** All body text should be a `p` tag by default. NEVER add extra `tracking` (letter-spacing) or `leading` (line-height) override rules to body text (keep them to defaults to maintain unified typography).
+
+**The Solid Text Color Rule.** Always use solid text colors (e.g., `text-black` or `text-white`). NEVER add opacity modifiers (such as `/80`, `/60`) to text elements unless explicitly requested.
+
 ## 4. Elevation
 
 The visual layout is flat-by-default, emphasizing clear color blocks, clean 1px borders, and solid shapes rather than heavy shadows.
@@ -79,8 +84,12 @@ The visual layout is flat-by-default, emphasizing clear color blocks, clean 1px 
 - **Do** wrap primary blocks in `.container-custom` to maintain a unified grid width across device viewports.
 - **Do** separate text and image content with generous spacing (`section-gap` and `element-padding`).
 - **Do** maintain strong legibility (>=4.5:1 contrast) for all text.
+- **Do** use `p` tags by default for all body text.
 
 ### Don't:
 - **Don't** use large rounded corners (border-radius > 12px) on cards or content blocks.
 - **Don't** use soft, heavy shadows to convey structure; keep outlines clean and simple.
 - **Don't** introduce complex gradient overlays under body text that reduce readability.
+- **Don't** add extra `tracking` (letter-spacing) or `leading` (line-height) override rules to body text.
+- **Don't** add opacity modifiers (such as `/80`, `/60`) to text colors unless explicitly requested.
+

@@ -24,17 +24,17 @@ const metrics = [
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <!-- Left Column: Copy & Link -->
       <div class="lg:col-span-5 flex flex-col justify-start max-w-[480px]">
-        <p class="font-bold! text-black">
+        <p class="font-bold">
           En MMG Bank somos tu socio estratégico en asesoría financiera,
           diseñados para acompañarte en tu evolución y expansión.
         </p>
-        <p class="text-black/80 mt-4">
+        <p class="mt-4">
           Como sus gestores de activos, en MMG Bank nos enfocamos en optimizar
           sus portafolios y resguardar su capital mediante estrategias sólidas y
           diversificadas.
         </p>
         <div>
-          <LinkMore href="/asesores-externos" class="mt-6" />
+          <LinkMore href="#" class="mt-6" />
         </div>
       </div>
 
@@ -44,10 +44,10 @@ const metrics = [
           metrics.map((metric) => (
             <div class="relative pt-6 border-t border-white/40 flex flex-row justify-between items-center gap-4">
               <span class="absolute top-[-5px] left-0 w-2 h-2 bg-white" />
-              <span class="text-h3 font-light text-black font-bornia leading-none whitespace-nowrap shrink-0">
+              <h3 class="font-light font-bornia whitespace-nowrap shrink-0">
                 {metric.value}
-              </span>
-              <span class="text-p-large! font-bold! text-black text-right uppercase">
+              </h3>
+              <span class="text-p font-bold text-right uppercase">
                 {metric.label}
               </span>
             </div>

@@ -1,0 +1,141 @@
+---
+const testimonials = [
+  {
+    quote: `"Pensé que comprar mi primer apartamento en la ciudad sería un dolor de cabeza, pero <strong>el equipo de MMG me guió en cada paso del camino.</strong> El trato fue súper cercano y la aprobación fue mucho más rápida de lo que esperaba. Hoy ya tengo las llaves de mi hogar."`,
+    role: "Cliente de préstamo hipotecario",
+    name: "Carlos Mendoza",
+  },
+  {
+    quote: `"Para mí, el tiempo es oro. Con la banca en línea y la app del banco resuelvo todo desde mi celular: transferencias ACH express, pago de servicios y recargas, sin tener que pisar una sucursal. <strong>Es la banca digital que un profesional moderno necesita.</strong>"`,
+    role: "Diseñadora freelance y usuaria digital",
+    name: "Valerie Chen",
+  },
+  {
+    quote: `"La plataforma de MMG me permite gestionar mis inversiones internacionales con total transparencia y rapidez. <strong>Es un aliado clave para la expansión de mi negocio en la región.</strong>"`,
+    role: "Inversionista y cliente corporativo",
+    name: "Mariana Silva",
+  },
+  {
+    quote: `"Para mí, el tiempo es oro. Con la banca en línea y la app del banco resuelvo todo desde mi celular: transferencias ACH express, pago de servicios y recargas, sin tener que pisar una sucursal. <strong>Es la banca digital que un profesional moderno necesita.</strong>"`,
+    role: "Diseñadora freelance y usuaria digital",
+    name: "Valerie Chen",
+  },
+  {
+    quote: `"La plataforma de MMG me permite gestionar mis inversiones internacionales con total transparencia y rapidez. <strong>Es un aliado clave para la expansión de mi negocio en la región.</strong>"`,
+    role: "Inversionista y cliente corporativo",
+    name: "Mariana Silva",
+  },
+];
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <div class="container-custom">
+    <!-- Swiper container -->
+    <div class="swiper testimonials-swiper overflow-visible!">
+      <div class="swiper-wrapper">
+        {
+          testimonials.map((t) => (
+            <div class="swiper-slide h-auto">
+              <div class="bg-light-green text-black p-8 md:p-12 flex flex-col justify-between h-full min-h-[300px]">
+                <p class="[&>strong]:font-bold" set:html={t.quote} />
+
+                <div class="flex items-center gap-4 justify-end mt-8 self-end">
+                  <div class="text-right">
+                    <span class="block text-p-small! uppercase">{t.role}</span>
+                    <span class="block font-bold! text-p-large! mt-1">
+                      {t.name}
+                    </span>
+                  </div>
+                  <div class="w-[5px] h-full bg-primary shrink-0" />
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Custom Swiper Navigation Arrows -->
+    <div class="flex items-center justify-center gap-4 mt-12">
+      <button
+        class="swiper-prev-btn flex items-center justify-center w-12 h-12 rounded-full border border-black/25 text-black hover:bg-primary hover:border-primary hover:text-white transition-colors duration-300 cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5L8.25 12l7.5-7.5"></path>
+        </svg>
+      </button>
+      <button
+        class="swiper-next-btn flex items-center justify-center w-12 h-12 rounded-full border border-black/25 text-black hover:bg-primary hover:border-primary hover:text-white transition-colors duration-300 cursor-pointer"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="w-5 h-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fix swiper slides height alignment */
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  /* Style disabled navigation buttons */
+  .swiper-prev-btn:disabled,
+  .swiper-next-btn:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay, Navigation } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/autoplay";
+  import "swiper/css/navigation";
+
+  // Initialize Swiper on component load
+  new Swiper(".testimonials-swiper", {
+    modules: [Autoplay, Navigation],
+    loop: false, // Not infinite loop
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    navigation: {
+      nextEl: ".swiper-next-btn",
+      prevEl: ".swiper-prev-btn",
+    },
+    slidesPerView: 1,
+    spaceBetween: 24,
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      },
+    },
+  });
+</script>

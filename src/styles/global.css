@@ -145,8 +145,8 @@
   /* 18px */
   --fs-p: 1rem;
   /* 16px */
-  --fs-p-small: 0.8125rem;
-  /* 13px */
+  --fs-p-small: 0.875rem;
+  /* 14px */
   --fs-btn: 0.875rem;
   /* 14px */
 
@@ -232,56 +232,48 @@
 }
 
 /* -------------------------------------------------------------
- * Semantic Typography Utilities
+ * Semantic Typography Utilities (Tailwind v4 Utilities)
  * Use these classes instead of raw Tailwind text-* size classes
  * to keep type consistent across the site.
+ * Supports overrides with modifiers like ! (important).
  * ------------------------------------------------------------- */
 
-/* h1 / h2 — Regular (400). Large display text; weight is set by the font itself */
-.text-h1 {
+@utility text-h1 {
   font-size: var(--fs-h1);
-  font-weight: 400;
   line-height: var(--lh-heading);
 }
 
-.text-h2 {
+@utility text-h2 {
   font-size: var(--fs-h2);
-  font-weight: 400;
   line-height: var(--lh-heading);
 }
 
-/* h3 / h4 — no weight enforced; set font-bold or font-normal at usage site */
-.text-h3 {
+@utility text-h3 {
   font-size: var(--fs-h3);
   line-height: var(--lh-heading);
 }
 
-.text-h4 {
+@utility text-h4 {
   font-size: var(--fs-h4);
   line-height: 1.25;
 }
 
-/* Body — Regular (400) */
-.text-p-large {
+@utility text-p-large {
   font-size: var(--fs-p-large);
-  font-weight: 400;
   line-height: var(--lh-body);
 }
 
-.text-p {
+@utility text-p {
   font-size: var(--fs-p);
-  font-weight: 400;
   line-height: var(--lh-body);
 }
 
-.text-p-small {
+@utility text-p-small {
   font-size: var(--fs-p-small);
-  font-weight: 400;
   line-height: var(--lh-body);
 }
 
-/* Button — Extra Bold (800) */
-.text-btn {
+@utility text-btn {
   font-size: var(--fs-btn);
   font-weight: 800;
   line-height: var(--lh-btn);
@@ -326,15 +318,16 @@ h4 {
   line-height: 1.25;
 }
 
-p {
+p,
+span {
   font-size: var(--fs-p);
-  font-weight: 400;
   line-height: var(--lh-body);
+  color: var(--color-black);
 }
 
 
 /* Centered content container system */
-.container-custom {
+@utility container-custom {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
@@ -342,17 +335,13 @@ p {
   padding-right: var(--element-padding);
   max-width: 400px;
   /* Mobile */
-}
 
-@media (min-width: 640px) {
-  .container-custom {
+  @media (min-width: 640px) {
     max-width: 800px;
     /* Tablet */
   }
-}
 
-@media (min-width: 1024px) {
-  .container-custom {
+  @media (min-width: 1024px) {
     max-width: 1400px;
     /* Desktop */
   }
