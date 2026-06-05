@@ -1,6 +1,7 @@
 ---
 import mapSvgRaw from "../../assets/img/map.svg?raw";
 import LinkMore from "../LinkMore.astro";
+import SplitRow from "../SplitRow.astro";
 
 /* Location marker centers (from SVG coordinate space 1684×819) */
 const pulseCenter = { x: 445, y: 393 };
@@ -33,23 +34,11 @@ const legend = [
 <section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
   <!-- Header -->
   <div class="container-custom">
-    <div
-      class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12 lg:mb-16"
-    >
-      <div class="lg:col-span-7">
-        <h2 class="text-primary">
-          Soluciones globales<br />para clientes ambiciosos.
-        </h2>
-      </div>
-      <div class="lg:col-span-5 flex items-start lg:justify-end">
-        <p class="max-w-[500px]">
-          Nuestra propia sólida trayectoria nos permite operar en tres
-          territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>,
-          conectándote con mercados estratégicos para que tú y tu patrimonio
-          sigan cruzando fronteras.
-        </p>
-      </div>
-    </div>
+    <SplitRow
+      title="Soluciones globales para clientes ambiciosos."
+      text="Nuestra propia sólida trayectoria nos permite operar en tres territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>, conectándote con mercados estratégicos para que tú y tu patrimonio sigan cruzando fronteras."
+      class="mb-12 lg:mb-16"
+    />
 
     <!-- Map area -->
     <div class="map-wrapper">
@@ -108,10 +97,10 @@ const legend = [
         {
           legend.map((item) => (
             <div class="legend-item">
-              <span class="uppercase">{item.label}</span>
+              <span class="uppercase text-p-small!">{item.label}</span>
               <span
                 class="legend-swatch"
-                style={`background-color: ${item.fill}; ${item.stroke ? `border: 5px solid ${item.stroke};` : ""}`}
+                style={`background-color: ${item.fill}; ${item.stroke ? `border: 3px solid ${item.stroke};` : ""}`}
               />
             </div>
           ))
@@ -188,12 +177,12 @@ const legend = [
   .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.65rem;
   }
 
   .legend-swatch {
-    width: 24px;
-    height: 24px;
+    width: 14px;
+    height: 14px;
     display: block;
     flex-shrink: 0;
     box-sizing: border-box;

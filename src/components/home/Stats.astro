@@ -23,7 +23,7 @@ const metrics = [
   <div class="container-custom relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <!-- Left Column: Copy & Link -->
-      <div class="lg:col-span-5 flex flex-col justify-start max-w-[480px]">
+      <div class="lg:col-span-5 flex flex-col justify-start lg:max-w-[480px]">
         <p class="font-bold">
           En MMG Bank somos tu socio estratégico en asesoría financiera,
           diseñados para acompañarte en tu evolución y expansión.
@@ -47,9 +47,7 @@ const metrics = [
               <h3 class="font-light font-bornia whitespace-nowrap shrink-0">
                 {metric.value}
               </h3>
-              <span class="text-p font-bold text-right uppercase">
-                {metric.label}
-              </span>
+              <span class="font-bold text-right uppercase">{metric.label}</span>
             </div>
           ))
         }

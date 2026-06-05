@@ -28,7 +28,7 @@ const testimonials = [
 ];
 ---
 
-<section class="w-full bg-cream py-section-gap overflow-hidden">
+<section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
   <div class="container-custom">
     <!-- Swiper container -->
     <div class="swiper testimonials-swiper overflow-visible!">
@@ -37,12 +37,12 @@ const testimonials = [
           testimonials.map((t) => (
             <div class="swiper-slide h-auto">
               <div class="bg-light-green text-black p-8 md:p-12 flex flex-col justify-between h-full min-h-[300px]">
-                <p class="[&>strong]:font-bold" set:html={t.quote} />
+                <p class="[&>strong]:font-bold " set:html={t.quote} />
 
                 <div class="flex items-center gap-4 justify-end mt-8 self-end">
                   <div class="text-right">
                     <span class="block text-p-small! uppercase">{t.role}</span>
-                    <span class="block font-bold! text-p-large! mt-1">
+                    <span class="block font-bold text-p-large! mt-1">
                       {t.name}
                     </span>
                   </div>

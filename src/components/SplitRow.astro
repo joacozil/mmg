@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  class?: string;
+}
+
+const { title, text, class: className = "" } = Astro.props;
+---
+
+<div class={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 ${className}`}>
+  <!-- Left Column: Title & Optional slot contents (like author metadata) -->
+  <div class="lg:col-span-7 flex flex-col justify-start">
+    <h2 class="text-primary lg:max-w-[700px]" set:html={title} />
+    <slot />
+  </div>
+
+  <!-- Right Column: Paragraph text -->
+  <div class="lg:col-span-5 flex items-start lg:justify-end w-full">
+    <p class="lg:max-w-[400px] w-full" set:html={text} />
+  </div>
+</div>
