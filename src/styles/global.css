@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------
+ * Custom Fonts (Bornia Font Family)
+ * ------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-RegularItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bornia';
+  src: url('../assets/fonts/borniafont/Bornia-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* -------------------------------------------------------------
+ * Responsive CSS Custom Properties
+ * ------------------------------------------------------------- */
+:root {
+  --section-gap: 3rem;       /* Mobile section gap */
+  --element-padding: 1rem;   /* Mobile element padding */
+  --color-cream: #F2EFEE;
+  --color-light-green: #A6E2B9;
+  --color-primary: #00AC69;
+  --color-darker-green: #124734;
+  --color-black: #0D0D0D;
+  --color-white: #FFFFFF;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --section-gap: 5rem;     /* Tablet section gap */
+    --element-padding: 1.5rem; /* Tablet element padding */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --section-gap: 8rem;     /* Desktop section gap */
+    --element-padding: 2.5rem; /* Desktop element padding */
+  }
+}
+
+/* -------------------------------------------------------------
+ * Tailwind Theme Extensions (Tailwind v4 syntax)
+ * ------------------------------------------------------------- */
+@theme {
+  /* Colors */
+  --color-cream: var(--color-cream);
+  --color-light-green: var(--color-light-green);
+  --color-primary: var(--color-primary);
+  --color-darker-green: var(--color-darker-green);
+  --color-black: var(--color-black);
+  --color-white: var(--color-white);
+
+  /* Typography */
+  --font-bornia: "Bornia", sans-serif;
+
+  /* Spacing System */
+  --spacing-section-gap: var(--section-gap);
+  --spacing-element-padding: var(--element-padding);
+}
+
+/* -------------------------------------------------------------
+ * Custom Global Styles & Utilities
+ * ------------------------------------------------------------- */
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-bornia);
+  background-color: var(--color-cream);
+  color: var(--color-black);
+}
+
+/* Centered content container system */
+.container-custom {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--element-padding);
+  padding-right: var(--element-padding);
+  max-width: 400px; /* Mobile */
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    max-width: 800px; /* Tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    max-width: 1200px; /* Desktop */
+  }
+}

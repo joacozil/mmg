@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-05T14:12:56Z",
+  "title": "Design System: MMG Bank",
+  "extensions": {
+    "colorMeta": {
+      "cream": { "role": "neutral", "displayName": "Alabaster Cream", "canonical": "oklch(95% 0.01 45)", "tonalRamp": ["#FFFFFF", "#F2EFEE", "#DFDAD7", "#C9C1BD"] },
+      "light-green": { "role": "neutral", "displayName": "Sage Mist", "canonical": "oklch(88% 0.05 145)", "tonalRamp": ["#F1FAF4", "#D4F2E1", "#A6E2B9", "#74BE8E"] },
+      "primary": { "role": "primary", "displayName": "Active Green", "canonical": "oklch(68% 0.18 155)", "tonalRamp": ["#E6F7F0", "#80DDC5", "#00AC69", "#007748"] },
+      "darker-green": { "role": "secondary", "displayName": "Deep Forest", "canonical": "oklch(28% 0.07 145)", "tonalRamp": ["#E8ECEB", "#8E9E99", "#124734", "#0A2D21"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Title", "purpose": "Hero and major section headers." },
+      "body": { "displayName": "Body Copy", "purpose": "Prose reading and descriptive copy." }
+    },
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Basic flat actions.",
+      "html": "<button class=\"ds-btn-primary\">VER MÁS</button>",
+      "css": ".ds-btn-primary { background-color: #124734; color: #FFFFFF; font-family: 'Bornia', sans-serif; font-size: 14px; font-weight: 600; padding: 12px 28px; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; transition: background-color 0.2s; } .ds-btn-primary:hover { background-color: #00AC69; }"
+    },
+    {
+      "name": "Standard Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Content grouping block.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">SOLUCIONES DE INVERSIÓN</h3><p class=\"ds-card-body\">Como sus gestores de activos en MMG Bank nos enfocamos en optimizar sus portafolios y resguardar su capital.</p></div>",
+      "css": ".ds-card { background-color: #FFFFFF; padding: 24px; border: 1px solid #F2EFEE; border-radius: 8px; font-family: 'Bornia', sans-serif; } .ds-card-title { color: #124734; font-size: 20px; font-weight: 600; margin-bottom: 12px; } .ds-card-body { color: #0D0D0D; font-size: 15px; margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Sovereign Garden",
+    "overview": "MMG Bank's design language is an elegant, editorial system that blends organic green tones with a warm cream canvas. It focuses on clean, responsive grids, crisp alignment, and high-contrast Bornia typography. The system values visual breathing room, clarity, and flat, structured blocks rather than heavy dropshadows or complex decorations.",
+    "keyCharacteristics": [
+      "Editorial Spaciousness: Generous margin and padding rules that prioritize content layout over crowded dashboards.",
+      "Harmonious Greens & Warm Neutrals: Saturated greens acting as primary brand indicators against a clean cream canvas.",
+      "Clean Geometric Construction: Low border radii (4px-8px) for buttons and containers, enforcing structural precision."
+    ],
+    "rules": [
+      { "name": "The Color Conservation Rule", "body": "Keep the Active Green accent (#00AC69) to under 10% of any viewport to preserve its visual impact.", "section": "colors" },
+      { "name": "The Flat-by-Default Rule", "body": "Use background colors or 1px outlines to divide layers. Shadows should only appear to signal hover/active states on interactive elements.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do wrap primary blocks in .container-custom to maintain a unified grid width across device viewports.",
+      "Do separate text and image content with generous spacing (section-gap and element-padding).",
+      "Do maintain strong legibility (>=4.5:1 contrast) for all text."
+    ],
+    "donts": [
+      "Don't use large rounded corners (border-radius > 12px) on cards or content blocks.",
+      "Don't use soft, heavy shadows to convey structure; keep outlines clean and simple.",
+      "Don't introduce complex gradient overlays under body text that reduce readability."
+    ]
+  }
+}
