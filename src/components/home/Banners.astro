@@ -1,0 +1,369 @@
+---
+import { Image } from "astro:assets";
+import LinkMore from "../LinkMore.astro";
+
+// Import images
+import image1 from "../../assets/img/men-suit-analyzing-results-chart 1.jpg";
+import image2 from "../../assets/img/beautiful-girl-standing-airport 6.jpg";
+import tarjetaImage from "../../assets/img/tarjeta.png";
+import mmgBuilding from "../../assets/img/mmg-building.jpg";
+
+// Import logos/SVGs
+import copaLogo from "../../assets/img/copa.png";
+import kuaraLogo from "../../assets/img/kuara.svg";
+---
+
+<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+  <div class="container-custom">
+    <!-- Swiper container -->
+    <div class="swiper banners-swiper overflow-visible!">
+      <div class="swiper-wrapper">
+        <!-- Slide 1: Financial Report -->
+        <div class="swiper-slide h-auto">
+          <div
+            class="w-full flex flex-col lg:grid lg:grid-cols-12 bg-primary rounded-lg overflow-hidden min-h-[480px] lg:min-h-[400px]"
+          >
+            <!-- Image (order-1 both mobile and desktop) -->
+            <div
+              class="w-full h-[240px] lg:h-full shrink-0 relative overflow-hidden order-1 lg:order-1 lg:col-span-6"
+            >
+              <Image
+                src={image1}
+                alt="Informe financiero para el año fiscal 2025"
+                class="w-full h-full object-cover absolute inset-0"
+              />
+            </div>
+            <!-- Content (order-2 both mobile and desktop) -->
+            <div
+              class="w-full flex-1 lg:h-full p-8 lg:p-12 flex flex-col justify-start lg:justify-between order-2 lg:order-2 text-white lg:col-span-6"
+            >
+              <div class="max-w-full lg:max-w-none">
+                <h3 class="font-bornia font-light leading-none tracking-tight">
+                  <span
+                    class="text-light-green! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >Accede a nuestro
+                  </span>
+                  <span
+                    class="text-white! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >informe financiero
+                  </span>
+                  <span
+                    class="text-light-green! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >para el año fiscal 2025</span
+                  >
+                </h3>
+              </div>
+              <div class="mt-auto lg:mt-8">
+                <LinkMore href="#" color="white" lg={true} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: ConnectMiles -->
+        <div class="swiper-slide h-auto">
+          <div
+            class="w-full flex flex-col lg:grid lg:grid-cols-12 bg-darker-green rounded-lg overflow-hidden min-h-[480px] lg:min-h-[400px]"
+          >
+            <!-- Image (order-1 on mobile, order-2 on desktop) -->
+            <div
+              class="w-full h-[240px] lg:h-full shrink-0 relative overflow-hidden order-1 lg:order-2 lg:col-span-6"
+            >
+              <Image
+                src={image2}
+                alt="Redime tus millas en el aeropuerto"
+                class="w-full h-full object-cover absolute inset-0"
+              />
+            </div>
+            <!-- Content (order-2 on mobile, order-1 on desktop) -->
+            <div
+              class="w-full flex-1 lg:h-full p-8 lg:p-12 flex flex-col justify-start lg:justify-between order-2 lg:order-1 text-white lg:col-span-6"
+            >
+              <div class="max-w-full lg:max-w-none">
+                <h3 class="font-bornia font-light leading-none tracking-tight">
+                  <span
+                    class="text-light-green! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >Redime tus
+                  </span>
+                  <span
+                    class="text-white! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >puntos a millas <span
+                      class="text-light-green! font-normal leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                      >con
+                    </span></span
+                  >
+                  <span
+                    class="text-white! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >ConnectMiles</span
+                  >
+                </h3>
+              </div>
+              <div
+                class="mt-auto lg:mt-8 flex flex-col-reverse gap-6 lg:flex-row lg:justify-between lg:items-end w-full"
+              >
+                <div>
+                  <LinkMore href="#" color="white" lg={true} />
+                </div>
+                <!-- Brand Logos -->
+                <div class="flex items-center gap-3 shrink-0 select-none">
+                  <span class="text-white! h-5 flex items-center">
+                    <svg
+                      width="110"
+                      height="13"
+                      viewBox="0 0 166 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-full w-auto"
+                    >
+                      <path
+                        d="M61.5573 2.29688L57.8296 14.8842L54.0221 2.29688H50.6635L48.1504 18.1717H50.8211L52.7258 5.87856L56.4535 18.1717H59.098L62.8277 5.87856L64.7305 18.1717H67.4289L64.942 2.29688H61.5573Z"
+                        fill="currentColor"></path>
+                      <path
+                        d="M83.4263 2.29688L79.6986 14.8842L75.8911 2.29688H72.5324L70.0195 18.1717H72.6901L74.5947 5.87856L78.3224 18.1717H80.967L84.6966 5.87856L86.5995 18.1717H89.2978L86.8109 2.29688H83.4263Z"
+                        fill="currentColor"></path>
+                      <path
+                        d="M100.008 9.09151V11.2937H102.391V15.687C101.755 15.9549 101.043 16.0617 100.064 16.0617C96.9701 16.0617 94.5908 13.764 94.5908 10.2367C94.5908 6.70945 96.8923 4.49024 100.064 4.49024C101.783 4.49024 103.396 5.105 104.507 6.14709V3.2345C103.239 2.46045 101.705 2.03125 99.9319 2.03125C95.2789 2.03125 91.8145 5.37114 91.8145 10.2348C91.8145 15.0984 95.1193 18.4383 100.012 18.4383C101.942 18.4383 103.847 18.0373 105.09 17.2631V9.09151H100.008Z"
+                        fill="currentColor"></path>
+                      <path
+                        d="M117.86 16.1669C117.517 16.1669 116.96 16.1405 116.458 16.088V11.303H118.151C120.293 11.303 121.693 11.9704 121.693 13.6816C121.693 15.3927 120.397 16.1669 117.86 16.1669ZM116.458 4.40965C116.88 4.35718 117.489 4.30283 117.938 4.30283C119.868 4.30283 121.057 5.05065 121.057 6.60058C121.057 8.23132 119.92 9.0859 117.724 9.0859H116.456V4.40965H116.458ZM120.662 9.99486C122.433 9.72688 123.73 8.3925 123.73 6.44137C123.73 3.39568 121.508 2.03125 117.78 2.03125C116.591 2.03125 114.976 2.19243 113.839 2.35174V18.1198C114.87 18.279 116.246 18.414 117.515 18.414C122.407 18.414 124.416 16.5978 124.416 13.8165C124.416 11.5186 122.91 10.1822 120.66 9.99486"
+                        fill="currentColor"></path>
+                      <path
+                        d="M133.962 16.3037C133.485 16.3843 132.93 16.4367 132.534 16.4367C130.946 16.4367 129.837 15.9569 129.837 14.7256C129.837 13.4942 131.028 12.99 132.851 12.99H133.962V16.3037ZM132.139 6.07031C130.685 6.07031 129.362 6.44519 128.331 7.03179V9.32952C129.31 8.76912 130.367 8.36814 131.716 8.36814C133.064 8.36814 133.963 8.95671 133.963 10.2387V11.2282H132.667C129.282 11.2282 127.246 12.4034 127.246 14.8079C127.246 17.4806 129.468 18.416 132.508 18.416C133.83 18.416 135.416 18.2286 136.527 17.9362V10.1055C136.527 7.13859 134.701 6.07031 132.137 6.07031"
+                        fill="currentColor"></path>
+                      <path
+                        d="M145.97 6.07031C144.25 6.07031 142.242 6.44519 140.601 7.08617V18.176H143.219V8.82174C143.907 8.60794 144.833 8.47494 145.758 8.47494C147.212 8.47494 148.271 9.08972 148.271 10.8008V18.176H150.862V10.5591C150.862 7.21918 148.957 6.07031 145.97 6.07031Z"
+                        fill="currentColor"></path>
+                      <path
+                        d="M165.366 18.1726L160.105 11.7046L165.261 6.33303H162.036L157.605 11.1929V0H154.986V18.1726H157.605V12.4L162.245 18.1726H165.366Z"
+                        fill="currentColor"></path>
+                      <path
+                        d="M14.0725 10.3365C9.59369 2.07293 0 2.30535 0 2.30535C2.96917 3.36804 7.29772 10.7694 7.34422 10.8575C11.8266 19.1191 21.4205 18.8831 21.4205 18.8831C18.4457 17.8185 14.1226 10.4246 14.0725 10.3383"
+                        fill="currentColor"></path>
+                      <path
+                        d="M35.6133 9.62175C31.1364 1.35828 21.5537 1.59444 21.5537 1.59444C24.5082 2.65527 28.8442 10.0549 28.8867 10.1429C33.3675 18.4064 42.9556 18.1683 42.9556 18.1683C39.9845 17.1037 35.6598 9.70983 35.6133 9.62373"
+                        fill="currentColor"></path>
+                      <path
+                        d="M25.3856 9.8522C25.4469 9.959 30.5693 18.7344 34.0911 19.9976C34.0911 19.9976 22.7113 20.2806 17.4017 10.4782C17.3429 10.3771 12.2051 1.59622 8.69629 0.336735C8.69629 0.336735 20.0673 0.059336 25.3856 9.85417"
+                        fill="currentColor"></path>
+                    </svg>
+                  </span>
+                  <div class="w-px h-6 bg-white/40"></div>
+                  <Image
+                    src={copaLogo}
+                    alt="ConnectMiles Copa Airlines"
+                    class="h-12 w-auto object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Slide 3: Kuara -->
+        <div class="swiper-slide h-auto">
+          <div
+            class="w-full flex flex-col lg:grid lg:grid-cols-12 bg-white rounded-lg overflow-hidden border border-black/10 min-h-[480px] lg:min-h-[400px]"
+          >
+            <!-- Logo (order-1 both mobile and desktop) -->
+            <div
+              class="w-full h-[240px] lg:h-full shrink-0 flex items-center justify-center p-8 bg-white order-1 lg:order-1 lg:col-span-6 select-none"
+            >
+              <Image
+                src={kuaraLogo}
+                alt="Kuara Logo"
+                class="w-[200px] sm:w-[250px] lg:w-[280px] h-auto object-contain"
+              />
+            </div>
+            <!-- Content (order-2 both mobile and desktop) -->
+            <div
+              class="w-full flex-1 lg:h-full p-8 lg:p-12 flex flex-col justify-start lg:justify-center order-2 lg:order-2 text-black bg-white lg:col-span-6"
+            >
+              <div class="max-w-full lg:max-w-none">
+                <h3 class="font-bornia font-light leading-none tracking-tight">
+                  <span
+                    class="text-black! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >Ahora podes elegir una
+                  </span>
+                  <span
+                    class="text-primary! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >nueva forma de transferir</span
+                  >
+                </h3>
+                <p
+                  class="text-[1.2rem]! sm:text-[1.4rem]! md:text-[1.6rem]! text-black leading-relaxed mt-6"
+                >
+                  Descubre cómo podrás enviar y recibir dinero al instante desde <strong
+                    class="font-bold">Rayo Pago</strong
+                  >.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Tarjeta Black Mastercard -->
+        <div class="swiper-slide h-auto">
+          <div
+            class="w-full flex flex-col lg:grid lg:grid-cols-10 bg-gradient-green rounded-lg overflow-hidden min-h-[480px] lg:min-h-[400px] lg:gap-x-12"
+          >
+            <!-- Card Image Container (order-1 on mobile, order-1 on desktop) -->
+            <div
+              class="w-full h-[240px] lg:h-full shrink-0 flex flex-col justify-center items-center lg:items-start p-8 lg:py-12 lg:pl-12 lg:pr-0 relative order-1 lg:order-1 lg:col-span-4"
+            >
+              <div
+                class="w-full flex items-center justify-center lg:justify-start"
+              >
+                <Image
+                  src={tarjetaImage}
+                  alt="Tarjeta MMG Bank Black Mastercard"
+                  class="w-[85%] sm:w-[80%] lg:w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[420px] h-auto object-contain mx-auto lg:mx-0 select-none transition-transform"
+                />
+              </div>
+            </div>
+            <!-- Content Container (order-2 on mobile, order-2 on desktop) -->
+            <div
+              class="w-full flex-1 lg:h-full p-8 lg:py-12 lg:pl-0 lg:pr-12 flex flex-col justify-start lg:justify-center order-2 lg:order-2 text-white lg:col-span-6"
+            >
+              <div class="max-w-full lg:max-w-none">
+                <h3 class="font-bornia font-light leading-none tracking-tight">
+                  <span
+                    class="text-light-green! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >Su método de pago
+                  </span>
+                  <span
+                    class="text-white! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >más personalizado, seguro y exclusivo.</span
+                  >
+                </h3>
+                <p class="text-p-small text-white! leading-relaxed mt-4">
+                  Disfrute de libertad financiera con nuestras tarjetas
+                  corporativas y personales. Obtenga una tasa del 11%, acumule
+                  puntos y sume beneficios Mastercard.
+                </p>
+                <p class="text-[11px]! text-white! leading-normal mt-4">
+                  Conozca todos los beneficios contactando a su Oficial de
+                  Relación o a través de <a
+                    href="mailto:account@mmgbank.com"
+                    class="underline hover:text-white transition-colors"
+                    >account@mmgbank.com</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5: Asesoría Financiera (Building) -->
+        <div class="swiper-slide h-auto">
+          <div
+            class="w-full flex flex-col lg:grid lg:grid-cols-12 bg-primary rounded-lg overflow-hidden min-h-[480px] lg:min-h-[400px]"
+          >
+            <!-- Content Container (order-2 on mobile, order-2 on desktop) -->
+            <div
+              class="w-full flex-1 lg:h-full p-8 lg:p-12 flex flex-col justify-start lg:justify-center order-2 lg:order-2 text-white bg-primary lg:col-span-6"
+            >
+              <div class="max-w-full lg:max-w-none">
+                <h3 class="font-bornia font-light leading-none tracking-tight">
+                  <span
+                    class="text-darker-green! font-normal inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >Brindamos asesoría
+                  </span>
+                  <span
+                    class="text-darker-green! font-bold inline lg:block leading-tight! text-[1.6rem]! sm:text-[2rem]! md:text-[2.4rem]! lg:text-[2.8rem]!"
+                    >financiera y estratégica</span
+                  >
+                </h3>
+                <p class="text-p text-white! leading-relaxed mt-6">
+                  Impulse su futuro financiero con nuestro <strong
+                    class="font-bold text-white!"
+                    >ecosistema de soluciones</strong
+                  > en banca privada y corporativa, gestión de activos y banca de
+                  inversión. Conectamos su capital con las mejores oportunidades globales
+                  a través de una asesoría experta y a su medida.
+                </p>
+              </div>
+            </div>
+            <!-- Building Image Container (order-1 on mobile, order-1 on desktop) -->
+            <div
+              class="w-full h-[240px] lg:h-full shrink-0 relative overflow-hidden order-1 lg:order-1 lg:col-span-6"
+            >
+              <Image
+                src={mmgBuilding}
+                alt="Edificio corporativo de MMG Bank con vista al mar"
+                class="w-full h-full object-cover absolute inset-0"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom lines-based pagination indicator container -->
+    <div class="banners-pagination"></div>
+  </div>
+</section>
+
+<style>
+  /* Swiper slide stretching */
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  /* Custom Premium Lines Pagination */
+  .banners-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3rem; /* Matches the mt-12 distance of the testimonials slider's arrows */
+    position: relative;
+    z-index: 10;
+  }
+
+  :global(.banners-pagination .swiper-pagination-bullet) {
+    width: 24px;
+    height: 3px;
+    background-color: rgba(18, 71, 52, 0.25) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+
+  :global(.banners-pagination .swiper-pagination-bullet-active) {
+    width: 48px;
+    background-color: var(--color-primary) !important;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay, Pagination } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/autoplay";
+  import "swiper/css/pagination";
+
+  // Initialize Swiper on page load
+  const swiperEl = document.querySelector(".banners-swiper");
+
+  if (swiperEl) {
+    const swiper = new Swiper(".banners-swiper", {
+      modules: [Autoplay, Pagination],
+      loop: false,
+      rewind: true,
+      speed: 800,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".banners-pagination",
+        type: "bullets",
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 24,
+    });
+  }
+</script>

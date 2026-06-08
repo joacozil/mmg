@@ -2,16 +2,23 @@
 interface Props {
   href: string;
   color?: "primary" | "black" | "white";
+  lg?: boolean;
   class?: string;
   [key: string]: any; // Allow passing extra HTML anchor attributes
 }
 
-const { href, color = "primary", class: className, ...rest } = Astro.props;
+const {
+  href,
+  color = "primary",
+  lg = false,
+  class: className,
+  ...rest
+} = Astro.props;
 
 const colorClasses = {
   primary: "text-primary",
-  black: "text-black hover:text-primary",
-  white: "text-white hover:text-primary",
+  black: "text-black ",
+  white: "text-white ",
 };
 
 const activeColorClass = colorClasses[color] || colorClasses.primary;
@@ -20,7 +27,8 @@ const activeColorClass = colorClasses[color] || colorClasses.primary;
 <a
   href={href}
   class:list={[
-    "link-more text-btn inline-flex items-center gap-1 uppercase transition-colors duration-200",
+    "link-more inline-flex items-center gap-1 uppercase transition-colors duration-200",
+    lg ? "link-more--large" : "text-btn",
     activeColorClass,
     className,
   ]}
@@ -33,6 +41,14 @@ const activeColorClass = colorClasses[color] || colorClasses.primary;
   .link-more {
     position: relative;
     padding-bottom: 4px;
+  }
+
+  .link-more.link-more--large {
+    font-size: var(--fs-p-large);
+    font-weight: 600;
+    line-height: var(--lh-btn);
+    letter-spacing: var(--ls-btn);
+    padding-bottom: 6px;
   }
 
   .link-more::after {

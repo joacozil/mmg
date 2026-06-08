@@ -26,8 +26,89 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     // Make sure ScrollTrigger is registered and we're on the client
     if (typeof window === 'undefined') return;
 
-    const headerEl = document.querySelector('.main-header');
+    const headerEl = document.querySelector('.main-header') as HTMLElement | null;
     const mainImg = mainImageRef.current?.querySelector('img');
+
+    // Detect if the user has reloaded the page while scrolled past the hero.
+    // If so, skip the entrance animation entirely to avoid the flash & layout jump.
+    const heroBottom = galleryWrapperRef.current?.getBoundingClientRect().bottom ?? Infinity;
+    const isScrolledPastHero = heroBottom <= 0;
+
+    // ---------- Helper: create the scroll-scrub timeline ----------
+    const createScrollTimeline = () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: galleryWrapperRef.current,
+          pin: true,
+          start: 'top top',
+          end: '+=150%',
+          scrub: 1,
+          onLeave: () => {
+            document.querySelector('.main-header')?.classList.add('is-sticky');
+          },
+          onEnterBack: () => {
+            document.querySelector('.main-header')?.classList.remove('is-sticky');
+          }
+        }
+      });
+
+      // 1. Header slides up out of view
+      tl.to(headerEl, { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power1.inOut' }, 0);
+
+      // 2. Text overlay fades out and moves slightly up
+      tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
+
+      // 3. Middle image shrinks
+      tl.to(mainImageRef.current, { width: '56%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
+
+      // 4. Add gap to gallery container
+      tl.to(galleryContainerRef.current, { gap: '1.5rem', duration: 1.5, ease: 'power2.inOut' }, 0);
+
+      // 5. Left and Right images slide in and expand
+      tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+      tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+    };
+
+    // =====================================================================
+    // PATH A: Already scrolled past the hero – skip entrance, go straight
+    //         to the sticky header and scroll timeline.
+    // =====================================================================
+    if (isScrolledPastHero) {
+      // Header should be sticky immediately – no animation, no flash
+      headerEl?.classList.add('is-sticky');
+
+      // Hero elements can stay at their natural / final state (no need to
+      // animate them since they are off-screen). Set side images to their
+      // initial scroll positions so the scroll timeline math is correct.
+      gsap.set(leftImageRef.current, { xPercent: -50 });
+      gsap.set(rightImageRef.current, { xPercent: 50 });
+
+      createScrollTimeline();
+
+      // Restore exact scroll position from sessionStorage.
+      // The saved value comes from a page that already had the pin spacer,
+      // and we just recreated the pin spacer above, so the position is exact.
+      try {
+        const saved = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
+        if (saved > 0) {
+          // Force GSAP to finish all internal position calculations first
+          ScrollTrigger.refresh();
+          window.scrollTo(0, saved);
+
+          // Fallback: GSAP may schedule deferred recalculations that overwrite
+          // our scrollTo. Catch those by re-applying in the next frame.
+          requestAnimationFrame(() => {
+            window.scrollTo(0, saved);
+            sessionStorage.removeItem('__mmg_scrollY');
+          });
+        }
+      } catch(e) { /* ignore */ }
+      return;
+    }
+
+    // =====================================================================
+    // PATH B: At the top of the page – run the full entrance animation
+    // =====================================================================
 
     // 1. Set initial hidden states immediately to avoid Flash of Unstyled Content (FOUC)
     gsap.set(headerEl, { y: -100, opacity: 0 });
@@ -73,38 +154,11 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       gsap.set(leftImageRef.current, { xPercent: -50 });
       gsap.set(rightImageRef.current, { xPercent: 50 });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryWrapperRef.current,
-          pin: true,
-          start: 'top top',
-          end: '+=150%',
-          scrub: 1,
-          onLeave: () => {
-            document.querySelector('.main-header')?.classList.add('is-sticky');
-          },
-          onEnterBack: () => {
-            document.querySelector('.main-header')?.classList.remove('is-sticky');
-          }
-        }
-      });
-
-      // 1. Header slides up out of view
-      tl.to(headerEl, { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power1.inOut' }, 0);
-
-      // 2. Text overlay fades out and moves slightly up
-      tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
-
-      // 3. Middle image shrinks
-      tl.to(mainImageRef.current, { width: '56%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
-
-      // 4. Add gap to gallery container
-      tl.to(galleryContainerRef.current, { gap: '1.5rem', duration: 1.5, ease: 'power2.inOut' }, 0);
-
-      // 5. Left and Right images slide in and expand
-      tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
-      tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+      createScrollTimeline();
     });
+
+    // Clear any saved scroll – we're at the top doing the entrance animation
+    try { sessionStorage.removeItem('__mmg_scrollY'); } catch(e) { /* ignore */ }
 
   }, { scope: containerRef });
 

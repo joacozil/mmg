@@ -22,8 +22,26 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<script is:inline>
+			// Disable browser scroll restoration – GSAP's pin spacer changes
+			// document height, making the browser's restored position wrong.
+			// We handle restoration manually after GSAP sets up.
+			if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+			window.addEventListener('beforeunload', function() {
+				try { sessionStorage.setItem('__mmg_scrollY', String(window.scrollY)); } catch(e) {}
+			});
+		</script>
 	</head>
 	<body>
 		<slot />
+		<script is:inline>
+			// Restore scroll BEFORE React hydrates (inline scripts run before
+			// deferred/module scripts). This gets us to ~the right position
+			// so GSAP's isScrolledPastHero check works correctly.
+			try {
+				var __y = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
+				if (__y > 0) window.scrollTo(0, __y);
+			} catch(e) {}
+		</script>
 	</body>
 </html>
