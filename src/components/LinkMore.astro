@@ -9,7 +9,7 @@ interface Props {
 const { href, color = "primary", class: className, ...rest } = Astro.props;
 
 const colorClasses = {
-  primary: "text-primary hover:text-darker-green",
+  primary: "text-primary",
   black: "text-black hover:text-primary",
   white: "text-white hover:text-primary",
 };
@@ -20,11 +20,42 @@ const activeColorClass = colorClasses[color] || colorClasses.primary;
 <a
   href={href}
   class:list={[
-    "text-btn inline-flex items-center gap-1 uppercase transition-colors duration-200",
+    "link-more text-btn inline-flex items-center gap-1 uppercase transition-colors duration-200",
     activeColorClass,
-    className
+    className,
   ]}
   {...rest}
 >
   <slot>VER MÁS +</slot>
 </a>
+
+<style>
+  .link-more {
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .link-more::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .link-more:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .link-more::after {
+      transition: none;
+    }
+  }
+</style>

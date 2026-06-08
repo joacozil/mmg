@@ -1,5 +1,16 @@
 ---
-import GradientBg from "../GradientBg.astro";
+import HeroSection from "./HeroSection.tsx";
+
+import heroImg from "../../assets/img/hero.jpg";
+import leftImg from "../../assets/img/cropped-colleagues-generating-business-ideas 1.jpg";
+import rightImg from "../../assets/img/happy-couple-signing-contract-meeting-with-their-real-estate-agent-office 1.jpg";
 ---
 
-<GradientBg class="w-full h-dvh" />
+<div class="relative w-full">
+  <HeroSection
+    client:load
+    heroSrc={heroImg.src}
+    leftSrc={leftImg.src}
+    rightSrc={rightImg.src}
+  />
+</div>
