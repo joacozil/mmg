@@ -1,0 +1,257 @@
+---
+import { Image } from "astro:assets";
+import sostenibilidadSvg from "../../assets/img/sostenibilidad.svg";
+import LinkMore from "../LinkMore.astro";
+---
+
+<section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
+  <!-- Particle Animation Canvas -->
+  <canvas
+    id="particles-canvas"
+    class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+  <div class="container-custom relative z-10">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-stretch"
+    >
+      <!-- Left Text -->
+      <div
+        class="lg:col-span-4 flex flex-col justify-start items-start text-left h-full"
+      >
+        <p class="text-darker-green! uppercase font-bold mb-4">
+          Sostenibilidad
+        </p>
+        <p class="mb-6 lg:max-w-[440px]">
+          En MMG Bank promovemos una visión de largo plazo para la gestión de su
+          patrimonio, basándonos en decisiones responsables y estrategias
+          diseñadas para perdurar en el tiempo. Para nosotros, <strong
+            >la sostenibilidad es el equilibrio perfecto entre su crecimiento
+            financiero, nuestra responsabilidad y un firme compromiso con el
+            entorno que compartimos.</strong
+          >
+        </p>
+        <LinkMore href="#" />
+      </div>
+
+      <!-- Center Graphic -->
+      <div class="lg:col-span-4 flex flex-col items-center justify-center">
+        <div
+          class="w-full max-w-[440px] aspect-square relative flex items-center justify-center"
+        >
+          <Image
+            src={sostenibilidadSvg}
+            alt="Sostenibilidad"
+            class="w-full h-full object-contain"
+          />
+        </div>
+
+        <!-- Legend for Mobile/Tablet only -->
+        <div class="sostenibilidad-legend flex lg:hidden mt-6 w-full max-w-[440px]">
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Ambiental</span>
+            <span class="legend-swatch bg-light-green"></span>
+          </div>
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Social</span>
+            <span class="legend-swatch bg-primary"></span>
+          </div>
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Gobierno Corporativo</span>
+            <span class="legend-swatch bg-darker-green"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Text & Legend -->
+      <div
+        class="lg:col-span-4 flex flex-col justify-start h-full relative pt-8 lg:pt-0"
+      >
+        <!-- Invisible placeholder header to align right paragraph with left paragraph -->
+        <h2
+          class="mb-4 uppercase font-bold invisible hidden lg:block select-none"
+          aria-hidden="true"
+        >
+          Sostenibilidad
+        </h2>
+        <p class="lg:max-w-[440px] mb-6">
+          En MMG Bank <strong>reconocemos el rol fundamental que tienen las empresas como agentes
+            multiplicadores de la sostenibilidad</strong>, por lo cual realizamos iniciativas relacionadas a la naturaleza de
+          nuestros negocios que contribuyen a las Objetivos de Desarrollo
+          Sostenible en los ejes ASG.
+        </p>
+        <!-- Invisible placeholder link to balance height and center paragraph perfectly -->
+        <div class="invisible hidden lg:block select-none" aria-hidden="true">
+          <LinkMore href="#" />
+        </div>
+
+        <!-- Legend for Desktop only -->
+        <div class="sostenibilidad-legend hidden lg:flex mt-auto">
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Ambiental</span>
+            <span class="legend-swatch bg-light-green"></span>
+          </div>
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Social</span>
+            <span class="legend-swatch bg-primary"></span>
+          </div>
+          <div class="legend-item">
+            <span class="uppercase text-p-small">Gobierno Corporativo</span>
+            <span class="legend-swatch bg-darker-green"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sostenibilidad-legend {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+</style>
+
+<script>
+  // Smooth moving particles animation
+  const canvas = document.getElementById(
+    "particles-canvas",
+  ) as HTMLCanvasElement | null;
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+
+    if (ctx) {
+      let width: number, height: number;
+      let particles: Particle[] = [];
+
+      // Brand colors: green variants with opacity
+      const colors = [
+        "rgba(0, 172, 105, 0.4)", // #00AC69
+        "rgba(18, 71, 52, 0.25)", // #124734
+        "rgba(166, 226, 185, 0.5)", // #A6E2B9
+      ];
+
+      // Keep particle count reasonable for performance
+      const particleCount = 70;
+
+      class Particle {
+        x: number;
+        y: number;
+        size: number;
+        speedX: number;
+        speedY: number;
+        color: string;
+
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.size = Math.random() * 3 + 1;
+          this.speedX = (Math.random() - 0.5) * 0.4;
+          this.speedY = (Math.random() - 0.5) * 0.4 - 0.15; // General upward drift
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          // Wrap around edges smoothly
+          if (this.x < -10) this.x = width + 10;
+          if (this.x > width + 10) this.x = -10;
+          if (this.y < -10) this.y = height + 10;
+          if (this.y > height + 10) this.y = -10;
+        }
+
+        draw() {
+          if (!ctx) return;
+          ctx.beginPath();
+          ctx.fillStyle = this.color;
+          ctx.fillRect(
+            this.x - this.size,
+            this.y - this.size,
+            this.size * 2,
+            this.size * 2,
+          );
+        }
+      }
+
+      function init() {
+        resize();
+        createParticles();
+        requestAnimationFrame(animate);
+        window.addEventListener("resize", handleResize);
+      }
+
+      function resize() {
+        if (!canvas) return;
+        width = canvas.clientWidth;
+        height = canvas.clientHeight;
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx?.scale(dpr, dpr);
+      }
+
+      let resizeTimeout: ReturnType<typeof setTimeout>;
+      function handleResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          resize();
+          createParticles();
+        }, 200);
+      }
+
+      function createParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+      }
+
+      function animate() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+          particles[i].update();
+          particles[i].draw();
+
+          // Connect nearby particles for a constellation effect
+          for (let j = i; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 120) {
+              ctx.beginPath();
+              // Fade out line as distance increases
+              ctx.strokeStyle = `rgba(0, 172, 105, ${0.12 * (1 - distance / 120)})`;
+              ctx.lineWidth = 0.8;
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      init();
+    }
+  }
+</script>
