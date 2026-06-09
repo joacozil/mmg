@@ -345,7 +345,7 @@ import kuaraLogo from "../../assets/img/kuara.svg";
   import "swiper/css/pagination";
 
   // Initialize Swiper on page load
-  const swiperEl = document.querySelector(".banners-swiper");
+  const swiperEl = document.querySelector(".banners-swiper") as HTMLElement | null;
 
   if (swiperEl) {
     const swiper = new Swiper(".banners-swiper", {
@@ -365,5 +365,21 @@ import kuaraLogo from "../../assets/img/kuara.svg";
       slidesPerView: 1,
       spaceBetween: 24,
     });
+
+    // Pause autoplay initially
+    swiper.autoplay.stop();
+
+    // Use Intersection Observer to play only when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          swiper.autoplay.start();
+        } else {
+          swiper.autoplay.stop();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(swiperEl);
   }
 </script>

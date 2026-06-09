@@ -141,7 +141,7 @@ const teamMembers = [
   import "swiper/css/pagination";
 
   // Initialize Swiper on page load
-  const swiperEl = document.querySelector(".team-swiper");
+  const swiperEl = document.querySelector(".team-swiper") as HTMLElement | null;
 
   if (swiperEl) {
     const swiper = new Swiper(".team-swiper", {
@@ -166,5 +166,21 @@ const teamMembers = [
         },
       },
     });
+
+    // Pause autoplay initially
+    swiper.autoplay.stop();
+
+    // Use Intersection Observer to play only when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          swiper.autoplay.start();
+        } else {
+          swiper.autoplay.stop();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(swiperEl);
   }
 </script>

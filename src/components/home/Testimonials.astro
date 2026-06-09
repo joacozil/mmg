@@ -119,23 +119,43 @@ const testimonials = [
   import "swiper/css/navigation";
 
   // Initialize Swiper on component load
-  new Swiper(".testimonials-swiper", {
-    modules: [Autoplay, Navigation],
-    loop: false, // Not infinite loop
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    navigation: {
-      nextEl: ".swiper-next-btn",
-      prevEl: ".swiper-prev-btn",
-    },
-    slidesPerView: 1,
-    spaceBetween: 24,
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
+  const swiperEl = document.querySelector(".testimonials-swiper") as HTMLElement | null;
+
+  if (swiperEl) {
+    const swiper = new Swiper(".testimonials-swiper", {
+      modules: [Autoplay, Navigation],
+      loop: false, // Not infinite loop
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
       },
-    },
-  });
+      navigation: {
+        nextEl: ".swiper-next-btn",
+        prevEl: ".swiper-prev-btn",
+      },
+      slidesPerView: 1,
+      spaceBetween: 24,
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        },
+      },
+    });
+
+    // Pause autoplay initially
+    swiper.autoplay.stop();
+
+    // Use Intersection Observer to play only when visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          swiper.autoplay.start();
+        } else {
+          swiper.autoplay.stop();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(swiperEl);
+  }
 </script>
