@@ -12,18 +12,25 @@ const metrics = [
 ];
 ---
 
-<section class="w-full bg-light-green py-section-gap relative overflow-hidden">
+<section
+  data-stats-section
+  class="w-full bg-light-green py-section-gap relative overflow-hidden"
+>
   <!-- Absolute texture image in bottom-left -->
   <Image
     src={textureImage}
     alt="Textura de arquitectura de fondo"
+    data-stats-texture
     class="absolute bottom-0 left-0 w-[100px] sm:w-[150px] md:w-[200px] h-auto object-contain pointer-events-none z-0 select-none"
   />
 
   <div class="container-custom relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <!-- Left Column: Copy & Link -->
-      <div class="lg:col-span-5 flex flex-col justify-start lg:max-w-[480px]">
+      <div
+        data-stats-left
+        class="lg:col-span-5 flex flex-col justify-start lg:max-w-[480px]"
+      >
         <p class="font-bold">
           En MMG Bank somos tu socio estratégico en asesoría financiera,
           diseñados para acompañarte en tu evolución y expansión.
@@ -42,12 +49,23 @@ const metrics = [
       <div class="lg:col-span-7 w-full space-y-6 lg:pl-8">
         {
           metrics.map((metric) => (
-            <div class="relative pt-6 border-t border-white/40 flex flex-row justify-between items-center gap-4">
-              <span class="absolute top-[-5px] left-0 w-2 h-2 bg-white" />
-              <h3 class="font-light font-bornia whitespace-nowrap shrink-0">
+            <div
+              data-stat-row
+              class="relative pt-6 border-t border-white/40 flex flex-row justify-between items-center gap-4"
+            >
+              <span
+                data-stat-dot
+                class="absolute top-[-5px] left-0 w-2 h-2 bg-white"
+              />
+              <h3
+                data-stat-value={metric.value}
+                class="font-light font-bornia whitespace-nowrap shrink-0"
+              >
                 {metric.value}
               </h3>
-              <span class="font-bold text-right uppercase">{metric.label}</span>
+              <span data-stat-label class="font-bold text-right uppercase">
+                {metric.label}
+              </span>
             </div>
           ))
         }
@@ -55,3 +73,219 @@ const metrics = [
     </div>
   </div>
 </section>
+
+<style>
+  /* When JavaScript is running, we can hide the static border-top color and use the pseudo-element instead */
+  .js-stats-animated [data-stat-row] {
+    border-top-color: transparent !important;
+  }
+
+  [data-stat-row]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.4);
+    transform-origin: left center;
+    transform: scaleX(var(--border-scale, 0));
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  function parseMetricValue(value: string) {
+    const match = value.match(/^([^\d]*)([\d\.]+)(.*)$/);
+    if (match) {
+      const prefix = match[1] || "";
+      const numStr = match[2];
+      const suffix = match[3] || "";
+      const count = parseFloat(numStr);
+      const decimals = numStr.includes(".") ? numStr.split(".")[1].length : 0;
+      return { prefix, count, suffix, decimals };
+    }
+    return { prefix: "", count: 0, suffix: value, decimals: 0 };
+  }
+
+  const section = document.querySelector<HTMLElement>("[data-stats-section]");
+  if (section && !prefersReduced) {
+    // Add JS loaded indicator class to hide original static borders
+    section.classList.add("js-stats-animated");
+
+    const leftCol = section.querySelector<HTMLElement>("[data-stats-left]");
+    const texture = section.querySelector<HTMLElement>("[data-stats-texture]");
+    const statRows = section.querySelectorAll<HTMLElement>("[data-stat-row]");
+
+    // Set initial states
+    if (leftCol) {
+      gsap.set(leftCol, { x: -40, opacity: 0 });
+    }
+    if (texture) {
+      gsap.set(texture, { opacity: 0, y: 20 });
+    }
+
+    statRows.forEach((row) => {
+      const dot = row.querySelector<HTMLElement>("[data-stat-dot]");
+      const valueEl = row.querySelector<HTMLElement>("[data-stat-value]");
+      const label = row.querySelector<HTMLElement>("[data-stat-label]");
+
+      gsap.set(row, { "--border-scale": 0 });
+      if (dot) {
+        gsap.set(dot, { scale: 0, opacity: 0 });
+      }
+      if (valueEl) {
+        gsap.set(valueEl, { opacity: 0, y: 12 });
+      }
+      if (label) {
+        gsap.set(label, { opacity: 0, x: 16 });
+      }
+    });
+
+    const createTriggers = () => {
+      // Animate left column
+      if (leftCol) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 60%",
+          once: true,
+          onEnter: () => {
+            gsap.to(leftCol, {
+              x: 0,
+              opacity: 1,
+              duration: 0.9,
+              ease: "power3.out",
+            });
+            if (texture) {
+              gsap.to(texture, {
+                opacity: 1,
+                y: 0,
+                duration: 1.1,
+                ease: "power3.out",
+                delay: 0.2,
+              });
+            }
+          },
+        });
+      }
+
+      // Animate rows staggeredly when row comes into view
+      statRows.forEach((row, i) => {
+        const dot = row.querySelector<HTMLElement>("[data-stat-dot]");
+        const valueEl = row.querySelector<HTMLElement>("[data-stat-value]");
+        const label = row.querySelector<HTMLElement>("[data-stat-label]");
+
+        const rawValue = valueEl?.getAttribute("data-stat-value") || "";
+        const { prefix, count, suffix, decimals } = parseMetricValue(rawValue);
+        const rowDelay = i * 0.12;
+
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 88%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline({ delay: rowDelay });
+
+            // 1. Draw top border
+            tl.to(row, {
+              "--border-scale": 1,
+              duration: 0.55,
+              ease: "power2.out",
+            });
+
+            // 2. Pop dot in
+            if (dot) {
+              tl.to(
+                dot,
+                {
+                  scale: 1,
+                  opacity: 1,
+                  duration: 0.3,
+                  ease: "back.out(2)",
+                },
+                "-=0.3",
+              );
+            }
+
+            // 3. Slide and fade number + count up
+            if (valueEl) {
+              const counter = { val: 0 };
+              tl.to(
+                counter,
+                {
+                  val: count,
+                  duration: 1.4,
+                  ease: "power2.out",
+                  onUpdate() {
+                    const formattedNum =
+                      decimals > 0
+                        ? counter.val.toFixed(decimals)
+                        : Math.round(counter.val).toString();
+                    valueEl.textContent = `${prefix}${formattedNum}${suffix}`;
+                  },
+                  onComplete() {
+                    // Ensure exact string at the end
+                    valueEl.textContent = rawValue;
+                  },
+                },
+                "-=0.15",
+              );
+
+              tl.to(
+                valueEl,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.4,
+                  ease: "power3.out",
+                },
+                "<",
+              );
+            }
+
+            // 4. Slide and fade label
+            if (label) {
+              tl.to(
+                label,
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.5,
+                  ease: "power3.out",
+                },
+                "<0.1",
+              );
+            }
+          },
+        });
+      });
+
+      // Force ScrollTrigger to calculate correct trigger positions now that layout is stable
+      ScrollTrigger.refresh();
+    };
+
+    const initTriggers = () => {
+      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
+      requestAnimationFrame(() => {
+        setTimeout(createTriggers, 100);
+      });
+    };
+
+    // Initialize ScrollTriggers immediately if Hero is already loaded, otherwise wait
+    if ((window as any).heroScrollTriggerInitialized) {
+      initTriggers();
+    } else {
+      window.addEventListener("hero-scroll-trigger-init", initTriggers, {
+        once: true,
+      });
+    }
+  }
+</script>

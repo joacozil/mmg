@@ -42,13 +42,16 @@ const teamMembers = [
 
 <section
   id="team-section"
+  data-team-section
   class="pt-0 pb-section-gap bg-cream relative overflow-hidden"
 >
   <div class="container-custom mb-12 lg:mb-16">
-    <SplitRow
-      title="30 años contribuyendo al desarrollo sostenible y crecimiento de Panamá"
-      text="Trabajamos día a día con una visión clara: ser sus líderes de confianza en asesoría financiera en Panamá, con el respaldo de un reconocimiento local e internacional como la <strong>firma líder panameña</strong> en administración de activos."
-    />
+    <div data-team-header>
+      <SplitRow
+        title="30 años contribuyendo al desarrollo sostenible y crecimiento de Panamá"
+        text="Trabajamos día a día con una visión clara: ser sus líderes de confianza en asesoría financiera en Panamá, con el respaldo de un reconocimiento local e internacional como la <strong>firma líder panameña</strong> en administración de activos."
+      />
+    </div>
   </div>
 
   <div class="container-custom">
@@ -139,6 +142,12 @@ const teamMembers = [
   import "swiper/css";
   import "swiper/css/autoplay";
   import "swiper/css/pagination";
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Initialize Swiper on page load
   const swiperEl = document.querySelector(".team-swiper") as HTMLElement | null;
@@ -170,10 +179,15 @@ const teamMembers = [
     // Pause autoplay initially
     swiper.autoplay.stop();
 
-    // Use Intersection Observer to play only when visible
+    let animationDone = false;
+    if (prefersReduced) {
+      animationDone = true;
+    }
+
+    // Use Intersection Observer to play only when visible and animation is done
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && animationDone) {
           swiper.autoplay.start();
         } else {
           swiper.autoplay.stop();
@@ -182,5 +196,95 @@ const teamMembers = [
     }, { threshold: 0.1 });
 
     observer.observe(swiperEl);
+
+    // Setup animations if not prefersReduced
+    if (!prefersReduced) {
+      const section = document.querySelector<HTMLElement>("[data-team-section]");
+      const header = section?.querySelector<HTMLElement>("[data-team-header]");
+      const cards = section?.querySelectorAll<HTMLElement>(".team-card");
+      
+      if (header) {
+        gsap.set(header, { opacity: 0, y: 30 });
+      }
+      if (cards && cards.length > 0) {
+        gsap.set(cards, { opacity: 0, y: 40 });
+      }
+
+      const bullets = document.querySelectorAll(".team-pagination .swiper-pagination-bullet");
+      if (bullets.length > 0) {
+        gsap.set(bullets, { opacity: 0, y: 15 });
+      }
+
+      const createTriggers = () => {
+        if (section) {
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top 60%", // trigger at top 60% of viewport
+            once: true,
+            onEnter: () => {
+              const tl = gsap.timeline();
+
+              // 1. Header fade & rise
+              if (header) {
+                tl.to(header, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.9,
+                  ease: "power3.out",
+                }, 0);
+              }
+
+              // 2. Team cards stagger fade & rise
+              if (cards && cards.length > 0) {
+                tl.to(cards, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 1.0,
+                  stagger: 0.08,
+                  ease: "power3.out",
+                  onComplete: () => {
+                    animationDone = true;
+                    // If currently intersecting, start autoplay
+                    if (swiperEl.getBoundingClientRect().top < window.innerHeight && swiperEl.getBoundingClientRect().bottom > 0) {
+                      swiper.autoplay.start();
+                    }
+                  }
+                }, 0.15);
+              } else {
+                animationDone = true;
+              }
+
+              // 3. Pagination bullets stagger
+              const liveBullets = section.querySelectorAll(".team-pagination .swiper-pagination-bullet");
+              if (liveBullets.length > 0) {
+                tl.to(liveBullets, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.6,
+                  stagger: 0.08,
+                  ease: "power3.out",
+                }, "-=0.6");
+              }
+            }
+          });
+        }
+
+        ScrollTrigger.refresh();
+      };
+
+      const initTriggers = () => {
+        // Defer to allow React hydration/rendering and pin spacing layout to settle completely
+        requestAnimationFrame(() => {
+          setTimeout(createTriggers, 100);
+        });
+      };
+
+      // Initialize triggers after Hero is ready
+      if ((window as any).heroScrollTriggerInitialized) {
+        initTriggers();
+      } else {
+        window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
+      }
+    }
   }
 </script>

@@ -1,24 +1,165 @@
 ---
-import SplitRow from "../SplitRow.astro";
+
 ---
 
-<section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
+<section
+  data-phrase-section
+  class="w-full bg-cream pt-section-gap pb-0 overflow-hidden"
+>
   <div class="container-custom">
-    <SplitRow
-      title="“Desde el inicio nos propusimos crear un modelo de negocios diferente, donde la asesoría fuese el principal elemento de las actividades a desarrollar.”"
-      text="Nuestros servicios están diseñados pensando en usted y guiados por nuestros valores de integridad, compromiso y fraternidad. Impulsamos cada solución a través del trabajo en equipo, la solidaridad y la sostenibilidad, <strong>garantizándole un servicio de excelencia que no solo hace crecer su patrimonio, sino que también genera un impacto positivo en nuestro entorno.</strong>"
-    >
-      <div class="flex items-stretch gap-4 mt-8">
-        <div class="w-[5px] bg-primary shrink-0"></div>
-        <div class="flex flex-col justify-center">
-          <span class="block text-p-small! uppercase">
-            Presidente Ejecutivo de MMG Bank
-          </span>
-          <span class="block font-bold text-p-large! mt-1">
-            Jorge Enrique Morgan V.
-          </span>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+      <!-- Left Column: Title & Author info -->
+      <div class="lg:col-span-7 flex flex-col justify-start">
+        <h2 data-phrase-title class="text-primary! lg:max-w-[700px]">
+          “Desde el inicio nos propusimos crear un modelo de negocios diferente,
+          donde la asesoría fuese el principal elemento de las actividades a
+          desarrollar.”
+        </h2>
+
+        <div data-phrase-author class="flex items-stretch gap-4 mt-8">
+          <div class="w-[5px] bg-primary shrink-0"></div>
+          <div class="flex flex-col justify-center">
+            <span class="block text-p-small! uppercase">
+              Presidente Ejecutivo de MMG Bank
+            </span>
+            <span class="block font-bold text-p-large! mt-1">
+              Jorge Enrique Morgan V.
+            </span>
+          </div>
         </div>
       </div>
-    </SplitRow>
+
+      <!-- Right Column: Paragraph text -->
+      <div class="lg:col-span-5 flex items-start lg:justify-end w-full">
+        <p data-phrase-text class="lg:max-w-[400px] w-full">
+          Nuestros servicios están diseñados pensando en usted y guiados por
+          nuestros valores de integridad, compromiso y fraternidad. Impulsamos
+          cada solución a través del trabajo en equipo, la solidaridad y la
+          sostenibilidad, <strong
+            >garantizándole un servicio de excelencia que no solo hace crecer su
+            patrimonio, sino que también genera un impacto positivo en nuestro
+            entorno.</strong
+          >
+        </p>
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  :global(.phrase-word) {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    color: inherit !important;
+    line-height: inherit !important;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.querySelector<HTMLElement>("[data-phrase-section]");
+  if (section && !prefersReduced) {
+    const titleEl = section.querySelector<HTMLElement>("[data-phrase-title]");
+    const authorEl = section.querySelector<HTMLElement>("[data-phrase-author]");
+    const textEl = section.querySelector<HTMLElement>("[data-phrase-text]");
+
+    // Wrap each word in a span for word-by-word animation
+    let wordSpans: NodeListOf<HTMLSpanElement> | null = null;
+    if (titleEl) {
+      const originalText = titleEl.textContent?.trim() || "";
+      const words = originalText.split(/\s+/);
+      titleEl.innerHTML = words
+        .map((word) => `<span class="phrase-word inline-block">${word}</span>`)
+        .join(" ");
+      wordSpans = titleEl.querySelectorAll<HTMLSpanElement>(".phrase-word");
+    }
+
+    // Set initial hidden states immediately to avoid visual jump (FOUC)
+    if (wordSpans) {
+      gsap.set(wordSpans, { opacity: 0 });
+    }
+    if (authorEl) {
+      gsap.set(authorEl, { opacity: 0, y: 20 });
+    }
+    if (textEl) {
+      gsap.set(textEl, { opacity: 0, x: 30 });
+    }
+
+    const createTriggers = () => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 60%", // trigger at top 60% of viewport
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+
+          // 1. Stagger title words in (much slower, typed-out feel)
+          if (wordSpans && wordSpans.length > 0) {
+            tl.to(wordSpans, {
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: "power2.out",
+            });
+          }
+
+          // 2. Slide and fade the right text in (re-timed to match the slower title stagger)
+          if (textEl) {
+            tl.to(
+              textEl,
+              {
+                opacity: 1,
+                x: 0,
+                duration: 1.2,
+                ease: "power3.out",
+              },
+              0.4,
+            );
+          }
+
+          // 3. Slide and fade the author info in near the end of the title stagger
+          if (authorEl) {
+            tl.to(
+              authorEl,
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out",
+              },
+              "-=0.5",
+            );
+          }
+        },
+      });
+
+      // Recalculate ScrollTrigger coordinates now that Hero pin is set up
+      ScrollTrigger.refresh();
+    };
+
+    const initTriggers = () => {
+      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
+      requestAnimationFrame(() => {
+        setTimeout(createTriggers, 100);
+      });
+    };
+
+    // Initialize ScrollTriggers immediately if Hero is already loaded, otherwise wait
+    if ((window as any).heroScrollTriggerInitialized) {
+      initTriggers();
+    } else {
+      window.addEventListener("hero-scroll-trigger-init", initTriggers, {
+        once: true,
+      });
+    }
+  }
+</script>

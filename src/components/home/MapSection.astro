@@ -31,22 +31,28 @@ const legend = [
 ];
 ---
 
-<section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
+<section
+  data-map-section
+  class="w-full bg-cream pt-section-gap pb-0 overflow-hidden"
+>
   <!-- Header -->
   <div class="container-custom">
-    <SplitRow
-      title="Soluciones globales para clientes ambiciosos."
-      text="Nuestra propia sólida trayectoria nos permite operar en tres territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>, conectándote con mercados estratégicos para que tú y tu patrimonio sigan cruzando fronteras."
-      class="mb-12 lg:mb-16"
-    />
+    <div data-map-header>
+      <SplitRow
+        title="Soluciones globales para clientes ambiciosos."
+        text="Nuestra propia sólida trayectoria nos permite operar en tres territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>, conectándote con mercados estratégicos para que tú y tu patrimonio sigan cruzando fronteras."
+        class="mb-12 lg:mb-16"
+      />
+    </div>
 
     <!-- Map area -->
     <div class="map-wrapper">
       <!-- Base dotted map -->
-      <div class="map-svg" set:html={mapSvgRaw} />
+      <div data-map-svg class="map-svg" set:html={mapSvgRaw} />
 
       <!-- Pulse + labels overlay (same viewBox as the map SVG) -->
       <svg
+        data-map-overlay
         class="map-overlay"
         viewBox="0 0 1684 819"
         preserveAspectRatio="xMidYMid meet"
@@ -70,15 +76,18 @@ const legend = [
           locations.map((loc) => (
             <>
               <line
+                data-map-line
                 x1={loc.x}
                 y1={loc.y}
                 x2={loc.labelX}
                 y2={loc.y}
+                data-target-x2={loc.labelX}
                 stroke="var(--color-black)"
                 stroke-width="0.8"
                 opacity="0.4"
               />
               <text
+                data-map-label
                 x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
                 y={loc.y + 5}
                 text-anchor={loc.side === "left" ? "end" : "start"}
@@ -96,7 +105,7 @@ const legend = [
       <div class="map-legend">
         {
           legend.map((item) => (
-            <div class="legend-item">
+            <div data-legend-item class="legend-item">
               <span class="uppercase text-p-small!">{item.label}</span>
               <span
                 class="legend-swatch"
@@ -204,3 +213,198 @@ const legend = [
     }
   }
 </style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.querySelector<HTMLElement>("[data-map-section]");
+  if (section && !prefersReduced) {
+    const header = section.querySelector<HTMLElement>("[data-map-header]");
+    const mapSvg = section.querySelector<HTMLElement>("[data-map-svg]");
+    const overlay = section.querySelector<HTMLElement>("[data-map-overlay]");
+    const lines = section.querySelectorAll<SVGLineElement>("[data-map-line]");
+    const labels = section.querySelectorAll<SVGTextElement>("[data-map-label]");
+    const legendItems =
+      section.querySelectorAll<HTMLElement>("[data-legend-item]");
+
+    // Setup native SVG clipPath for robust browser compatibility
+    const svgEl = mapSvg?.querySelector("svg");
+    let clipCircle: SVGCircleElement | null = null;
+
+    if (svgEl) {
+      let defs = svgEl.querySelector("defs");
+      if (!defs) {
+        defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        svgEl.insertBefore(defs, svgEl.firstChild);
+      }
+
+      const clipPath = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "clipPath",
+      );
+      clipPath.setAttribute("id", "map-circle-clip");
+
+      clipCircle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle",
+      ) as SVGCircleElement;
+      clipCircle.setAttribute("cx", "445");
+      clipCircle.setAttribute("cy", "393");
+      clipCircle.setAttribute("r", "0");
+
+      clipPath.appendChild(clipCircle);
+      defs.appendChild(clipPath);
+      svgEl.setAttribute("clip-path", "url(#map-circle-clip)");
+    }
+
+    // Set initial hidden states immediately to avoid visual jump (FOUC)
+    if (header) {
+      gsap.set(header, { opacity: 0, y: 30 });
+    }
+    if (mapSvg) {
+      gsap.set(mapSvg, { opacity: 0 });
+    }
+    if (overlay) {
+      gsap.set(overlay, { opacity: 0 });
+    }
+    lines.forEach((line) => {
+      const x1 = line.getAttribute("x1");
+      if (x1) {
+        gsap.set(line, { attr: { x2: x1 }, opacity: 0 });
+      }
+    });
+    labels.forEach((label) => {
+      gsap.set(label, { opacity: 0 });
+    });
+    legendItems.forEach((item) => {
+      gsap.set(item, { opacity: 0, y: 15 });
+    });
+
+    const createTriggers = () => {
+      // 1. Trigger for Title/Header slide-up and fade-in
+      if (header) {
+        ScrollTrigger.create({
+          trigger: header,
+          start: "top 60%",
+          once: true,
+          onEnter: () => {
+            gsap.to(header, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+            });
+          },
+        });
+      }
+
+      // 2. Trigger for Map and overlay lines/text/legend
+      if (mapSvg) {
+        ScrollTrigger.create({
+          trigger: mapSvg,
+          start: "top 50%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+
+            // A. Fade in map and overlay, and expand its clipPath from Panamá coordinate
+            tl.addLabel("mapExpand");
+            tl.to(
+              [mapSvg, overlay].filter(Boolean),
+              {
+                opacity: 1,
+                duration: 0.6,
+              },
+              "mapExpand",
+            );
+
+            if (clipCircle) {
+              tl.to(
+                clipCircle,
+                {
+                  attr: { r: 1800 },
+                  duration: 1.8,
+                  ease: "power2.out",
+                },
+                "mapExpand",
+              );
+            }
+
+            // B. Draw location indicator lines and fade in text labels (staggered dynamically)
+            lines.forEach((line, index) => {
+              const targetX2 = line.getAttribute("data-target-x2");
+              const label = labels[index];
+              const delayOffset = index * 0.15;
+
+              if (targetX2) {
+                tl.to(
+                  line,
+                  {
+                    attr: { x2: targetX2 },
+                    opacity: 0.4,
+                    duration: 0.6,
+                    ease: "power2.out",
+                  },
+                  `mapExpand+=${0.4 + delayOffset}`,
+                );
+              }
+
+              if (label) {
+                tl.to(
+                  label,
+                  {
+                    opacity: 1,
+                    duration: 0.4,
+                    ease: "power2.out",
+                  },
+                  `mapExpand+=${0.8 + delayOffset}`,
+                );
+              }
+            });
+
+            // C. Stagger legend item cards in
+            if (legendItems.length > 0) {
+              tl.to(
+                legendItems,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.6,
+                  stagger: 0.1,
+                  ease: "power3.out",
+                },
+                "mapExpand+=1.0",
+              );
+            }
+          },
+        });
+      }
+
+      // Recalculate ScrollTrigger coordinates now that Hero pin is set up
+      ScrollTrigger.refresh();
+    };
+
+    const initTriggers = () => {
+      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
+      requestAnimationFrame(() => {
+        setTimeout(createTriggers, 100);
+      });
+    };
+
+    // Initialize ScrollTriggers immediately if Hero is already loaded, otherwise wait
+    if ((window as any).heroScrollTriggerInitialized) {
+      initTriggers();
+    } else {
+      window.addEventListener("hero-scroll-trigger-init", initTriggers, {
+        once: true,
+      });
+    }
+  }
+</script>

@@ -4,7 +4,7 @@ import sostenibilidadSvg from "../../assets/img/sostenibilidad.svg";
 import LinkMore from "../LinkMore.astro";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
+<section data-sostenibilidad-section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
   <!-- Particle Animation Canvas -->
   <canvas
     id="particles-canvas"
@@ -16,6 +16,7 @@ import LinkMore from "../LinkMore.astro";
     >
       <!-- Left Text -->
       <div
+        data-sostenibilidad-left
         class="lg:col-span-4 flex flex-col justify-start items-start text-left h-full"
       >
         <p class="text-darker-green! uppercase font-bold mb-4">
@@ -36,9 +37,11 @@ import LinkMore from "../LinkMore.astro";
       <!-- Center Graphic -->
       <div class="lg:col-span-4 flex flex-col items-center justify-center">
         <div
+          data-sostenibilidad-center
           class="w-full max-w-[440px] aspect-square relative flex items-center justify-center"
         >
           <Image
+            data-sostenibilidad-svg
             src={sostenibilidadSvg}
             alt="Sostenibilidad"
             class="w-full h-full object-contain"
@@ -46,7 +49,7 @@ import LinkMore from "../LinkMore.astro";
         </div>
 
         <!-- Legend for Mobile/Tablet only -->
-        <div class="sostenibilidad-legend flex lg:hidden mt-6 w-full max-w-[440px]">
+        <div data-sostenibilidad-legend-mobile class="sostenibilidad-legend flex lg:hidden mt-6 w-full max-w-[440px]">
           <div class="legend-item">
             <span class="uppercase text-p-small">Ambiental</span>
             <span class="legend-swatch bg-light-green"></span>
@@ -64,6 +67,7 @@ import LinkMore from "../LinkMore.astro";
 
       <!-- Right Text & Legend -->
       <div
+        data-sostenibilidad-right
         class="lg:col-span-4 flex flex-col justify-start h-full relative pt-8 lg:pt-0"
       >
         <!-- Invisible placeholder header to align right paragraph with left paragraph -->
@@ -85,7 +89,7 @@ import LinkMore from "../LinkMore.astro";
         </div>
 
         <!-- Legend for Desktop only -->
-        <div class="sostenibilidad-legend hidden lg:flex mt-auto">
+        <div data-sostenibilidad-legend-desktop class="sostenibilidad-legend hidden lg:flex mt-auto">
           <div class="legend-item">
             <span class="uppercase text-p-small">Ambiental</span>
             <span class="legend-swatch bg-light-green"></span>
@@ -127,6 +131,13 @@ import LinkMore from "../LinkMore.astro";
 </style>
 
 <script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   // Smooth moving particles animation
   const canvas = document.getElementById(
     "particles-canvas",
@@ -252,6 +263,109 @@ import LinkMore from "../LinkMore.astro";
       }
 
       init();
+    }
+  }
+
+  // Setup animations if not prefersReduced
+  const sSection = document.querySelector<HTMLElement>("[data-sostenibilidad-section]");
+  if (sSection && !prefersReduced) {
+    const leftText = sSection.querySelector<HTMLElement>("[data-sostenibilidad-left]");
+    const rightText = sSection.querySelector<HTMLElement>("[data-sostenibilidad-right]");
+    const svgEl = sSection.querySelector<HTMLElement>("[data-sostenibilidad-svg]");
+    const legendMobileItems = sSection.querySelectorAll("[data-sostenibilidad-legend-mobile] .legend-item");
+    const legendDesktopItems = sSection.querySelectorAll("[data-sostenibilidad-legend-desktop] .legend-item");
+
+    // Set initial hidden states immediately to avoid visual jump (FOUC)
+    if (leftText) {
+      gsap.set(leftText, { opacity: 0, x: -30 });
+    }
+    if (rightText) {
+      gsap.set(rightText, { opacity: 0, x: 30 });
+    }
+    if (svgEl) {
+      gsap.set(svgEl, {
+        opacity: 0,
+        scale: 0.3,
+        rotation: -90,
+        transformOrigin: "center center",
+        force3D: true,
+      });
+    }
+    if (legendMobileItems.length > 0) {
+      gsap.set(legendMobileItems, { opacity: 0, y: 15 });
+    }
+    if (legendDesktopItems.length > 0) {
+      gsap.set(legendDesktopItems, { opacity: 0, y: 15 });
+    }
+
+    const createTriggers = () => {
+      ScrollTrigger.create({
+        trigger: sSection,
+        start: "top 60%", // trigger at top 60% of viewport
+        once: true,
+        onEnter: () => {
+          const tl = gsap.timeline();
+
+          // 1. Text blocks fade and slide into place
+          const textElements = [leftText, rightText].filter(Boolean);
+          if (textElements.length > 0) {
+            tl.to(textElements, {
+              opacity: 1,
+              x: 0,
+              duration: 1.0,
+              ease: "power3.out",
+            }, 0);
+          }
+
+          // 2. Central SVG grow, spin, and fade-in
+          if (svgEl) {
+            tl.to(svgEl, {
+              opacity: 1,
+              scale: 1,
+              rotation: 0,
+              duration: 1.4,
+              ease: "power3.out",
+              onComplete: () => {
+                // Majestic slow idle rotation loop after entry completes
+                gsap.to(svgEl, {
+                  rotation: 360,
+                  duration: 60,
+                  repeat: -1,
+                  ease: "none",
+                });
+              }
+            }, 0.1);
+          }
+
+          // 3. Legend items stagger in
+          const allLegendItems = Array.from(legendMobileItems).concat(Array.from(legendDesktopItems));
+          if (allLegendItems.length > 0) {
+            tl.to(allLegendItems, {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power3.out",
+            }, 0.3);
+          }
+        }
+      });
+
+      ScrollTrigger.refresh();
+    };
+
+    const initTriggers = () => {
+      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
+      requestAnimationFrame(() => {
+        setTimeout(createTriggers, 100);
+      });
+    };
+
+    // Initialize triggers after Hero is ready
+    if ((window as any).heroScrollTriggerInitialized) {
+      initTriggers();
+    } else {
+      window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
     }
   }
 </script>

@@ -67,7 +67,12 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       // 5. Left and Right images slide in and expand
       tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
       tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+
+      // Signal that the hero scroll trigger has been initialized (and pin spacing created)
+      (window as any).heroScrollTriggerInitialized = true;
+      window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
     };
+
 
     // =====================================================================
     // PATH A: Already scrolled past the hero – skip entrance, go straight
@@ -102,7 +107,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
             sessionStorage.removeItem('__mmg_scrollY');
           });
         }
-      } catch(e) { /* ignore */ }
+      } catch (e) { /* ignore */ }
       return;
     }
 
@@ -158,7 +163,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     });
 
     // Clear any saved scroll – we're at the top doing the entrance animation
-    try { sessionStorage.removeItem('__mmg_scrollY'); } catch(e) { /* ignore */ }
+    try { sessionStorage.removeItem('__mmg_scrollY'); } catch (e) { /* ignore */ }
 
   }, { scope: containerRef });
 
