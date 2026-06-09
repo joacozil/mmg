@@ -1,0 +1,223 @@
+---
+// src/components/home/Contact.astro
+---
+
+<section
+  id="contact-section"
+  class="w-full bg-cream py-section-gap relative overflow-hidden"
+>
+  <div class="container-custom">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
+      <!-- Left Column: Title / Tagline -->
+      <div class="lg:col-span-6 flex flex-col justify-start">
+        <h2>
+          El camino hacia sus metas financieras se recorre mejor acompañado; <span
+            class="text-primary! text-h2!"
+            >co-creemos la estrategia ideal para su portafolio.</span
+          >
+        </h2>
+      </div>
+
+      <!-- Right Column: Contact Form -->
+      <form class="lg:col-span-6 flex flex-col gap-6 w-full" id="contact-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <!-- Left Form Fields Column -->
+          <div class="flex flex-col gap-5">
+            <div class="flex flex-col">
+              <label
+                for="nombre"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Nombre</label
+              >
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                required
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="empresa"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Empresa</label
+              >
+              <input
+                type="text"
+                id="empresa"
+                name="empresa"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                required
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="telefono"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Teléfono</label
+              >
+              <input
+                type="tel"
+                id="telefono"
+                name="telefono"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="email"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                required
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="tipo_consulta"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Tipo de consulta</label
+              >
+              <div class="relative w-full">
+                <select
+                  id="tipo_consulta"
+                  name="tipo_consulta"
+                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all appearance-none cursor-pointer"
+                  required
+                >
+                  <option value="" disabled selected
+                    >Seleccione una opción</option
+                  >
+                  <option value="Banca Privada">Banca Privada</option>
+                  <option value="Asset Management">Asset Management</option>
+                  <option value="Banca Corporativa">Banca Corporativa</option>
+                  <option value="Otros">Otros</option>
+                </select>
+                <div
+                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center text-primary"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Form Fields Column -->
+          <div class="flex flex-col gap-5 h-full">
+            <div class="flex flex-col">
+              <label
+                for="cargo"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Cargo de la empresa</label
+              >
+              <input
+                type="text"
+                id="cargo"
+                name="cargo"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+              />
+            </div>
+
+            <div class="flex flex-col">
+              <label
+                for="nuevo_cliente"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Es usted nuevo cliente?</label
+              >
+              <div class="relative w-full">
+                <select
+                  id="nuevo_cliente"
+                  name="nuevo_cliente"
+                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all appearance-none cursor-pointer"
+                  required
+                >
+                  <option value="" disabled selected
+                    >Seleccione una opción</option
+                  >
+                  <option value="Si">Sí</option>
+                  <option value="No">No</option>
+                </select>
+                <div
+                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center text-primary"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.5"
+                    stroke="currentColor"
+                    class="w-4 h-4"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col flex-1 min-h-[200px] md:min-h-0">
+              <label
+                for="mensaje"
+                class="text-p-small! font-bold uppercase text-primary mb-2"
+                >Mensaje</label
+              >
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all flex-1 resize-none min-h-[120px] md:min-h-[140px]"
+                required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="flex justify-start mt-2">
+          <button
+            type="submit"
+            class="bg-darker-green hover:bg-primary text-white text-btn uppercase px-8 py-4 rounded-sm transition-colors duration-300 cursor-pointer"
+          >
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Simple form submission handler for feedback/mocking
+  const form = document.getElementById(
+    "contact-form",
+  ) as HTMLFormElement | null;
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("¡Gracias! Su mensaje ha sido enviado exitosamente.");
+      form.reset();
+    });
+  }
+</script>

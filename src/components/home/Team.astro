@@ -1,0 +1,36 @@
+---
+import SplitRow from "../SplitRow.astro";
+import TeamSlider from "./TeamSlider.tsx";
+
+// Import images from src/assets/img/team
+import img1 from "../../assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral 2.jpg";
+import img2 from "../../assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-2 2.jpg";
+import img3 from "../../assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-3 2.jpg";
+import img4 from "../../assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-4 2.jpg";
+import img5 from "../../assets/img/team/Gemini_Generated_Image_28194f28194f2819 2.jpg";
+import img6 from "../../assets/img/team/Gemini_Generated_Image_asbb9basbb9basbb 2.jpg";
+import img7 from "../../assets/img/team/Gemini_Generated_Image_bl49h6bl49h6bl49 2.jpg";
+import img8 from "../../assets/img/team/Gemini_Generated_Image_kiawuxkiawuxkiaw 2.jpg";
+
+const teamMembers = [
+  { name: "Jorge Enrique Morgan V.", role: "Presidente Ejecutivo de MMG Bank", imageSrc: img1.src },
+  { name: "María Eugenia Espino", role: "VP Administración, Contabilidad y Operaciones", imageSrc: img2.src },
+  { name: "Carlos Eduardo Troetsch", role: "Vicepresidente Ejecutivo", imageSrc: img3.src },
+  { name: "Jorge Vallarino Ferrer", role: "VP Tesorería y Relaciones Institucionales", imageSrc: img4.src },
+  { name: "Maricarmen Sosa", role: "VP Banca de Inversión", imageSrc: img5.src },
+  { name: "Luis Navarro", role: "VP Gestión Patrimonial", imageSrc: img6.src },
+  { name: "Ana Isabel Domínguez", role: "VP Cumplimiento", imageSrc: img7.src },
+  { name: "Roberto Brenes", role: "Director General", imageSrc: img8.src },
+];
+---
+
+<section id="team-section" class="pt-12 lg:pt-16 pb-0 bg-cream relative z-20 overflow-hidden">
+  <div class="container-custom mb-12 lg:mb-16">
+    <SplitRow 
+      title="30 años contribuyendo al desarrollo sostenible y crecimiento de Panamá" 
+      text="Trabajamos día a día con una visión clara: ser sus líderes de confianza en asesoría financiera en Panamá, con el respaldo de un reconocimiento local e internacional como la <strong>firma líder panameña</strong> en administración de activos." 
+    />
+  </div>
+  
+  <TeamSlider client:load teamMembers={teamMembers} />
+</section>
