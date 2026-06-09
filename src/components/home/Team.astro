@@ -1,6 +1,6 @@
 ---
+import { Image } from "astro:assets";
 import SplitRow from "../SplitRow.astro";
-import TeamSlider from "./TeamSlider.tsx";
 
 // Import images from src/assets/img/team
 import img1 from "../../assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral 2.jpg";
@@ -13,24 +13,158 @@ import img7 from "../../assets/img/team/Gemini_Generated_Image_bl49h6bl49h6bl49 
 import img8 from "../../assets/img/team/Gemini_Generated_Image_kiawuxkiawuxkiaw 2.jpg";
 
 const teamMembers = [
-  { name: "Jorge Enrique Morgan V.", role: "Presidente Ejecutivo de MMG Bank", imageSrc: img1.src },
-  { name: "María Eugenia Espino", role: "VP Administración, Contabilidad y Operaciones", imageSrc: img2.src },
-  { name: "Carlos Eduardo Troetsch", role: "Vicepresidente Ejecutivo", imageSrc: img3.src },
-  { name: "Jorge Vallarino Ferrer", role: "VP Tesorería y Relaciones Institucionales", imageSrc: img4.src },
-  { name: "Maricarmen Sosa", role: "VP Banca de Inversión", imageSrc: img5.src },
-  { name: "Luis Navarro", role: "VP Gestión Patrimonial", imageSrc: img6.src },
-  { name: "Ana Isabel Domínguez", role: "VP Cumplimiento", imageSrc: img7.src },
-  { name: "Roberto Brenes", role: "Director General", imageSrc: img8.src },
+  {
+    name: "Jorge Enrique Morgan V.",
+    role: "Presidente Ejecutivo de MMG Bank",
+    imageSrc: img1,
+  },
+  {
+    name: "María Eugenia Espino",
+    role: "VP Administración, Contabilidad y Operaciones",
+    imageSrc: img2,
+  },
+  {
+    name: "Carlos Eduardo Troetsch",
+    role: "Vicepresidente Ejecutivo",
+    imageSrc: img3,
+  },
+  {
+    name: "Jorge Vallarino Ferrer",
+    role: "VP Tesorería y Relaciones Institucionales",
+    imageSrc: img4,
+  },
+  { name: "Maricarmen Sosa", role: "VP Banca de Inversión", imageSrc: img5 },
+  { name: "Luis Navarro", role: "VP Gestión Patrimonial", imageSrc: img6 },
+  { name: "Ana Isabel Domínguez", role: "VP Cumplimiento", imageSrc: img7 },
+  { name: "Roberto Brenes", role: "Director General", imageSrc: img8 },
 ];
 ---
 
-<section id="team-section" class="pt-12 lg:pt-16 pb-0 bg-cream relative z-20 overflow-hidden">
+<section
+  id="team-section"
+  class="pt-0 pb-section-gap bg-cream relative overflow-hidden"
+>
   <div class="container-custom mb-12 lg:mb-16">
-    <SplitRow 
-      title="30 años contribuyendo al desarrollo sostenible y crecimiento de Panamá" 
-      text="Trabajamos día a día con una visión clara: ser sus líderes de confianza en asesoría financiera en Panamá, con el respaldo de un reconocimiento local e internacional como la <strong>firma líder panameña</strong> en administración de activos." 
+    <SplitRow
+      title="30 años contribuyendo al desarrollo sostenible y crecimiento de Panamá"
+      text="Trabajamos día a día con una visión clara: ser sus líderes de confianza en asesoría financiera en Panamá, con el respaldo de un reconocimiento local e internacional como la <strong>firma líder panameña</strong> en administración de activos."
     />
   </div>
-  
-  <TeamSlider client:load teamMembers={teamMembers} />
+
+  <div class="container-custom">
+    <!-- Swiper container -->
+    <div class="swiper team-swiper overflow-visible!">
+      <div class="swiper-wrapper">
+        {
+          teamMembers.map((member) => (
+            <div class="swiper-slide team-card shrink-0 flex flex-col gap-4">
+              <div class="w-full aspect-square overflow-hidden rounded-md bg-light-green">
+                <Image
+                  src={member.imageSrc}
+                  alt={member.name}
+                  class="w-full h-full object-cover object-center"
+                />
+              </div>
+              <div class="flex flex-col justify-center">
+                <span class="block text-p-small! uppercase text-gray-500">
+                  {member.role}
+                </span>
+                <span class="block font-bold text-p-large! mt-1 text-primary">
+                  {member.name}
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <!-- Custom lines-based pagination indicator container -->
+    <div class="team-pagination"></div>
+  </div>
 </section>
+
+<style>
+  /* Swiper slide stretching */
+  .swiper-slide {
+    display: flex;
+    height: auto;
+  }
+
+  /* Responsive card widths since we use slidesPerView: "auto" */
+  .team-card {
+    width: 220px;
+  }
+  @media (min-width: 640px) {
+    .team-card {
+      width: 260px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .team-card {
+      width: 300px;
+    }
+  }
+
+  /* Custom Premium Lines Pagination */
+  .team-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  :global(.team-pagination .swiper-pagination-bullet) {
+    width: 24px;
+    height: 3px;
+    background-color: rgba(18, 71, 52, 0.25) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+
+  :global(.team-pagination .swiper-pagination-bullet-active) {
+    width: 48px;
+    background-color: var(--color-primary) !important;
+  }
+</style>
+
+<script>
+  import Swiper from "swiper";
+  import { Autoplay, Pagination } from "swiper/modules";
+  import "swiper/css";
+  import "swiper/css/autoplay";
+  import "swiper/css/pagination";
+
+  // Initialize Swiper on page load
+  const swiperEl = document.querySelector(".team-swiper");
+
+  if (swiperEl) {
+    const swiper = new Swiper(".team-swiper", {
+      modules: [Autoplay, Pagination],
+      loop: false,
+      rewind: true,
+      speed: 800,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".team-pagination",
+        type: "bullets",
+        clickable: true,
+      },
+      slidesPerView: "auto",
+      spaceBetween: 24,
+      breakpoints: {
+        1024: {
+          spaceBetween: 32,
+        },
+      },
+    });
+  }
+</script>
