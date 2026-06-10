@@ -180,7 +180,10 @@
               </div>
             </div>
 
-            <div data-form-field class="flex flex-col flex-1 min-h-[200px] lg:min-h-0">
+            <div
+              data-form-field
+              class="flex flex-col flex-1 min-h-[200px] lg:min-h-0"
+            >
               <label
                 for="mensaje"
                 class="text-p-small! font-bold uppercase text-primary mb-2"
@@ -199,7 +202,7 @@
         <div data-form-submit class="flex justify-start mt-2">
           <button
             type="submit"
-            class="bg-darker-green hover:bg-primary text-white text-btn uppercase px-8 py-4 rounded-sm transition-colors duration-300 cursor-pointer"
+            class="bg-primary text-white text-btn uppercase px-8 py-4 rounded-sm transition-colors duration-300 cursor-pointer"
           >
             Enviar
           </button>
@@ -215,7 +218,9 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
 
   // Simple form submission handler for feedback/mocking
   const form = document.getElementById(
@@ -254,7 +259,7 @@
               ease: "power3.out",
             });
           }
-        }
+        },
       });
 
       ScrollTrigger.refresh();
@@ -271,7 +276,9 @@
     if ((window as any).heroScrollTriggerInitialized) {
       initTriggers();
     } else {
-      window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
+      window.addEventListener("hero-scroll-trigger-init", initTriggers, {
+        once: true,
+      });
     }
   }
 </script>

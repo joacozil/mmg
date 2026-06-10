@@ -226,7 +226,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
             <img src={heroSrc} alt="Main Hero" className="absolute inset-0 w-full h-full object-cover" />
 
             {/* Subtle gradient overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
 
             {/* Text Content overlay */}
             <div ref={textContentRef} className="absolute bottom-8 left-8 right-8 md:bottom-16 md:left-16 md:right-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-8">

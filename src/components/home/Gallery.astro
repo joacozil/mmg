@@ -13,91 +13,131 @@ import imgForo from "../../assets/img/foro.jpg";
 >
   <div class="container-custom">
     <!-- Fallback Layout: Beautiful 3-column grid for No-JS and Reduced Motion -->
-    <div data-gallery-fallback-grid class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start w-full">
+    <div
+      data-gallery-fallback-grid
+      class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start w-full"
+    >
       <!-- Card 1 -->
       <div class="flex flex-col items-center text-center gap-4">
-        <div class="w-full aspect-[4/3] shadow-md rounded-sm overflow-hidden rotate-[-2deg]">
-          <Image 
-            src={imgAlianzas} 
-            alt="Alianzas estratégicas MMG Bank" 
+        <div
+          class="w-full aspect-4/3 shadow-md rounded-sm overflow-hidden -rotate-2"
+        >
+          <Image
+            src={imgAlianzas}
+            alt="Alianzas estratégicas MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
-        <p class="text-p-small! font-bold text-darker-green uppercase mt-2 max-w-[300px]">
-          ALIANZAS ESTRATÉGICAS NOS IMPULSAN A LOGRAR LOS OBJETIVOS DE DESARROLLO SOSTENIBLE.
-        </p>
+        <h2 class="text-primary! text-p-small! font-bold mt-2 max-w-[300px]">
+          Alianzas estratégicas nos impulsan a lograr los Objetivos de
+          Desarrollo Sostenible.
+        </h2>
       </div>
 
       <!-- Card 2 -->
       <div class="flex flex-col items-center text-center gap-4">
-        <div class="w-full aspect-[4/3] shadow-md rounded-sm overflow-hidden rotate-[3deg]">
-          <Image 
-            src={imgCartas} 
-            alt="Cartas de crédito MMG Bank" 
+        <div
+          class="w-full aspect-4/3 shadow-md rounded-sm overflow-hidden rotate-3"
+        >
+          <Image
+            src={imgCartas}
+            alt="Cartas de crédito MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
-        <p class="text-p-small! font-bold text-darker-green uppercase mt-2 max-w-[300px]">
-          COMPROMISO COMPARTIDO A TRAVÉS DE CARTAS Y ALIANZAS QUE GENERAN VALOR A LARGO PLAZO.
-        </p>
+        <h2 class="text-primary! text-p-small! font-bold mt-2 max-w-[300px]">
+          Compromiso compartido a través de cartas y alianzas que generan valor
+          a largo plazo.
+        </h2>
       </div>
 
       <!-- Card 3 -->
       <div class="flex flex-col items-center text-center gap-4">
-        <div class="w-full aspect-[4/3] shadow-md rounded-sm overflow-hidden rotate-[-1deg]">
-          <Image 
-            src={imgForo} 
-            alt="Foros y encuentros regionales MMG Bank" 
+        <div
+          class="w-full aspect-4/3 shadow-md rounded-sm overflow-hidden -rotate-1"
+        >
+          <Image
+            src={imgForo}
+            alt="Foros y encuentros regionales MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
-        <p class="text-p-small! font-bold text-darker-green uppercase mt-2 max-w-[300px]">
-          FOROS Y ENCUENTROS LÍDERES QUE IMPULSAN EL DIÁLOGO Y EL INTERCAMBIO DE IDEAS EN LA REGIÓN.
-        </p>
+        <h2 class="text-primary! text-p-small! font-bold mt-2 max-w-[300px]">
+          Foros y encuentros líderes que impulsan el diálogo y el intercambio de
+          ideas en la región.
+        </h2>
       </div>
     </div>
 
     <!-- Enhanced Layout: Pinned Stack Animation Container (enabled dynamically via JS) -->
-    <div data-gallery-stack-container class="hidden relative w-full flex-col justify-center items-center">
+    <div
+      data-gallery-stack-container
+      class="hidden relative w-full flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 xl:gap-20"
+    >
+      <!-- Captions Container -->
+      <div
+        class="gallery-captions-wrapper w-full lg:w-[48%] text-left relative min-h-[160px] sm:min-h-[130px] lg:min-h-[240px] flex items-center justify-start"
+      >
+        <h2
+          data-gallery-caption="1"
+          class="gallery-caption text-primary! absolute left-0 right-0 opacity-100"
+        >
+          Alianzas estratégicas nos impulsan a lograr los Objetivos de
+          Desarrollo Sostenible.
+        </h2>
+        <h2
+          data-gallery-caption="2"
+          class="gallery-caption text-primary! absolute left-0 right-0 opacity-0 pointer-events-none"
+        >
+          Compromiso compartido a través de cartas y alianzas que generan valor
+          a largo plazo.
+        </h2>
+        <h2
+          data-gallery-caption="3"
+          class="gallery-caption text-primary! absolute left-0 right-0 opacity-0 pointer-events-none"
+        >
+          Foros y encuentros líderes que impulsan el diálogo y el intercambio de
+          ideas en la región.
+        </h2>
+      </div>
+
       <!-- Photo stack container -->
-      <div class="gallery-cards-container relative w-[85vw] sm:w-[75vw] lg:w-full lg:max-w-[560px] aspect-[4/3] z-10">
+      <div
+        class="gallery-cards-container relative w-[85vw] sm:w-[65vw] lg:w-[45%] aspect-4/3 z-10 shrink-0 max-w-[500px] xl:max-w-[560px]"
+      >
         <!-- Card 3 (Bottom) -->
-        <div data-gallery-card="3" class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden">
-          <Image 
-            src={imgForo} 
-            alt="Foros y encuentros regionales MMG Bank" 
+        <div
+          data-gallery-card="3"
+          class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden"
+        >
+          <Image
+            src={imgForo}
+            alt="Foros y encuentros regionales MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
         <!-- Card 2 (Middle) -->
-        <div data-gallery-card="2" class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden">
-          <Image 
-            src={imgCartas} 
-            alt="Cartas de crédito MMG Bank" 
+        <div
+          data-gallery-card="2"
+          class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden"
+        >
+          <Image
+            src={imgCartas}
+            alt="Cartas de crédito MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
         <!-- Card 1 (Top) -->
-        <div data-gallery-card="1" class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden">
-          <Image 
-            src={imgAlianzas} 
-            alt="Alianzas estratégicas MMG Bank" 
+        <div
+          data-gallery-card="1"
+          class="gallery-card absolute inset-0 shadow-lg rounded-sm overflow-hidden"
+        >
+          <Image
+            src={imgAlianzas}
+            alt="Alianzas estratégicas MMG Bank"
             class="w-full h-full object-cover"
           />
         </div>
-      </div>
-
-      <!-- Captions Container -->
-      <div class="gallery-captions-wrapper w-full max-w-[650px] text-center mt-10 relative min-h-[60px] flex items-center justify-center">
-        <p data-gallery-caption="1" class="gallery-caption text-p font-bold text-darker-green uppercase absolute inset-x-0 mx-auto max-w-[520px] opacity-100">
-          ALIANZAS ESTRATÉGICAS NOS IMPULSAN A LOGRAR LOS OBJETIVOS DE DESARROLLO SOSTENIBLE.
-        </p>
-        <p data-gallery-caption="2" class="gallery-caption text-p font-bold text-darker-green uppercase absolute inset-x-0 mx-auto max-w-[520px] opacity-0 pointer-events-none">
-          COMPROMISO COMPARTIDO A TRAVÉS DE CARTAS Y ALIANZAS QUE GENERAN VALOR A LARGO PLAZO.
-        </p>
-        <p data-gallery-caption="3" class="gallery-caption text-p font-bold text-darker-green uppercase absolute inset-x-0 mx-auto max-w-[520px] opacity-0 pointer-events-none">
-          FOROS Y ENCUENTROS LÍDERES QUE IMPULSAN EL DIÁLOGO Y EL INTERCAMBIO DE IDEAS EN LA REGIÓN.
-        </p>
       </div>
     </div>
   </div>
@@ -118,7 +158,7 @@ import imgForo from "../../assets/img/foro.jpg";
   :global(.gallery-animated-active) [data-gallery-fallback-grid] {
     display: none !important;
   }
-  
+
   :global(.gallery-animated-active) [data-gallery-stack-container] {
     display: flex !important;
   }
@@ -131,8 +171,6 @@ import imgForo from "../../assets/img/foro.jpg";
   }
 
   .gallery-caption {
-    line-height: var(--lh-heading);
-    letter-spacing: 0.02em;
     will-change: transform, opacity;
   }
 </style>
@@ -143,30 +181,72 @@ import imgForo from "../../assets/img/foro.jpg";
 
   gsap.registerPlugin(ScrollTrigger);
 
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   const section = document.querySelector<HTMLElement>("[data-gallery-section]");
 
   // Only run animations if motion is allowed and DOM elements exist
   if (section && !prefersReduced) {
-    const fallbackGrid = section.querySelector<HTMLElement>("[data-gallery-fallback-grid]");
-    const stackContainer = section.querySelector<HTMLElement>("[data-gallery-stack-container]");
+    const fallbackGrid = section.querySelector<HTMLElement>(
+      "[data-gallery-fallback-grid]",
+    );
+    const stackContainer = section.querySelector<HTMLElement>(
+      "[data-gallery-stack-container]",
+    );
 
     const card1 = section.querySelector<HTMLElement>('[data-gallery-card="1"]');
     const card2 = section.querySelector<HTMLElement>('[data-gallery-card="2"]');
     const card3 = section.querySelector<HTMLElement>('[data-gallery-card="3"]');
 
-    const caption1 = section.querySelector<HTMLElement>('[data-gallery-caption="1"]');
-    const caption2 = section.querySelector<HTMLElement>('[data-gallery-caption="2"]');
-    const caption3 = section.querySelector<HTMLElement>('[data-gallery-caption="3"]');
+    const caption1 = section.querySelector<HTMLElement>(
+      '[data-gallery-caption="1"]',
+    );
+    const caption2 = section.querySelector<HTMLElement>(
+      '[data-gallery-caption="2"]',
+    );
+    const caption3 = section.querySelector<HTMLElement>(
+      '[data-gallery-caption="3"]',
+    );
 
-    if (fallbackGrid && stackContainer && card1 && card2 && card3 && caption1 && caption2 && caption3) {
+    if (
+      fallbackGrid &&
+      stackContainer &&
+      card1 &&
+      card2 &&
+      card3 &&
+      caption1 &&
+      caption2 &&
+      caption3
+    ) {
       // 1. Activate animated layout
       section.classList.add("gallery-animated-active");
 
       // 2. Setup initial animation states to prevent layout shifts
-      gsap.set(card1, { rotate: -5, scale: 1, y: 0, x: 0, opacity: 1, zIndex: 30 });
-      gsap.set(card2, { rotate: 4, scale: 0.96, y: 8, x: 8, opacity: 1, zIndex: 20 });
-      gsap.set(card3, { rotate: -2, scale: 0.92, y: 16, x: -8, opacity: 1, zIndex: 10 });
+      gsap.set(card1, {
+        rotate: -5,
+        scale: 1,
+        y: 0,
+        x: 0,
+        opacity: 1,
+        zIndex: 30,
+      });
+      gsap.set(card2, {
+        rotate: 4,
+        scale: 0.96,
+        y: 8,
+        x: 8,
+        opacity: 1,
+        zIndex: 20,
+      });
+      gsap.set(card3, {
+        rotate: -2,
+        scale: 0.92,
+        y: 16,
+        x: -8,
+        opacity: 1,
+        zIndex: 10,
+      });
 
       gsap.set(caption1, { opacity: 1, y: 0 });
       gsap.set(caption2, { opacity: 0, y: 15 });
@@ -182,92 +262,128 @@ import imgForo from "../../assets/img/foro.jpg";
             pin: true,
             scrub: true,
             anticipatePin: 1,
-          }
+          },
         });
 
         // --- TRANSITION 1: Card 1 slides away, Card 2 & 3 step forward ---
         // Caption 1 fades out
-        tl.to(caption1, {
-          opacity: 0,
-          y: -15,
-          duration: 0.4,
-          ease: "power2.in"
-        }, 0.3);
+        tl.to(
+          caption1,
+          {
+            opacity: 0,
+            y: -15,
+            duration: 0.4,
+            ease: "power2.in",
+          },
+          0.3,
+        );
 
         // Top card slides up and away
-        tl.to(card1, {
-          y: "-140%",
-          rotate: -15,
-          opacity: 0,
-          duration: 1.0,
-          ease: "power2.inOut"
-        }, 0.4);
+        tl.to(
+          card1,
+          {
+            y: "-140%",
+            rotate: -15,
+            opacity: 0,
+            duration: 1.0,
+            ease: "power2.inOut",
+          },
+          0.4,
+        );
 
         // Middle card moves to top position
-        tl.to(card2, {
-          rotate: -5,
-          scale: 1.0,
-          y: 0,
-          x: 0,
-          duration: 1.0,
-          ease: "power2.inOut"
-        }, 0.4);
+        tl.to(
+          card2,
+          {
+            rotate: -5,
+            scale: 1.0,
+            y: 0,
+            x: 0,
+            duration: 1.0,
+            ease: "power2.inOut",
+          },
+          0.4,
+        );
 
         // Bottom card moves to middle position
-        tl.to(card3, {
-          rotate: 4,
-          scale: 0.96,
-          y: 8,
-          x: 8,
-          duration: 1.0,
-          ease: "power2.inOut"
-        }, 0.4);
+        tl.to(
+          card3,
+          {
+            rotate: 4,
+            scale: 0.96,
+            y: 8,
+            x: 8,
+            duration: 1.0,
+            ease: "power2.inOut",
+          },
+          0.4,
+        );
 
         // Caption 2 fades in
-        tl.to(caption2, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out"
-        }, 0.9);
+        tl.to(
+          caption2,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          0.9,
+        );
 
         // --- DWELL STATE: Dwell on Card 2 from timeline index 1.5 to 2.3 ---
 
         // --- TRANSITION 2: Card 2 slides away, Card 3 steps forward ---
         // Caption 2 fades out
-        tl.to(caption2, {
-          opacity: 0,
-          y: -15,
-          duration: 0.4,
-          ease: "power2.in"
-        }, 2.3);
+        tl.to(
+          caption2,
+          {
+            opacity: 0,
+            y: -15,
+            duration: 0.4,
+            ease: "power2.in",
+          },
+          2.3,
+        );
 
         // Middle card (now on top) slides up and away
-        tl.to(card2, {
-          y: "-140%",
-          rotate: 15,
-          opacity: 0,
-          duration: 1.0,
-          ease: "power2.inOut"
-        }, 2.4);
+        tl.to(
+          card2,
+          {
+            y: "-140%",
+            rotate: 15,
+            opacity: 0,
+            duration: 1.0,
+            ease: "power2.inOut",
+          },
+          2.4,
+        );
 
         // Bottom card (now middle) moves to top position
-        tl.to(card3, {
-          rotate: -2,
-          scale: 1.0,
-          y: 0,
-          x: 0,
-          duration: 1.0,
-          ease: "power2.inOut"
-        }, 2.4);
+        tl.to(
+          card3,
+          {
+            rotate: -2,
+            scale: 1.0,
+            y: 0,
+            x: 0,
+            duration: 1.0,
+            ease: "power2.inOut",
+          },
+          2.4,
+        );
 
         // Caption 3 fades in
-        tl.to(caption3, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out"
-        }, 2.9);
+        tl.to(
+          caption3,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          2.9,
+        );
 
         // --- PADDING: Keep final card active until scroll finishes ---
         tl.to({}, { duration: 0.8 }, 3.5);
@@ -286,7 +402,9 @@ import imgForo from "../../assets/img/foro.jpg";
       if ((window as any).heroScrollTriggerInitialized) {
         initTriggers();
       } else {
-        window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
+        window.addEventListener("hero-scroll-trigger-init", initTriggers, {
+          once: true,
+        });
       }
     }
   }
