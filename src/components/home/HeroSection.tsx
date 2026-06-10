@@ -276,19 +276,22 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
             <img src={heroSrc} alt="Main Hero" className="absolute inset-0 w-full h-full object-cover" />
 
             {/* Subtle gradient overlay for better text readability */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-black/60 lg:from-black/80 lg:via-black/20 lg:to-transparent"></div>
 
             {/* Text Content overlay */}
-            <div ref={textContentRef} className="absolute bottom-8 left-8 right-8 md:bottom-16 md:left-16 md:right-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
+            <div ref={textContentRef} className="absolute inset-8 md:inset-12 lg:inset-auto lg:bottom-16 lg:left-16 lg:right-16 flex flex-col justify-between lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
               <div className="max-w-2xl">
-                <span className="hero-subtitle font-light text-white!">Desde Panamá hacia el mundo</span>
-                <h1 className="hero-title font-bold text-white mt-4 border-b border-white pb-6">
+                <span className="hero-subtitle font-light text-white! block">Desde Panamá hacia el mundo</span>
+                <h1 className="hero-title font-bold text-white mt-3 lg:mt-4 lg:border-b lg:border-white lg:pb-6">
                   Soluciones globales para clientes ambiciosos.
                 </h1>
               </div>
-              <a href="#contact" className="hero-btn bg-cream text-black px-8 py-3 rounded-full text-btn uppercase hover:bg-white transition-colors whitespace-nowrap">
-                Contactanos
-              </a>
+              <div className="w-full lg:w-auto flex flex-col lg:flex-row items-stretch lg:items-end gap-6">
+                <div className="w-full h-px bg-white/30 lg:hidden"></div>
+                <a href="#contact" className="hero-btn bg-cream text-black px-8 py-3 rounded-full text-btn uppercase hover:bg-white transition-colors text-center whitespace-nowrap self-start lg:self-auto">
+                  Contactanos
+                </a>
+              </div>
             </div>
           </div>
 
