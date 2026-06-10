@@ -44,64 +44,69 @@ const legend = [
         class="mb-12 lg:mb-16"
       />
     </div>
+  </div>
 
-    <!-- Map area -->
-    <div class="map-wrapper">
-      <!-- Base dotted map -->
-      <div data-map-svg class="map-svg" set:html={mapSvgRaw} />
+  <!-- Map area -->
+  <div class="map-wrapper">
+    <div class="map-container-zoom">
+      <div class="map-inner">
+        <!-- Base dotted map -->
+        <div data-map-svg class="map-svg" set:html={mapSvgRaw} />
 
-      <!-- Pulse + labels overlay (same viewBox as the map SVG) -->
-      <svg
-        data-map-overlay
-        class="map-overlay"
-        viewBox="0 0 1684 819"
-        preserveAspectRatio="xMidYMid meet"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <!-- Pulse rings -->
-        {
-          [1, 2, 3].map((i) => (
-            <circle
-              class={`pulse-ring pulse-ring-${i}`}
-              cx={pulseCenter.x}
-              cy={pulseCenter.y}
-              r="20"
-            />
-          ))
-        }
-
-        <!-- Label lines + text -->
-        {
-          locations.map((loc) => (
-            <>
-              <line
-                data-map-line
-                x1={loc.x}
-                y1={loc.y}
-                x2={loc.labelX}
-                y2={loc.y}
-                data-target-x2={loc.labelX}
-                stroke="var(--color-black)"
-                stroke-width="0.8"
-                opacity="0.4"
+        <!-- Pulse + labels overlay (same viewBox as the map SVG) -->
+        <svg
+          data-map-overlay
+          class="map-overlay"
+          viewBox="0 0 1684 819"
+          preserveAspectRatio="xMidYMid meet"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Pulse rings -->
+          {
+            [1, 2, 3].map((i) => (
+              <circle
+                class={`pulse-ring pulse-ring-${i}`}
+                cx={pulseCenter.x}
+                cy={pulseCenter.y}
+                r="20"
               />
-              <text
-                data-map-label
-                x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
-                y={loc.y + 5}
-                text-anchor={loc.side === "left" ? "end" : "start"}
-                font-size="var(--fs-p-large)"
-                fill="var(--color-black)"
-              >
-                {loc.name}
-              </text>
-            </>
-          ))
-        }
-      </svg>
+            ))
+          }
 
-      <!-- Legend -->
+          <!-- Label lines + text -->
+          {
+            locations.map((loc) => (
+              <>
+                <line
+                  data-map-line
+                  x1={loc.x}
+                  y1={loc.y}
+                  x2={loc.labelX}
+                  y2={loc.y}
+                  data-target-x2={loc.labelX}
+                  stroke="var(--color-black)"
+                  opacity="0.4"
+                />
+                <text
+                  data-map-label
+                  x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
+                  y={loc.y}
+                  alignment-baseline="middle"
+                  text-anchor={loc.side === "left" ? "end" : "start"}
+                  fill="var(--color-black)"
+                >
+                  {loc.name}
+                </text>
+              </>
+            ))
+          }
+        </svg>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="container-custom relative">
       <div class="map-legend">
         {
           legend.map((item) => (
@@ -119,12 +124,54 @@ const legend = [
   </div>
 </section>
 
-<style>
-  /* ── Map wrapper ─────────────────────────────── */
+<style>  /* ── Map wrapper ─────────────────────────────── */
   .map-wrapper {
     position: relative;
     width: 100%;
     margin-bottom: 5.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .map-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--element-padding);
+      padding-right: var(--element-padding);
+      max-width: 1400px;
+    }
+  }
+
+  /* ── Map zoom container ──────────────────────── */
+  .map-container-zoom {
+    position: relative;
+    width: 100%;
+  }
+
+  .map-inner {
+    position: relative;
+    width: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    .map-container-zoom {
+      height: auto;
+      overflow: hidden;
+    }
+    .map-inner {
+      width: 170%;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 639px) {
+    .map-container-zoom {
+      height: auto;
+      overflow: hidden;
+    }
+    .map-inner {
+      width: 200%;
+      transform: none;
+    }
   }
 
   /* Make the inlined SVG responsive */
@@ -176,7 +223,7 @@ const legend = [
   .map-legend {
     position: absolute;
     bottom: -4.5rem;
-    right: 2rem;
+    right: var(--element-padding);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -197,6 +244,33 @@ const legend = [
     box-sizing: border-box;
   }
 
+  /* ── Map Labels & Lines ───────────────────────── */
+  [data-map-label] {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  [data-map-line] {
+    stroke-width: 0.8px;
+  }
+
+  @media (max-width: 1023px) {
+    [data-map-label] {
+      font-size: 16px;
+    }
+    [data-map-line] {
+      stroke-width: 1.0px;
+    }
+  }
+
+  @media (max-width: 639px) {
+    [data-map-label] {
+      font-size: 26px;
+    }
+    [data-map-line] {
+      stroke-width: 1.4px;
+    }
+  }
+
   /* ── Responsive adjustments ──────────────────── */
   @media (max-width: 639px) {
     .map-wrapper {
@@ -205,11 +279,6 @@ const legend = [
 
     .map-legend {
       bottom: -3.5rem;
-      right: 1rem;
-    }
-
-    .label-text {
-      font-size: 14px;
     }
   }
 </style>

@@ -280,10 +280,10 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
             {/* Text Content overlay */}
             <div ref={textContentRef} className="absolute inset-8 md:inset-12 lg:inset-auto lg:bottom-16 lg:left-16 lg:right-16 flex flex-col justify-between lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
-              <div className="max-w-2xl">
-                <span className="hero-subtitle font-light text-white! block">Desde Panamá hacia el mundo</span>
+              <div className="max-w-3xl ">
+                <span className="hero-subtitle font-bold uppercase text-white! block">Desde Panamá hacia el mundo</span>
                 <h1 className="hero-title font-bold text-white mt-3 lg:mt-4 lg:border-b lg:border-white lg:pb-6">
-                  Soluciones globales para clientes ambiciosos.
+                  Potenciamos su crecimiento para asegurar un futuro sólido.
                 </h1>
               </div>
               <div className="w-full lg:w-auto flex flex-col lg:flex-row items-stretch lg:items-end gap-6">
