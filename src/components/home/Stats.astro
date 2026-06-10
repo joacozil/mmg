@@ -51,19 +51,28 @@ const metrics = [
           metrics.map((metric) => (
             <div
               data-stat-row
-              class="relative pt-6 border-t border-white/40 flex flex-row justify-between items-center gap-4"
+              class="relative pt-6 border-t border-white/40 flex flex-col items-start lg:flex-row lg:justify-between lg:items-center gap-2 lg:gap-4"
             >
               <span
                 data-stat-dot
                 class="absolute top-[-5px] left-0 w-2 h-2 bg-white"
               />
-              <h3
+              <span
                 data-stat-value={metric.value}
-                class="font-light font-bornia whitespace-nowrap shrink-0"
+                class="font-light font-bornia whitespace-nowrap shrink-0 text-h1! md:text-h2!"
+                set:html={
+                  metric.value.includes("USD")
+                    ? metric.value.replace(
+                        "USD",
+                        '<span class="text-[0.55em] font-normal ml-1 inline-block align-baseline">USD</span>',
+                      )
+                    : metric.value
+                }
+              />
+              <span
+                data-stat-label
+                class="font-bold text-left lg:text-right uppercase"
               >
-                {metric.value}
-              </h3>
-              <span data-stat-label class="font-bold text-right uppercase">
                 {metric.label}
               </span>
             </div>
@@ -91,6 +100,23 @@ const metrics = [
     transform-origin: left center;
     transform: scaleX(var(--border-scale, 0));
   }
+
+  [data-stat-value] {
+    font-size: 2.25rem !important;
+    line-height: 1 !important;
+  }
+
+  @media (min-width: 640px) {
+    [data-stat-value] {
+      font-size: 3rem !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    [data-stat-value] {
+      font-size: 2.75rem !important;
+    }
+  }
 </style>
 
 <script>
@@ -114,6 +140,17 @@ const metrics = [
       return { prefix, count, suffix, decimals };
     }
     return { prefix: "", count: 0, suffix: value, decimals: 0 };
+  }
+
+  function formatValueHTML(prefix: string, valStr: string, suffix: string) {
+    let htmlSuffix = suffix;
+    if (suffix.includes("USD")) {
+      htmlSuffix = suffix.replace(
+        "USD",
+        `<span class="text-[0.55em] font-normal ml-1 inline-block align-baseline">USD</span>`,
+      );
+    }
+    return `${prefix}${valStr}${htmlSuffix}`;
   }
 
   const section = document.querySelector<HTMLElement>("[data-stats-section]");
@@ -229,11 +266,19 @@ const metrics = [
                       decimals > 0
                         ? counter.val.toFixed(decimals)
                         : Math.round(counter.val).toString();
-                    valueEl.textContent = `${prefix}${formattedNum}${suffix}`;
+                    valueEl.innerHTML = formatValueHTML(
+                      prefix,
+                      formattedNum,
+                      suffix,
+                    );
                   },
                   onComplete() {
                     // Ensure exact string at the end
-                    valueEl.textContent = rawValue;
+                    valueEl.innerHTML = formatValueHTML(
+                      prefix,
+                      count.toFixed(decimals),
+                      suffix,
+                    );
                   },
                 },
                 "-=0.15",
