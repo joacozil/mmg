@@ -1,12 +1,12 @@
 <header
-  class="main-header fixed top-0 left-0 w-full py-6 md:py-7 flex justify-between items-center z-999"
+  class="main-header fixed top-0 left-0 w-full py-4 lg:py-7 flex justify-between items-center z-999"
 >
   <div
     class="container-custom mx-auto flex justify-between items-center w-full"
   >
     <a
       href="/"
-      class="logo-link shrink-0 text-white"
+      class="logo-link shrink-0 text-white z-1000 relative"
       aria-label="MMG Bank Home"
     >
       <svg
@@ -51,18 +51,53 @@
     </a>
     <nav class="hidden lg:flex gap-8 uppercase font-semibold text-white">
       <a href="#" class="transition-colors">Cliente</a>
-      <a href="#" class="transition-colors"
-        >Soluciones de Inversión</a
-      >
-      <a href="#" class="transition-colors"
-        >Servicios Bancarios</a
-      >
-      <a href="#" class="transition-colors"
-        >Consultoría y Asesoramiento</a
-      >
+      <a href="#" class="transition-colors">Soluciones de Inversión</a>
+      <a href="#" class="transition-colors">Servicios Bancarios</a>
+      <a href="#" class="transition-colors">Consultoría y Asesoramiento</a>
     </nav>
+    <!-- Hamburger Button -->
+    <button
+      id="menu-toggle"
+      class="flex flex-col gap-1.5 justify-center items-center w-8 h-8 lg:hidden z-1000 relative text-white transition-colors duration-300 focus:outline-none cursor-pointer"
+      aria-label="Toggle menu"
+    >
+      <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"
+      ></span>
+      <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+      <span class="w-6 h-0.5 bg-white transition-all duration-300 origin-center"
+      ></span>
+    </button>
   </div>
 </header>
+
+<!-- Mobile Menu Overlay (placed outside header to avoid transform container clipping) -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 bg-primary flex flex-col justify-center items-start px-8 sm:px-16 gap-8 text-white text-left transition-all duration-300 opacity-0 pointer-events-none z-998"
+>
+  <nav class="flex flex-col gap-6 uppercase font-semibold text-lg md:text-xl">
+    <a
+      href="#"
+      class="mobile-nav-link hover:text-white/80 transition-colors"
+      >Cliente</a
+    >
+    <a
+      href="#"
+      class="mobile-nav-link hover:text-white/80 transition-colors"
+      >Soluciones de Inversión</a
+    >
+    <a
+      href="#"
+      class="mobile-nav-link hover:text-white/80 transition-colors"
+      >Servicios Bancarios</a
+    >
+    <a
+      href="#"
+      class="mobile-nav-link hover:text-white/80 transition-colors"
+      >Consultoría y Asesoramiento</a
+    >
+  </nav>
+</div>
 
 <style>
   .main-header {
@@ -86,9 +121,40 @@
     transition: color 0.4s ease;
   }
 
+  /* Hamburger Animation */
+  #menu-toggle.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  #menu-toggle.is-active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+  }
+  #menu-toggle.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Hamburger color in sticky state */
+  .main-header.is-sticky #menu-toggle span {
+    background-color: var(--color-primary) !important;
+  }
+
+  /* When menu is active, ensure toggle button is white against dark overlay */
+  #menu-toggle.is-active span {
+    background-color: var(--color-white) !important;
+  }
+
+  /* When menu is open, modify header container styles */
+  .main-header.is-active-menu {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+  .main-header.is-active-menu .logo-link {
+    color: var(--color-white) !important;
+  }
+
   /* Sticky class styling */
   .main-header.is-sticky {
-    padding: 1rem 1.5rem !important;
+    padding: 1rem 0px !important;
     background-color: var(--color-white) !important;
     transform: translateY(0) !important;
     opacity: 1 !important;
@@ -114,4 +180,55 @@
   .main-header.is-sticky nav a:hover {
     color: var(--color-primary) !important;
   }
+
+  #mobile-menu.is-active {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
 </style>
+
+<script>
+  function initMenu() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mainHeader = document.querySelector(".main-header");
+    const body = document.body;
+
+    console.log("initMenu called:", { menuToggle, mobileMenu, mainHeader });
+
+    if (menuToggle && mobileMenu && mainHeader) {
+      // Toggle menu
+      menuToggle.addEventListener("click", () => {
+        console.log("menuToggle clicked");
+        const isActive = menuToggle.classList.toggle("is-active");
+        mobileMenu.classList.toggle("is-active", isActive);
+        mainHeader.classList.toggle("is-active-menu", isActive);
+
+        if (isActive) {
+          body.style.overflow = "hidden";
+        } else {
+          body.style.overflow = "";
+        }
+      });
+
+      // Close menu when clicking a link
+      const mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
+      mobileLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          console.log("mobileLink clicked");
+          menuToggle.classList.remove("is-active");
+          mobileMenu.classList.remove("is-active");
+          mainHeader.classList.remove("is-active-menu");
+          body.style.overflow = "";
+        });
+      });
+    }
+  }
+
+  // Self initialize menu
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMenu);
+  } else {
+    initMenu();
+  }
+</script>

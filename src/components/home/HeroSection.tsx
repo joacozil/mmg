@@ -35,186 +35,236 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     const isScrolledPastHero = heroBottom <= 0;
 
     let cleanupScrollListener: (() => void) | undefined;
+    const mm = gsap.matchMedia();
 
-    // ---------- Helper: create the scroll-scrub timeline ----------
-    const createScrollTimeline = () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: galleryWrapperRef.current,
-          pin: true,
-          start: 'top top',
-          end: '+=150%',
-          scrub: 1,
-          onLeave: () => {
-            document.querySelector('.main-header')?.classList.add('is-sticky');
-          },
-          onEnterBack: () => {
-            document.querySelector('.main-header')?.classList.remove('is-sticky');
+    // =====================================================================
+    // DESKTOP: width >= 1024px
+    // =====================================================================
+    mm.add("(min-width: 1024px)", () => {
+      let scrollTl: gsap.core.Timeline;
+
+      const createScrollTimeline = () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: galleryWrapperRef.current,
+            pin: true,
+            start: 'top top',
+            end: '+=150%',
+            scrub: 1,
+            onLeave: () => {
+              headerEl?.classList.add('is-sticky');
+            },
+            onEnterBack: () => {
+              headerEl?.classList.remove('is-sticky');
+            }
           }
-        }
+        });
+
+        // Text overlay fades out and moves slightly up
+        tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
+
+        // Middle image shrinks
+        tl.to(mainImageRef.current, { width: '56%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
+
+        // Add gap to gallery container
+        tl.to(galleryContainerRef.current, { gap: '1.5rem', duration: 1.5, ease: 'power2.inOut' }, 0);
+
+        // Left and Right images slide in and expand
+        tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+        tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+
+        // Signal that the hero scroll trigger has been initialized
+        (window as any).heroScrollTriggerInitialized = true;
+        window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
+
+        return tl;
+      };
+
+      if (isScrolledPastHero) {
+        headerEl?.classList.add('is-sticky');
+        gsap.set(leftImageRef.current, { xPercent: -50 });
+        gsap.set(rightImageRef.current, { xPercent: 50 });
+
+        createScrollTimeline();
+
+        try {
+          const saved = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
+          if (saved > 0) {
+            ScrollTrigger.refresh();
+            window.scrollTo(0, saved);
+            requestAnimationFrame(() => {
+              window.scrollTo(0, saved);
+              sessionStorage.removeItem('__mmg_scrollY');
+            });
+          }
+        } catch (e) { /* ignore */ }
+        return;
+      }
+
+      scrollTl = createScrollTimeline();
+      if (scrollTl.scrollTrigger) {
+        scrollTl.scrollTrigger.disable(false);
+      }
+
+      // Set initial hidden states
+      gsap.set(headerEl, { y: -100, opacity: 0 });
+      gsap.set(mainImageRef.current, { y: 30, opacity: 0 });
+      if (mainImg) {
+        gsap.set(mainImg, { scale: 1.1 });
+      }
+      gsap.set('.hero-subtitle', { y: 30, opacity: 0 });
+      gsap.set('.hero-title', { y: 40, opacity: 0 });
+      gsap.set('.hero-btn', { y: 30, opacity: 0 });
+
+      gsap.set(leftImageRef.current, { xPercent: -50 });
+      gsap.set(rightImageRef.current, { xPercent: 50 });
+
+      const entranceTl = gsap.timeline({
+        defaults: { ease: 'power3.out', duration: 1.2 }
       });
 
-      // 2. Text overlay fades out and moves slightly up
-      tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
-
-      // 3. Middle image shrinks
-      tl.to(mainImageRef.current, { width: '56%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
-
-      // 4. Add gap to gallery container
-      tl.to(galleryContainerRef.current, { gap: '1.5rem', duration: 1.5, ease: 'power2.inOut' }, 0);
-
-      // 5. Left and Right images slide in and expand
-      tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
-      tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
-
-      // Signal that the hero scroll trigger has been initialized (and pin spacing created)
-      (window as any).heroScrollTriggerInitialized = true;
-      window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
-
-      return tl;
-    };
-
-
-    // =====================================================================
-    // PATH A: Already scrolled past the hero – skip entrance, go straight
-    //         to the sticky header and scroll timeline.
-    // =====================================================================
-    if (isScrolledPastHero) {
-      // Header should be sticky immediately – no animation, no flash
-      headerEl?.classList.add('is-sticky');
-
-      // Hero elements can stay at their natural / final state (no need to
-      // animate them since they are off-screen). Set side images to their
-      // initial scroll positions so the scroll timeline math is correct.
-      gsap.set(leftImageRef.current, { xPercent: -50 });
-      gsap.set(rightImageRef.current, { xPercent: 50 });
-
-      createScrollTimeline();
-
-      // Restore exact scroll position from sessionStorage.
-      // The saved value comes from a page that already had the pin spacer,
-      // and we just recreated the pin spacer above, so the position is exact.
-      try {
-        const saved = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
-        if (saved > 0) {
-          // Force GSAP to finish all internal position calculations first
-          ScrollTrigger.refresh();
-          window.scrollTo(0, saved);
-
-          // Fallback: GSAP may schedule deferred recalculations that overwrite
-          // our scrollTo. Catch those by re-applying in the next frame.
-          requestAnimationFrame(() => {
-            window.scrollTo(0, saved);
-            sessionStorage.removeItem('__mmg_scrollY');
-          });
+      const handleScroll = () => {
+        if (window.scrollY > 0) {
+          if (cleanupScrollListener) cleanupScrollListener();
+          if (entranceTl.isActive()) {
+            entranceTl.progress(1);
+          }
         }
-      } catch (e) { /* ignore */ }
-      return;
-    }
+      };
+      window.addEventListener('scroll', handleScroll);
+      cleanupScrollListener = () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
 
-    // =====================================================================
-    // PATH B: At the top of the page – run the full entrance animation
-    // =====================================================================
+      entranceTl
+        .to(mainImageRef.current, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' })
+        .to(mainImg || [], { scale: 1, duration: 1.4, ease: 'power3.out' }, 0)
+        .to(headerEl, { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out' }, 0.4)
+        .to('.hero-subtitle', { y: 0, opacity: 1, duration: 0.8 }, 0.6)
+        .to('.hero-title', { y: 0, opacity: 1, duration: 0.8 }, 0.7)
+        .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8 }, 0.8);
 
-    // Create the scroll timeline immediately so that pin spacing is established in the layout.
-    // This prevents layout shifts and scrollbar size adjustments later.
-    // We do this BEFORE setting the initial hidden states so that GSAP/ScrollTrigger
-    // records the correct natural starting states (e.g. y: 0, opacity: 1 for headerEl).
-    const scrollTl = createScrollTimeline();
+      entranceTl.eventCallback('onComplete', () => {
+        if (cleanupScrollListener) {
+          cleanupScrollListener();
+          cleanupScrollListener = undefined;
+        }
 
-    // Disable ScrollTrigger interaction initially so it doesn't fight the entrance animation.
-    // Passing false keeps the pin spacer and layout structure in place.
-    if (scrollTl.scrollTrigger) {
-      scrollTl.scrollTrigger.disable(false);
-    }
+        gsap.set([mainImageRef.current, headerEl, '.hero-subtitle', '.hero-title', '.hero-btn'], { clearProps: 'all' });
+        if (mainImg) {
+          gsap.set(mainImg, { clearProps: 'all' });
+        }
 
-    // 1. Set initial hidden states immediately to avoid Flash of Unstyled Content (FOUC)
-    gsap.set(headerEl, { y: -100, opacity: 0 });
-    gsap.set(mainImageRef.current, { y: 30, opacity: 0 });
-    if (mainImg) {
-      gsap.set(mainImg, { scale: 1.1 });
-    }
-    gsap.set('.hero-subtitle', { y: 30, opacity: 0 });
-    gsap.set('.hero-title', { y: 40, opacity: 0 });
-    gsap.set('.hero-btn', { y: 30, opacity: 0 });
+        gsap.set(leftImageRef.current, { xPercent: -50 });
+        gsap.set(rightImageRef.current, { xPercent: 50 });
 
-    // Set initial states for side images that scroll in later
-    gsap.set(leftImageRef.current, { xPercent: -50 });
-    gsap.set(rightImageRef.current, { xPercent: 50 });
-
-    // 2. Coordinated Entrance Timeline
-    const entranceTl = gsap.timeline({
-      defaults: { ease: 'power3.out', duration: 1.2 }
+        if (scrollTl.scrollTrigger) {
+          scrollTl.scrollTrigger.enable();
+          scrollTl.scrollTrigger.refresh();
+        }
+      });
     });
 
-    // Scroll listener to skip the entrance animation if the user starts scrolling down early.
-    // This avoids teleporting the user back up when the animation completes.
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        if (cleanupScrollListener) cleanupScrollListener();
-        if (entranceTl.isActive()) {
-          entranceTl.progress(1);
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    cleanupScrollListener = () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    // =====================================================================
+    // TABLET & MOBILE: width < 1024px
+    // =====================================================================
+    mm.add("(max-width: 1023px)", () => {
+      let stickyTrigger: ScrollTrigger;
 
-    entranceTl
-      // A. Smooth slide-up and fade-in of main image + zoom out
-      .to(mainImageRef.current, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' })
-      .to(mainImg || [], { scale: 1, duration: 1.4, ease: 'power3.out' }, 0)
+      const createMobileScrollTrigger = () => {
+        return ScrollTrigger.create({
+          trigger: galleryWrapperRef.current,
+          start: 'top+=80px top',
+          onEnter: () => {
+            headerEl?.classList.add('is-sticky');
+          },
+          onLeaveBack: () => {
+            headerEl?.classList.remove('is-sticky');
+          }
+        });
+      };
 
-      // B. Slide down the header in sync
-      .to(headerEl, { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out' }, 0.4)
-
-      // C. Stagger text content elements
-      .to('.hero-subtitle', { y: 0, opacity: 1, duration: 0.8 }, 0.6)
-      .to('.hero-title', { y: 0, opacity: 1, duration: 0.8 }, 0.7)
-      .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8 }, 0.8);
-
-    // 3. Enable the scroll timeline and clean up once entrance completes
-    entranceTl.eventCallback('onComplete', () => {
-      if (cleanupScrollListener) {
-        cleanupScrollListener();
-        cleanupScrollListener = undefined;
+      if (isScrolledPastHero) {
+        headerEl?.classList.add('is-sticky');
+        (window as any).heroScrollTriggerInitialized = true;
+        window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
+        createMobileScrollTrigger();
+        return;
       }
 
-      // Clear properties so ScrollTrigger has clean baseline values to animate
-      gsap.set([mainImageRef.current, headerEl, '.hero-subtitle', '.hero-title', '.hero-btn'], { clearProps: 'all' });
+      stickyTrigger = createMobileScrollTrigger();
+      stickyTrigger.disable(false);
+
+      // Set initial hidden states
+      gsap.set(headerEl, { y: -100, opacity: 0 });
+      gsap.set(mainImageRef.current, { y: 30, opacity: 0 });
       if (mainImg) {
-        gsap.set(mainImg, { clearProps: 'all' });
+        gsap.set(mainImg, { scale: 1.1 });
       }
+      gsap.set('.hero-subtitle', { y: 30, opacity: 0 });
+      gsap.set('.hero-title', { y: 40, opacity: 0 });
+      gsap.set('.hero-btn', { y: 30, opacity: 0 });
 
-      // Re-initialize scroll-trigger target starting states
-      gsap.set(leftImageRef.current, { xPercent: -50 });
-      gsap.set(rightImageRef.current, { xPercent: 50 });
+      const entranceTl = gsap.timeline({
+        defaults: { ease: 'power3.out', duration: 1.2 }
+      });
 
-      // Enable ScrollTrigger now that entrance animation is complete
-      if (scrollTl.scrollTrigger) {
-        scrollTl.scrollTrigger.enable();
-        scrollTl.scrollTrigger.refresh();
-      }
+      const handleScroll = () => {
+        if (window.scrollY > 0) {
+          if (cleanupScrollListener) cleanupScrollListener();
+          if (entranceTl.isActive()) {
+            entranceTl.progress(1);
+          }
+        }
+      };
+      window.addEventListener('scroll', handleScroll);
+      cleanupScrollListener = () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+
+      entranceTl
+        .to(mainImageRef.current, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' })
+        .to(mainImg || [], { scale: 1, duration: 1.4, ease: 'power3.out' }, 0)
+        .to(headerEl, { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out' }, 0.4)
+        .to('.hero-subtitle', { y: 0, opacity: 1, duration: 0.8 }, 0.6)
+        .to('.hero-title', { y: 0, opacity: 1, duration: 0.8 }, 0.7)
+        .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8 }, 0.8);
+
+      entranceTl.eventCallback('onComplete', () => {
+        if (cleanupScrollListener) {
+          cleanupScrollListener();
+          cleanupScrollListener = undefined;
+        }
+
+        gsap.set([mainImageRef.current, headerEl, '.hero-subtitle', '.hero-title', '.hero-btn'], { clearProps: 'all' });
+        if (mainImg) {
+          gsap.set(mainImg, { clearProps: 'all' });
+        }
+
+        (window as any).heroScrollTriggerInitialized = true;
+        window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
+
+        stickyTrigger.enable();
+        stickyTrigger.refresh();
+      });
     });
 
-    // Clear any saved scroll – we're at the top doing the entrance animation
     try { sessionStorage.removeItem('__mmg_scrollY'); } catch (e) { /* ignore */ }
 
     return () => {
       if (cleanupScrollListener) {
         cleanupScrollListener();
       }
+      mm.revert();
     };
   }, { scope: containerRef });
 
   return (
     <div ref={containerRef} className="relative w-full">
       {/* Main Gallery Area (Pinned) */}
-      <div ref={galleryWrapperRef} className="gradient-bg relative w-full h-screen overflow-hidden flex flex-col p-4 md:p-6 lg:p-8 z-10">
+      <div ref={galleryWrapperRef} className="gradient-bg relative w-full h-screen overflow-hidden flex flex-col pt-16 pb-6 px-4 md:pt-16 md:pb-8 md:px-6 lg:p-8 z-10">
         <div className="gradient-bg__canvas" aria-hidden="true"></div>
-        <div ref={galleryContainerRef} className="relative z-10 flex items-center justify-center w-full h-full max-w-[1400px] mx-auto mt-8 md:mt-12">
+        <div ref={galleryContainerRef} className="relative z-10 flex items-center justify-center w-full h-full max-w-[1400px] mx-auto mt-0 lg:mt-12">
 
           {/* Left Side Image */}
           <div ref={leftImageRef} className="w-0 opacity-0 h-[80%] rounded-2xl overflow-hidden relative shrink-0 flex-none shadow-2xl">
