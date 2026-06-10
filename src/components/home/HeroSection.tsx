@@ -34,6 +34,8 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     const heroBottom = galleryWrapperRef.current?.getBoundingClientRect().bottom ?? Infinity;
     const isScrolledPastHero = heroBottom <= 0;
 
+    let cleanupScrollListener: (() => void) | undefined;
+
     // ---------- Helper: create the scroll-scrub timeline ----------
     const createScrollTimeline = () => {
       const tl = gsap.timeline({
@@ -52,9 +54,6 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
         }
       });
 
-      // 1. Header slides up out of view
-      tl.to(headerEl, { yPercent: -100, opacity: 0, duration: 0.5, ease: 'power1.inOut' }, 0);
-
       // 2. Text overlay fades out and moves slightly up
       tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
 
@@ -71,6 +70,8 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       // Signal that the hero scroll trigger has been initialized (and pin spacing created)
       (window as any).heroScrollTriggerInitialized = true;
       window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
+
+      return tl;
     };
 
 
@@ -115,6 +116,18 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     // PATH B: At the top of the page – run the full entrance animation
     // =====================================================================
 
+    // Create the scroll timeline immediately so that pin spacing is established in the layout.
+    // This prevents layout shifts and scrollbar size adjustments later.
+    // We do this BEFORE setting the initial hidden states so that GSAP/ScrollTrigger
+    // records the correct natural starting states (e.g. y: 0, opacity: 1 for headerEl).
+    const scrollTl = createScrollTimeline();
+
+    // Disable ScrollTrigger interaction initially so it doesn't fight the entrance animation.
+    // Passing false keeps the pin spacer and layout structure in place.
+    if (scrollTl.scrollTrigger) {
+      scrollTl.scrollTrigger.disable(false);
+    }
+
     // 1. Set initial hidden states immediately to avoid Flash of Unstyled Content (FOUC)
     gsap.set(headerEl, { y: -100, opacity: 0 });
     gsap.set(mainImageRef.current, { y: 30, opacity: 0 });
@@ -134,6 +147,21 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       defaults: { ease: 'power3.out', duration: 1.2 }
     });
 
+    // Scroll listener to skip the entrance animation if the user starts scrolling down early.
+    // This avoids teleporting the user back up when the animation completes.
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        if (cleanupScrollListener) cleanupScrollListener();
+        if (entranceTl.isActive()) {
+          entranceTl.progress(1);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    cleanupScrollListener = () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+
     entranceTl
       // A. Smooth slide-up and fade-in of main image + zoom out
       .to(mainImageRef.current, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' })
@@ -147,8 +175,13 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       .to('.hero-title', { y: 0, opacity: 1, duration: 0.8 }, 0.7)
       .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8 }, 0.8);
 
-    // 3. Instantiate scroll timeline only after entrance animation has finished
+    // 3. Enable the scroll timeline and clean up once entrance completes
     entranceTl.eventCallback('onComplete', () => {
+      if (cleanupScrollListener) {
+        cleanupScrollListener();
+        cleanupScrollListener = undefined;
+      }
+
       // Clear properties so ScrollTrigger has clean baseline values to animate
       gsap.set([mainImageRef.current, headerEl, '.hero-subtitle', '.hero-title', '.hero-btn'], { clearProps: 'all' });
       if (mainImg) {
@@ -159,12 +192,21 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
       gsap.set(leftImageRef.current, { xPercent: -50 });
       gsap.set(rightImageRef.current, { xPercent: 50 });
 
-      createScrollTimeline();
+      // Enable ScrollTrigger now that entrance animation is complete
+      if (scrollTl.scrollTrigger) {
+        scrollTl.scrollTrigger.enable();
+        scrollTl.scrollTrigger.refresh();
+      }
     });
 
     // Clear any saved scroll – we're at the top doing the entrance animation
     try { sessionStorage.removeItem('__mmg_scrollY'); } catch (e) { /* ignore */ }
 
+    return () => {
+      if (cleanupScrollListener) {
+        cleanupScrollListener();
+      }
+    };
   }, { scope: containerRef });
 
   return (
