@@ -234,42 +234,9 @@ const legend = [
     const legendItems =
       section.querySelectorAll<HTMLElement>("[data-legend-item]");
 
-    // Setup native SVG clipPath for robust browser compatibility
-    const svgEl = mapSvg?.querySelector("svg");
-    let clipCircle: SVGCircleElement | null = null;
-
-    if (svgEl) {
-      let defs = svgEl.querySelector("defs");
-      if (!defs) {
-        defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-        svgEl.insertBefore(defs, svgEl.firstChild);
-      }
-
-      const clipPath = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "clipPath",
-      );
-      clipPath.setAttribute("id", "map-circle-clip");
-
-      clipCircle = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "circle",
-      ) as SVGCircleElement;
-      clipCircle.setAttribute("cx", "445");
-      clipCircle.setAttribute("cy", "393");
-      clipCircle.setAttribute("r", "0");
-
-      clipPath.appendChild(clipCircle);
-      defs.appendChild(clipPath);
-      svgEl.setAttribute("clip-path", "url(#map-circle-clip)");
-    }
-
     // Set initial hidden states immediately to avoid visual jump (FOUC)
     if (header) {
       gsap.set(header, { opacity: 0, y: 30 });
-    }
-    if (mapSvg) {
-      gsap.set(mapSvg, { opacity: 0 });
     }
     if (overlay) {
       gsap.set(overlay, { opacity: 0 });
@@ -314,24 +281,14 @@ const legend = [
           onEnter: () => {
             const tl = gsap.timeline();
 
-            // A. Fade in map and overlay, and expand its clipPath from Panamá coordinate
+            // A. Fade in overlay (mapSvg is static and visible from start)
             tl.addLabel("mapExpand");
-            tl.to(
-              [mapSvg, overlay].filter(Boolean),
-              {
-                opacity: 1,
-                duration: 0.6,
-              },
-              "mapExpand",
-            );
-
-            if (clipCircle) {
+            if (overlay) {
               tl.to(
-                clipCircle,
+                overlay,
                 {
-                  attr: { r: 1800 },
-                  duration: 1.8,
-                  ease: "power2.out",
+                  opacity: 1,
+                  duration: 0.6,
                 },
                 "mapExpand",
               );

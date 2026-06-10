@@ -262,7 +262,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
   return (
     <div ref={containerRef} className="relative w-full">
       {/* Main Gallery Area (Pinned) */}
-      <div ref={galleryWrapperRef} className="gradient-bg relative w-full h-screen overflow-hidden flex flex-col pt-16 pb-6 px-4 md:pt-16 md:pb-8 md:px-6 lg:p-8 z-10">
+      <div ref={galleryWrapperRef} className="gradient-bg relative w-full h-dvh overflow-hidden flex flex-col pt-16 pb-6 px-4 md:pt-16 md:pb-8 md:px-6 lg:p-8 z-10">
         <div className="gradient-bg__canvas" aria-hidden="true"></div>
         <div ref={galleryContainerRef} className="relative z-10 flex items-center justify-center w-full h-full max-w-[1400px] mx-auto mt-0 lg:mt-12">
 

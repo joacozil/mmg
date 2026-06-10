@@ -317,24 +317,22 @@ import LinkMore from "../LinkMore.astro";
             }, 0);
           }
 
-          // 2. Central SVG grow, spin, and fade-in
+          // 2. Central SVG grow and fade-in
           if (svgEl) {
             tl.to(svgEl, {
               opacity: 1,
               scale: 1,
-              rotation: 0,
               duration: 1.4,
               ease: "power3.out",
-              onComplete: () => {
-                // Majestic slow idle rotation loop after entry completes
-                gsap.to(svgEl, {
-                  rotation: 360,
-                  duration: 60,
-                  repeat: -1,
-                  ease: "none",
-                });
-              }
             }, 0.1);
+
+            // Majestic slow idle rotation loop starts immediately (no halt at end of entry)
+            gsap.to(svgEl, {
+              rotation: "+=360",
+              duration: 60,
+              repeat: -1,
+              ease: "none",
+            });
           }
 
           // 3. Legend items stagger in
