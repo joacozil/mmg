@@ -120,17 +120,8 @@ const testimonials = [
   import "swiper/css/autoplay";
   import "swiper/css/navigation";
 
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   // Initialize Swiper on component load
   const swiperEl = document.querySelector<HTMLElement>(".testimonials-swiper");
-  const navPrev = document.querySelector<HTMLElement>("[data-testimonials-prev]");
-  const navNext = document.querySelector<HTMLElement>("[data-testimonials-next]");
   let swiper: Swiper | null = null;
 
   if (swiperEl) {
@@ -157,15 +148,10 @@ const testimonials = [
     // Pause autoplay initially
     swiper.autoplay.stop();
 
-    let animationDone = false;
-    if (prefersReduced) {
-      animationDone = true;
-    }
-
-    // Use Intersection Observer to play only when visible and animation is done
+    // Use Intersection Observer to play only when visible
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && animationDone) {
+        if (entry.isIntersecting) {
           swiper?.autoplay.start();
         } else {
           swiper?.autoplay.stop();
@@ -174,70 +160,5 @@ const testimonials = [
     }, { threshold: 0.1 });
 
     observer.observe(swiperEl);
-
-    // Setup animations if not prefersReduced
-    if (!prefersReduced) {
-      // Set initial states
-      gsap.set(swiperEl, { opacity: 0, y: 40 });
-      if (navPrev && navNext) {
-        gsap.set([navPrev, navNext], { opacity: 0, scale: 0.8 });
-      }
-
-      const createTriggers = () => {
-        const section = document.querySelector<HTMLElement>("[data-testimonials-section]");
-        if (section) {
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top 60%", // user requested top 60%
-            once: true,
-            onEnter: () => {
-              const tl = gsap.timeline();
-
-              // 1. Swiper slides container fade-in and rise
-              tl.to(swiperEl, {
-                opacity: 1,
-                y: 0,
-                duration: 1.0,
-                ease: "power3.out",
-                onComplete: () => {
-                  animationDone = true;
-                  // If currently intersecting, start autoplay
-                  if (swiperEl.getBoundingClientRect().top < window.innerHeight && swiperEl.getBoundingClientRect().bottom > 0) {
-                    swiper?.autoplay.start();
-                  }
-                }
-              });
-
-              // 2. Navigation buttons fade and pop in
-              if (navPrev && navNext) {
-                tl.to([navPrev, navNext], {
-                  opacity: 1,
-                  scale: 1,
-                  duration: 0.5,
-                  stagger: 0.1,
-                  ease: "power3.out",
-                }, "-=0.6");
-              }
-            }
-          });
-        }
-
-        ScrollTrigger.refresh();
-      };
-
-      const initTriggers = () => {
-        // Defer to allow React mounting/hydration and layout spacing to completely settle
-        requestAnimationFrame(() => {
-          setTimeout(createTriggers, 100);
-        });
-      };
-
-      // Initialize triggers after Hero is ready
-      if ((window as any).heroScrollTriggerInitialized) {
-        initTriggers();
-      } else {
-        window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
-      }
-    }
   }
 </script>

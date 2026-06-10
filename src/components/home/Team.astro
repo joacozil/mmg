@@ -179,15 +179,10 @@ const teamMembers = [
     // Pause autoplay initially
     swiper.autoplay.stop();
 
-    let animationDone = false;
-    if (prefersReduced) {
-      animationDone = true;
-    }
-
-    // Use Intersection Observer to play only when visible and animation is done
+    // Use Intersection Observer to play only when visible
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && animationDone) {
+        if (entry.isIntersecting) {
           swiper.autoplay.start();
         } else {
           swiper.autoplay.stop();
@@ -197,22 +192,13 @@ const teamMembers = [
 
     observer.observe(swiperEl);
 
-    // Setup animations if not prefersReduced
+    // Setup animations if not prefersReduced (only animate header, not the slider cards)
     if (!prefersReduced) {
       const section = document.querySelector<HTMLElement>("[data-team-section]");
       const header = section?.querySelector<HTMLElement>("[data-team-header]");
-      const cards = section?.querySelectorAll<HTMLElement>(".team-card");
       
       if (header) {
         gsap.set(header, { opacity: 0, y: 30 });
-      }
-      if (cards && cards.length > 0) {
-        gsap.set(cards, { opacity: 0, y: 40 });
-      }
-
-      const bullets = document.querySelectorAll(".team-pagination .swiper-pagination-bullet");
-      if (bullets.length > 0) {
-        gsap.set(bullets, { opacity: 0, y: 15 });
       }
 
       const createTriggers = () => {
@@ -222,48 +208,14 @@ const teamMembers = [
             start: "top 60%", // trigger at top 60% of viewport
             once: true,
             onEnter: () => {
-              const tl = gsap.timeline();
-
-              // 1. Header fade & rise
+              // Header fade & rise
               if (header) {
-                tl.to(header, {
+                gsap.to(header, {
                   opacity: 1,
                   y: 0,
                   duration: 0.9,
                   ease: "power3.out",
-                }, 0);
-              }
-
-              // 2. Team cards stagger fade & rise
-              if (cards && cards.length > 0) {
-                tl.to(cards, {
-                  opacity: 1,
-                  y: 0,
-                  duration: 1.0,
-                  stagger: 0.08,
-                  ease: "power3.out",
-                  onComplete: () => {
-                    animationDone = true;
-                    // If currently intersecting, start autoplay
-                    if (swiperEl.getBoundingClientRect().top < window.innerHeight && swiperEl.getBoundingClientRect().bottom > 0) {
-                      swiper.autoplay.start();
-                    }
-                  }
-                }, 0.15);
-              } else {
-                animationDone = true;
-              }
-
-              // 3. Pagination bullets stagger
-              const liveBullets = section.querySelectorAll(".team-pagination .swiper-pagination-bullet");
-              if (liveBullets.length > 0) {
-                tl.to(liveBullets, {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.6,
-                  stagger: 0.08,
-                  ease: "power3.out",
-                }, "-=0.6");
+                });
               }
             }
           });

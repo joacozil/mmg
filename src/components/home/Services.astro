@@ -118,13 +118,6 @@ const services = [
   import Swiper from "swiper";
   import "swiper/css";
 
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   // Initialize Swiper on component load for services
   new Swiper(".services-swiper", {
     slidesPerView: 1.15,
@@ -138,101 +131,4 @@ const services = [
       },
     },
   });
-
-  const section = document.querySelector<HTMLElement>("[data-services-section]");
-  if (section && !prefersReduced) {
-    const desktopRows = section.querySelectorAll<HTMLElement>("[data-service-row]");
-    const mobileSwiper = section.querySelector<HTMLElement>("[data-services-mobile-swiper]");
-
-    // Set initial hidden states immediately to avoid visual jump (FOUC)
-    desktopRows.forEach((row) => {
-      const image = row.querySelector<HTMLElement>("[data-service-image]");
-      const card = row.querySelector<HTMLElement>("[data-service-card]");
-
-      if (image) {
-        gsap.set(image, { opacity: 0, x: -40 });
-      }
-      if (card) {
-        gsap.set(card, { opacity: 0, x: 40 });
-      }
-    });
-
-    if (mobileSwiper) {
-      const slides = mobileSwiper.querySelectorAll<HTMLElement>(".swiper-slide");
-      if (slides.length > 0) {
-        gsap.set(slides, { opacity: 0, y: 30 });
-      }
-    }
-
-    const createTriggers = () => {
-      // 1. Create separate ScrollTriggers for each desktop card row
-      desktopRows.forEach((row, i) => {
-        const image = row.querySelector<HTMLElement>("[data-service-image]");
-        const card = row.querySelector<HTMLElement>("[data-service-card]");
-
-        ScrollTrigger.create({
-          trigger: row,
-          start: "top 60%", // trigger at top 60% of viewport
-          once: true,
-          onEnter: () => {
-            const tl = gsap.timeline();
-            if (image) {
-              tl.to(image, {
-                opacity: 1,
-                x: 0,
-                duration: 0.9,
-                ease: "power3.out",
-              }, 0);
-            }
-            if (card) {
-              tl.to(card, {
-                opacity: 1,
-                x: 0,
-                duration: 0.9,
-                ease: "power3.out",
-              }, 0.05); // small stagger
-            }
-          },
-        });
-      });
-
-      // 2. Create ScrollTrigger for mobile swiper
-      if (mobileSwiper) {
-        const slides = mobileSwiper.querySelectorAll<HTMLElement>(".swiper-slide");
-        if (slides.length > 0) {
-          ScrollTrigger.create({
-            trigger: mobileSwiper,
-            start: "top 60%",
-            once: true,
-            onEnter: () => {
-              gsap.to(slides, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.1,
-                ease: "power3.out",
-              });
-            },
-          });
-        }
-      }
-
-      // Recalculate ScrollTrigger coordinates now that Hero pin is set up
-      ScrollTrigger.refresh();
-    };
-
-    const initTriggers = () => {
-      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
-      requestAnimationFrame(() => {
-        setTimeout(createTriggers, 100);
-      });
-    };
-
-    // Initialize ScrollTriggers immediately if Hero is already loaded, otherwise wait
-    if ((window as any).heroScrollTriggerInitialized) {
-      initTriggers();
-    } else {
-      window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
-    }
-  }
 </script>

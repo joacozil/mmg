@@ -343,12 +343,6 @@ import kuaraLogo from "../../assets/img/kuara.svg";
   import "swiper/css";
   import "swiper/css/autoplay";
   import "swiper/css/pagination";
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Initialize Swiper on page load
   const swiperEl = document.querySelector(".banners-swiper") as HTMLElement | null;
@@ -375,15 +369,10 @@ import kuaraLogo from "../../assets/img/kuara.svg";
     // Pause autoplay initially
     swiper.autoplay.stop();
 
-    let animationDone = false;
-    if (prefersReduced) {
-      animationDone = true;
-    }
-
-    // Use Intersection Observer to play only when visible and animation is done
+    // Use Intersection Observer to play only when visible
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && animationDone) {
+        if (entry.isIntersecting) {
           swiper.autoplay.start();
         } else {
           swiper.autoplay.stop();
@@ -392,72 +381,5 @@ import kuaraLogo from "../../assets/img/kuara.svg";
     }, { threshold: 0.1 });
 
     observer.observe(swiperEl);
-
-    // Setup animations if not prefersReduced
-    if (!prefersReduced) {
-      // Set initial states
-      gsap.set(swiperEl, { opacity: 0, y: 40 });
-      
-      const bullets = document.querySelectorAll(".banners-pagination .swiper-pagination-bullet");
-      if (bullets.length > 0) {
-        gsap.set(bullets, { opacity: 0, y: 15 });
-      }
-
-      const createTriggers = () => {
-        const section = document.querySelector<HTMLElement>("[data-banners-section]");
-        if (section) {
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top 60%", // trigger at top 60% of viewport
-            once: true,
-            onEnter: () => {
-              const tl = gsap.timeline();
-
-              // 1. Swiper container fade-in and rise
-              tl.to(swiperEl, {
-                opacity: 1,
-                y: 0,
-                duration: 1.0,
-                ease: "power3.out",
-                onComplete: () => {
-                  animationDone = true;
-                  // If currently intersecting, start autoplay
-                  if (swiperEl.getBoundingClientRect().top < window.innerHeight && swiperEl.getBoundingClientRect().bottom > 0) {
-                    swiper.autoplay.start();
-                  }
-                }
-              });
-
-              // 2. Pagination bullets fade and pop in with stagger
-              const liveBullets = section.querySelectorAll(".banners-pagination .swiper-pagination-bullet");
-              if (liveBullets.length > 0) {
-                tl.to(liveBullets, {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.6,
-                  stagger: 0.08,
-                  ease: "power3.out",
-                }, "-=0.6");
-              }
-            }
-          });
-        }
-        ScrollTrigger.refresh();
-      };
-
-      const initTriggers = () => {
-        // Defer to allow React hydration/rendering and pin spacing layout to settle completely
-        requestAnimationFrame(() => {
-          setTimeout(createTriggers, 100);
-        });
-      };
-
-      // Initialize triggers after Hero is ready
-      if ((window as any).heroScrollTriggerInitialized) {
-        initTriggers();
-      } else {
-        window.addEventListener("hero-scroll-trigger-init", initTriggers, { once: true });
-      }
-    }
   }
 </script>
