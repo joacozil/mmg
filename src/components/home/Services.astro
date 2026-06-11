@@ -38,7 +38,11 @@ const services = [
     <div class="hidden md:flex flex-col gap-6">
       {
         services.map((service, i) => (
-          <div data-service-row class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          <div
+            id={i === 0 ? "soluciones" : i === 1 ? "servicios" : "consultoria"}
+            data-service-row
+            class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch"
+          >
             <!-- Image Container -->
             <div data-service-image class="md:col-span-8 relative min-h-[220px] md:min-h-0 overflow-hidden">
               <Image

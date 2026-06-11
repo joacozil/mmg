@@ -1,0 +1,170 @@
+<div class="relative inline-block text-left en-linea-dropdown-container">
+  <!-- Toggle Button -->
+  <button
+    id="en-linea-toggle"
+    class="en-linea-btn flex items-center gap-1.5 text-btn uppercase font-bold cursor-pointer"
+    style="color: var(--color-white);"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    <span style="color: inherit;">En Línea</span>
+
+    <!-- Chevron Down SVG -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2"
+      stroke="currentColor"
+      class="w-4 h-4 transition-transform duration-300 chevron-icon shrink-0"
+    >
+      <path d="m19.5 8.25-7.5 7.5-7.5-7.5"></path>
+    </svg>
+  </button>
+
+  <!-- Dropdown Menu Card -->
+  <div
+    id="en-linea-menu"
+    class="absolute right-0 mt-2 w-48 bg-white shadow-xl origin-top-right transform scale-95 opacity-0 pointer-events-none transition-all duration-200 z-1010"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="en-linea-toggle"
+  >
+    <a
+      href="#"
+      class="block px-4 py-2.5 text-p hover:bg-light-green transition-colors duration-200 font-semibold"
+      role="menuitem"
+    >
+      Banca en Línea
+    </a>
+    <a
+      href="#"
+      class="block px-4 py-2.5 text-p hover:bg-light-green transition-colors duration-200 font-semibold"
+      role="menuitem"
+    >
+      EVA
+    </a>
+  </div>
+</div>
+
+<style>
+  .en-linea-btn {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    color: var(--color-white);
+    transition:
+      color 0.4s ease,
+      opacity 0.3s ease;
+  }
+  .en-linea-btn span {
+    color: inherit;
+    transition: color 0.4s ease;
+  }
+  .en-linea-btn:hover,
+  .en-linea-btn.is-active {
+    opacity: 0.8;
+  }
+
+  /* Active Menu overlay overrides */
+  :global(.main-header.is-active-menu) .en-linea-btn,
+  :global(.main-header.is-active-menu) .en-linea-btn span {
+    color: var(--color-white) !important;
+  }
+  :global(.main-header.is-active-menu) .en-linea-btn:hover,
+  :global(.main-header.is-active-menu) .en-linea-btn.is-active,
+  :global(.main-header.is-active-menu) .en-linea-btn:hover span,
+  :global(.main-header.is-active-menu) .en-linea-btn.is-active span {
+    opacity: 0.8 !important;
+  }
+
+  /* Sticky Header overrides (takes precedence over active-menu when header has white background) */
+  :global(.main-header.is-sticky) .en-linea-btn,
+  :global(.main-header.is-sticky) .en-linea-btn span {
+    color: var(--color-black) !important;
+  }
+  :global(.main-header.is-sticky) .en-linea-btn:hover,
+  :global(.main-header.is-sticky) .en-linea-btn.is-active,
+  :global(.main-header.is-sticky) .en-linea-btn:hover span,
+  :global(.main-header.is-sticky) .en-linea-btn.is-active span {
+    color: var(--color-black) !important;
+    opacity: 0.8 !important;
+  }
+
+  /* Chevron rotation */
+  .en-linea-btn.is-active .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Menu open styles */
+  #en-linea-menu.is-active {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+</style>
+
+<script>
+  function initDropdown() {
+    const container = document.querySelector(".en-linea-dropdown-container");
+    const toggle = document.getElementById("en-linea-toggle");
+    const menu = document.getElementById("en-linea-menu");
+
+    if (toggle && menu && container) {
+      function openDropdown() {
+        toggle?.classList.add("is-active");
+        toggle?.setAttribute("aria-expanded", "true");
+        menu?.classList.add("is-active");
+      }
+
+      function closeDropdown() {
+        toggle?.classList.remove("is-active");
+        toggle?.setAttribute("aria-expanded", "false");
+        menu?.classList.remove("is-active");
+      }
+
+      function toggleDropdown(e: Event) {
+        e.stopPropagation();
+        const isOpen = menu?.classList.contains("is-active");
+        if (isOpen) {
+          closeDropdown();
+        } else {
+          openDropdown();
+        }
+      }
+
+      // Toggle click
+      toggle.addEventListener("click", toggleDropdown);
+
+      // Close when clicking outside
+      document.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        if (!container.contains(target)) {
+          closeDropdown();
+        }
+      });
+
+      // Close when clicking item
+      const items = menu.querySelectorAll("a");
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          closeDropdown();
+        });
+      });
+
+      // Close on Escape key
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeDropdown();
+        }
+      });
+    }
+  }
+
+  // Self initialize dropdown
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDropdown);
+  } else {
+    initDropdown();
+  }
+</script>

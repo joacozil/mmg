@@ -11,10 +11,9 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
       <!-- Left Column: Title / Tagline -->
       <div data-contact-left class="lg:col-span-6 flex flex-col justify-start">
-        <h2>
-          Hable con nuestros expertos. Contáctenos y reciba una atención
-          profesional orientada a resolver sus necesidades financieras de forma
-          eficiente.
+        <h2 class="text-primary">
+          Hable con nuestros expertos y resuelva sus necesidades financieras
+          eficientemente
         </h2>
       </div>
 
@@ -24,9 +23,7 @@
           <!-- Left Form Fields Column -->
           <div class="flex flex-col gap-5">
             <div data-form-field class="flex flex-col">
-              <label
-                for="nombre"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
+              <label for="nombre" class="text-p-small! font-bold uppercase mb-2"
                 >Nombre</label
               >
               <input
@@ -41,8 +38,7 @@
             <div data-form-field class="flex flex-col">
               <label
                 for="empresa"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
-                >Empresa</label
+                class="text-p-small! font-bold uppercase mb-2">Empresa</label
               >
               <input
                 type="text"
@@ -56,8 +52,7 @@
             <div data-form-field class="flex flex-col">
               <label
                 for="telefono"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
-                >Teléfono</label
+                class="text-p-small! font-bold uppercase mb-2">Teléfono</label
               >
               <input
                 type="tel"
@@ -68,9 +63,7 @@
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label
-                for="email"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
+              <label for="email" class="text-p-small! font-bold uppercase mb-2"
                 >Email</label
               >
               <input
@@ -85,7 +78,7 @@
             <div data-form-field class="flex flex-col">
               <label
                 for="tipo_consulta"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
+                class="text-p-small! font-bold uppercase mb-2"
                 >Tipo de consulta</label
               >
               <div class="relative w-full">
@@ -104,7 +97,7 @@
                   <option value="Otros">Otros</option>
                 </select>
                 <div
-                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center text-primary"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -127,9 +120,7 @@
           <!-- Right Form Fields Column -->
           <div class="flex flex-col gap-5 h-full">
             <div data-form-field class="flex flex-col">
-              <label
-                for="cargo"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
+              <label for="cargo" class="text-p-small! font-bold uppercase mb-2"
                 >Cargo de la empresa</label
               >
               <input
@@ -143,7 +134,7 @@
             <div data-form-field class="flex flex-col">
               <label
                 for="nuevo_cliente"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
+                class="text-p-small! font-bold uppercase mb-2"
                 >Es usted nuevo cliente?</label
               >
               <div class="relative w-full">
@@ -160,7 +151,7 @@
                   <option value="No">No</option>
                 </select>
                 <div
-                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center text-primary"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none flex items-center"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -185,8 +176,7 @@
             >
               <label
                 for="mensaje"
-                class="text-p-small! font-bold uppercase text-primary mb-2"
-                >Mensaje</label
+                class="text-p-small! font-bold uppercase mb-2">Mensaje</label
               >
               <textarea
                 id="mensaje"
@@ -201,7 +191,7 @@
         <div data-form-submit class="flex justify-start mt-2">
           <button
             type="submit"
-            class="bg-primary text-white text-btn uppercase px-8 py-4 rounded-sm transition-colors duration-300 cursor-pointer"
+            class="btn-more inline-flex items-center gap-1 uppercase transition-colors duration-200 text-primary bg-transparent border-none p-0 cursor-pointer focus:outline-none"
           >
             Enviar
           </button>
@@ -281,3 +271,38 @@
     }
   }
 </script>
+
+<style>
+  .btn-more {
+    position: relative;
+    padding-bottom: 6px;
+    font-size: var(--fs-p-large);
+    font-weight: 600;
+    line-height: var(--lh-btn);
+    letter-spacing: var(--ls-btn);
+  }
+
+  .btn-more::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .btn-more:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-more::after {
+      transition: none;
+    }
+  }
+</style>

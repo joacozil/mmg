@@ -298,6 +298,7 @@ body {
   font-family: var(--font-bornia);
   background-color: var(--color-cream);
   color: var(--color-black);
+  scroll-behavior: smooth;
 }
 
 /* -------------------------------------------------------------
