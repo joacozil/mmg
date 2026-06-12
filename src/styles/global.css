@@ -364,7 +364,7 @@ span {
 @property --c-0 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #00ac69;
+  initial-value: #1CB973;
 }
 
 @property --s-start-0 {
@@ -412,13 +412,13 @@ span {
 @property --c-1 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #136b4a;
+  initial-value: #05744E;
 }
 
 @property --c-2 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #00ac69;
+  initial-value: #1CB973;
 }
 
 @property --y-2 {
@@ -472,7 +472,7 @@ span {
 @property --c-3 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #00ac69;
+  initial-value: #1CB973;
 }
 
 @property --x-4 {
@@ -502,7 +502,7 @@ span {
 @property --c-4 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #a6e2b9;
+  initial-value: #86DEA7;
 }
 
 @property --x-5 {
@@ -514,7 +514,7 @@ span {
 @property --c-5 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #00ac69;
+  initial-value: #1CB973;
 }
 
 @property --s-start-5 {
@@ -556,7 +556,7 @@ span {
 @property --c-6 {
   syntax: "<color>";
   inherits: false;
-  initial-value: #a6e2b9;
+  initial-value: #86DEA7;
 }
 
 @property --x-6 {
@@ -569,7 +569,7 @@ span {
 @keyframes ani-gradient-canvas {
   0% {
     --x-0: 95%;
-    --c-0: #00ac69;
+    --c-0: #1CB973;
     --s-start-0: 8%;
     --s-end-0: 56.590226783981535%;
     --y-0: 75%;
@@ -577,8 +577,8 @@ span {
     --s-start-1: 1%;
     --s-end-1: 62.39165434620126%;
     --y-1: 15%;
-    --c-1: #136b4a;
-    --c-2: #00ac69;
+    --c-1: #05744E;
+    --c-2: #1CB973;
     --y-2: 86%;
     --s-start-2: 8.392121895570533%;
     --s-end-2: 48.52567687605722%;
@@ -587,27 +587,27 @@ span {
     --y-3: 94%;
     --s-start-3: 8.392121895570533%;
     --s-end-3: 48.52567687605722%;
-    --c-3: #00ac69;
+    --c-3: #1CB973;
     --x-4: 55%;
     --s-start-4: 18%;
     --s-end-4: 49.94408311488525%;
     --y-4: 101%;
-    --c-4: #a6e2b9;
+    --c-4: #86DEA7;
     --x-5: 90%;
-    --c-5: #00ac69;
+    --c-5: #1CB973;
     --s-start-5: 11.133917156423086%;
     --s-end-5: 51.76366794121349%;
     --y-5: 47%;
     --s-start-6: 6%;
     --s-end-6: 36.01800730950539%;
     --y-6: 72%;
-    --c-6: #a6e2b9;
+    --c-6: #86DEA7;
     --x-6: 46%;
   }
 
   50% {
     --x-0: 25%;
-    --c-0: #00ac69;
+    --c-0: #1CB973;
     --s-start-0: 9%;
     --s-end-0: 47.631590766043374%;
     --y-0: 90%;
@@ -615,8 +615,8 @@ span {
     --s-start-1: 9%;
     --s-end-1: 73%;
     --y-1: 12%;
-    --c-1: #136b4a;
-    --c-2: #00ac69;
+    --c-1: #05744E;
+    --c-2: #1CB973;
     --y-2: 71%;
     --s-start-2: 9%;
     --s-end-2: 49.05074977970796%;
@@ -625,21 +625,21 @@ span {
     --y-3: 97%;
     --s-start-3: 9%;
     --s-end-3: 49.05074977970796%;
-    --c-3: #00ac69;
+    --c-3: #1CB973;
     --x-4: 28%;
     --s-start-4: 9%;
     --s-end-4: 49.07325835290392%;
     --y-4: 75%;
-    --c-4: #a6e2b9;
+    --c-4: #86DEA7;
     --x-5: 42%;
-    --c-5: #00ac69;
+    --c-5: #1CB973;
     --s-start-5: 9%;
     --s-end-5: 49.48618142677546%;
     --y-5: 102%;
     --s-start-6: 9%;
     --s-end-6: 47.075992875412794%;
     --y-6: 97%;
-    --c-6: #00ac69;
+    --c-6: #1CB973;
     --x-6: 42%;
   }
 
@@ -648,8 +648,8 @@ span {
     --s-start-1: 9%;
     --s-end-1: 38.76465783663554%;
     --y-1: 14%;
-    --c-1: #136b4a;
-    --c-2: #00ac69;
+    --c-1: #05744E;
+    --c-2: #1CB973;
     --y-2: 95%;
     --s-start-2: 10.200720718860145%;
     --s-end-2: 50.46456494288142%;
@@ -658,11 +658,11 @@ span {
     --y-3: 74%;
     --s-start-3: 10.200720718860145%;
     --s-end-3: 50.46456494288142%;
-    --c-3: #00ac69;
+    --c-3: #1CB973;
     --s-start-6: 9%;
     --s-end-6: 47.075992875412794%;
     --y-6: 93%;
-    --c-6: #136b4a;
+    --c-6: #05744E;
     --x-6: 90%;
   }
 }
@@ -682,28 +682,28 @@ span {
   pointer-events: none;
 
   --x-0: 95%;
-  --c-0: #00ac69;
+  --c-0: #1CB973;
   --y-0: 75%;
   --x-1: 95%;
   --y-1: 15%;
-  --c-1: #136b4a;
-  --c-2: #00ac69;
+  --c-1: #05744E;
+  --c-2: #1CB973;
   --y-2: 86%;
   --x-2: 2%;
   --x-3: 93%;
   --y-3: 94%;
-  --c-3: #00ac69;
+  --c-3: #1CB973;
   --x-4: 55%;
   --y-4: 101%;
-  --c-4: #a6e2b9;
+  --c-4: #86DEA7;
   --x-5: 90%;
-  --c-5: #00ac69;
+  --c-5: #1CB973;
   --y-5: 47%;
   --y-6: 72%;
-  --c-6: #a6e2b9;
+  --c-6: #86DEA7;
   --x-6: 46%;
 
-  background-color: #136b4a;
+  background-color: #03251A;
   background-image:
     radial-gradient(circle at var(--x-0) var(--y-0),
       var(--c-0) var(--s-start-0),
