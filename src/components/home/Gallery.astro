@@ -252,141 +252,84 @@ import imgForo from "../../assets/img/foro.jpg";
       gsap.set(caption2, { opacity: 0, y: 15 });
       gsap.set(caption3, { opacity: 0, y: 15 });
 
+      let currentStateIndex = -1;
+
+      const goToState = (index: number, immediate = false) => {
+        if (index === currentStateIndex) return;
+        currentStateIndex = index;
+
+        const duration = immediate ? 0 : 0.8;
+        const ease = immediate ? "none" : "power2.out";
+
+        // Kill active animations on these elements first to prevent overlap conflicts
+        gsap.killTweensOf([card1, card2, card3, caption1, caption2, caption3]);
+
+        const t = gsap.timeline({ defaults: { ease, duration } });
+
+        if (index === 0) {
+          t.to(card1, { y: "0%", rotate: -5, scale: 1, opacity: 1, zIndex: 30 }, 0);
+          t.to(card2, { y: 8, x: 8, rotate: 4, scale: 0.96, opacity: 1, zIndex: 20 }, 0);
+          t.to(card3, { y: 16, x: -8, rotate: -2, scale: 0.92, opacity: 1, zIndex: 10 }, 0);
+
+          t.to(caption1, { opacity: 1, y: 0 }, 0);
+          t.to(caption2, { opacity: 0, y: 15 }, 0);
+          t.to(caption3, { opacity: 0, y: 15 }, 0);
+        } else if (index === 1) {
+          t.to(card1, { y: "-140%", rotate: -15, opacity: 0, zIndex: 10 }, 0);
+          t.to(card2, { y: 0, x: 0, rotate: -5, scale: 1, opacity: 1, zIndex: 30 }, 0);
+          t.to(card3, { y: 8, x: 8, rotate: 4, scale: 0.96, opacity: 1, zIndex: 20 }, 0);
+
+          t.to(caption1, { opacity: 0, y: -15 }, 0);
+          t.to(caption2, { opacity: 1, y: 0 }, 0);
+          t.to(caption3, { opacity: 0, y: 15 }, 0);
+        } else if (index === 2) {
+          t.to(card1, { y: "-140%", rotate: -15, opacity: 0, zIndex: 10 }, 0);
+          t.to(card2, { y: "-140%", rotate: 15, opacity: 0, zIndex: 20 }, 0);
+          t.to(card3, { y: 0, x: 0, rotate: -2, scale: 1.0, opacity: 1, zIndex: 30 }, 0);
+
+          t.to(caption1, { opacity: 0, y: -15 }, 0);
+          t.to(caption2, { opacity: 0, y: -15 }, 0);
+          t.to(caption3, { opacity: 1, y: 0 }, 0);
+        }
+      };
+
       // 3. Build scroll trigger
       const createTriggers = () => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "+=200%",
-            pin: true,
-            scrub: true,
-            anticipatePin: 1,
+        const trigger = ScrollTrigger.create({
+          trigger: section,
+          start: "top top",
+          end: "+=200%",
+          pin: true,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.5, 1],
+            duration: { min: 0.2, max: 0.5 },
+            delay: 0.05,
+            ease: "power1.inOut"
           },
+          onUpdate: (self) => {
+            let targetIndex = 0;
+            if (self.progress < 0.25) {
+              targetIndex = 0;
+            } else if (self.progress < 0.75) {
+              targetIndex = 1;
+            } else {
+              targetIndex = 2;
+            }
+            goToState(targetIndex);
+          }
         });
 
-        // --- TRANSITION 1: Card 1 slides away, Card 2 & 3 step forward ---
-        // Caption 1 fades out
-        tl.to(
-          caption1,
-          {
-            opacity: 0,
-            y: -15,
-            duration: 0.4,
-            ease: "power2.in",
-          },
-          0.3,
-        );
-
-        // Top card slides up and away
-        tl.to(
-          card1,
-          {
-            y: "-140%",
-            rotate: -15,
-            opacity: 0,
-            duration: 1.0,
-            ease: "power2.inOut",
-          },
-          0.4,
-        );
-
-        // Middle card moves to top position
-        tl.to(
-          card2,
-          {
-            rotate: -5,
-            scale: 1.0,
-            y: 0,
-            x: 0,
-            duration: 1.0,
-            ease: "power2.inOut",
-          },
-          0.4,
-        );
-
-        // Bottom card moves to middle position
-        tl.to(
-          card3,
-          {
-            rotate: 4,
-            scale: 0.96,
-            y: 8,
-            x: 8,
-            duration: 1.0,
-            ease: "power2.inOut",
-          },
-          0.4,
-        );
-
-        // Caption 2 fades in
-        tl.to(
-          caption2,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          },
-          0.9,
-        );
-
-        // --- DWELL STATE: Dwell on Card 2 from timeline index 1.5 to 2.3 ---
-
-        // --- TRANSITION 2: Card 2 slides away, Card 3 steps forward ---
-        // Caption 2 fades out
-        tl.to(
-          caption2,
-          {
-            opacity: 0,
-            y: -15,
-            duration: 0.4,
-            ease: "power2.in",
-          },
-          2.3,
-        );
-
-        // Middle card (now on top) slides up and away
-        tl.to(
-          card2,
-          {
-            y: "-140%",
-            rotate: 15,
-            opacity: 0,
-            duration: 1.0,
-            ease: "power2.inOut",
-          },
-          2.4,
-        );
-
-        // Bottom card (now middle) moves to top position
-        tl.to(
-          card3,
-          {
-            rotate: -2,
-            scale: 1.0,
-            y: 0,
-            x: 0,
-            duration: 1.0,
-            ease: "power2.inOut",
-          },
-          2.4,
-        );
-
-        // Caption 3 fades in
-        tl.to(
-          caption3,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          },
-          2.9,
-        );
-
-        // --- PADDING: Keep final card active until scroll finishes ---
-        tl.to({}, { duration: 0.8 }, 3.5);
+        // Set initial state based on starting scroll position
+        let initialIndex = 0;
+        if (trigger.progress < 0.25) {
+          initialIndex = 0;
+        } else if (trigger.progress < 0.75) {
+          initialIndex = 1;
+        } else {
+          initialIndex = 2;
+        }
+        goToState(initialIndex, true);
 
         ScrollTrigger.refresh();
       };
