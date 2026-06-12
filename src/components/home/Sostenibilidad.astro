@@ -5,10 +5,7 @@ import LinkMore from "../LinkMore.astro";
 ---
 
 <section id="sostenibilidad" data-sostenibilidad-section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
-  <!-- Particle Animation Canvas -->
-  <canvas
-    id="particles-canvas"
-    class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
 
   <div class="container-custom relative z-10">
     <div
@@ -112,7 +109,7 @@ import LinkMore from "../LinkMore.astro";
   .sostenibilidad-legend {
     flex-direction: column;
     align-items: flex-end;
-    gap: 0.85rem;
+    gap: 0.5rem;
   }
 
   .legend-item {
@@ -138,133 +135,7 @@ import LinkMore from "../LinkMore.astro";
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Smooth moving particles animation
-  const canvas = document.getElementById(
-    "particles-canvas",
-  ) as HTMLCanvasElement | null;
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
 
-    if (ctx) {
-      let width: number, height: number;
-      let particles: Particle[] = [];
-
-      // Brand colors: green variants with opacity
-      const colors = [
-        "rgba(0, 172, 105, 0.4)", // #00AC69
-        "rgba(18, 71, 52, 0.25)", // #124734
-        "rgba(166, 226, 185, 0.5)", // #A6E2B9
-      ];
-
-      // Keep particle count reasonable for performance
-      const particleCount = 70;
-
-      class Particle {
-        x: number;
-        y: number;
-        size: number;
-        speedX: number;
-        speedY: number;
-        color: string;
-
-        constructor() {
-          this.x = Math.random() * width;
-          this.y = Math.random() * height;
-          this.size = Math.random() * 3 + 1;
-          this.speedX = (Math.random() - 0.5) * 0.4;
-          this.speedY = (Math.random() - 0.5) * 0.4 - 0.15; // General upward drift
-          this.color = colors[Math.floor(Math.random() * colors.length)];
-        }
-
-        update() {
-          this.x += this.speedX;
-          this.y += this.speedY;
-
-          // Wrap around edges smoothly
-          if (this.x < -10) this.x = width + 10;
-          if (this.x > width + 10) this.x = -10;
-          if (this.y < -10) this.y = height + 10;
-          if (this.y > height + 10) this.y = -10;
-        }
-
-        draw() {
-          if (!ctx) return;
-          ctx.beginPath();
-          ctx.fillStyle = this.color;
-          ctx.fillRect(
-            this.x - this.size,
-            this.y - this.size,
-            this.size * 2,
-            this.size * 2,
-          );
-        }
-      }
-
-      function init() {
-        resize();
-        createParticles();
-        requestAnimationFrame(animate);
-        window.addEventListener("resize", handleResize);
-      }
-
-      function resize() {
-        if (!canvas) return;
-        width = canvas.clientWidth;
-        height = canvas.clientHeight;
-        const dpr = window.devicePixelRatio || 1;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx?.scale(dpr, dpr);
-      }
-
-      let resizeTimeout: ReturnType<typeof setTimeout>;
-      function handleResize() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          resize();
-          createParticles();
-        }, 200);
-      }
-
-      function createParticles() {
-        particles = [];
-        for (let i = 0; i < particleCount; i++) {
-          particles.push(new Particle());
-        }
-      }
-
-      function animate() {
-        if (!ctx) return;
-        ctx.clearRect(0, 0, width, height);
-
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
-
-          // Connect nearby particles for a constellation effect
-          for (let j = i; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 120) {
-              ctx.beginPath();
-              // Fade out line as distance increases
-              ctx.strokeStyle = `rgba(0, 172, 105, ${0.12 * (1 - distance / 120)})`;
-              ctx.lineWidth = 0.8;
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
-              ctx.stroke();
-            }
-          }
-        }
-
-        requestAnimationFrame(animate);
-      }
-
-      init();
-    }
-  }
 
   // Setup animations if not prefersReduced
   const sSection = document.querySelector<HTMLElement>("[data-sostenibilidad-section]");

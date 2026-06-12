@@ -64,14 +64,14 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
         tl.to(textContentRef.current, { opacity: 0, y: -30, duration: 0.8, ease: 'power2.inOut' }, 0);
 
         // Middle image shrinks
-        tl.to(mainImageRef.current, { width: '56%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
+        tl.to(mainImageRef.current, { width: '32%', height: '80%', duration: 1.5, ease: 'power2.inOut' }, 0);
 
         // Add gap to gallery container
         tl.to(galleryContainerRef.current, { gap: '1.5rem', duration: 1.5, ease: 'power2.inOut' }, 0);
 
         // Left and Right images slide in and expand
-        tl.to(leftImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
-        tl.to(rightImageRef.current, { width: '22%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+        tl.to(leftImageRef.current, { width: '32%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
+        tl.to(rightImageRef.current, { width: '32%', opacity: 1, xPercent: 0, duration: 1.5, ease: 'power2.inOut' }, 0.2);
 
         // Signal that the hero scroll trigger has been initialized
         (window as any).heroScrollTriggerInitialized = true;
@@ -268,7 +268,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
           {/* Left Side Image */}
           <div ref={leftImageRef} className="w-0 opacity-0 h-[80%] rounded-2xl overflow-hidden relative shrink-0 flex-none shadow-2xl">
-            <img src={leftSrc} alt="Team generating ideas" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={leftSrc} alt="Team generating ideas" className="absolute inset-0 w-full h-full object-cover object-right" />
           </div>
 
           {/* Middle Main Image */}
@@ -282,13 +282,12 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
             <div ref={textContentRef} className="absolute inset-8 md:inset-12 lg:inset-auto lg:bottom-16 lg:left-16 lg:right-16 flex flex-col justify-between lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
               <div className="max-w-3xl ">
                 <span className="hero-subtitle font-bold uppercase text-white! block">Desde Panamá hacia el mundo</span>
-                <h1 className="hero-title font-bold text-white mt-3 lg:mt-4 lg:border-b lg:border-white lg:pb-6">
+                <h1 className="hero-title font-bold text-white mt-3 lg:mt-4">
                   Potenciamos su crecimiento para asegurar un futuro sólido.
                 </h1>
               </div>
               <div className="w-full lg:w-auto flex flex-col lg:flex-row items-stretch lg:items-end gap-6">
-                <div className="w-full h-px bg-white/30 lg:hidden"></div>
-                <a href="#contact" className="hero-btn bg-cream text-black px-8 py-3 rounded-full text-btn uppercase hover:bg-white transition-colors text-center whitespace-nowrap self-start lg:self-auto">
+                <a href="#contact" className="hero-btn bg-cream text-black px-8 py-3 text-btn uppercase hover:bg-white transition-colors text-center whitespace-nowrap self-start lg:self-auto">
                   Contactanos
                 </a>
               </div>
@@ -297,7 +296,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
           {/* Right Side Image */}
           <div ref={rightImageRef} className="w-0 opacity-0 h-[80%] rounded-2xl overflow-hidden relative shrink-0 flex-none shadow-2xl">
-            <img src={rightSrc} alt="Building texture" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={rightSrc} alt="Building texture" className="absolute inset-0 w-full h-full object-cover object-right" />
           </div>
 
         </div>

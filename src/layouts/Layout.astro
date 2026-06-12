@@ -42,6 +42,21 @@ const {
 				var __y = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
 				if (__y > 0) window.scrollTo(0, __y);
 			} catch(e) {}
+
+			// Smooth scroll to anchors
+			document.addEventListener('click', function(e) {
+				const target = e.target.closest('a[href^="#"]');
+				if (target) {
+					const href = target.getAttribute('href');
+					if (href.startsWith('#') && href !== '#') {
+						const el = document.querySelector(href);
+						if (el) {
+							e.preventDefault();
+							el.scrollIntoView({ behavior: 'smooth' });
+						}
+					}
+				}
+			});
 		</script>
 	</body>
 </html>
