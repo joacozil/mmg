@@ -5,7 +5,7 @@
 <section
   id="contact-section"
   data-contact-section
-  class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden"
+  class="w-full bg-cream pt-0 pb-section-gap relative overflow-x-clip"
 >
   <div class="container-custom">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
@@ -23,73 +23,63 @@
           <!-- Left Form Fields Column -->
           <div class="flex flex-col gap-5">
             <div data-form-field class="flex flex-col">
-              <label for="nombre" class="text-p-small! font-bold uppercase mb-2"
-                >Nombre</label
-              >
               <input
                 type="text"
                 id="nombre"
                 name="nombre"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                placeholder="Nombre"
+                aria-label="Nombre"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all"
                 required
               />
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label
-                for="empresa"
-                class="text-p-small! font-bold uppercase mb-2">Empresa</label
-              >
               <input
                 type="text"
                 id="empresa"
                 name="empresa"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                placeholder="Empresa"
+                aria-label="Empresa"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all"
                 required
               />
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label
-                for="telefono"
-                class="text-p-small! font-bold uppercase mb-2">Teléfono</label
-              >
               <input
                 type="tel"
                 id="telefono"
                 name="telefono"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                placeholder="Teléfono"
+                aria-label="Teléfono"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all"
               />
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label for="email" class="text-p-small! font-bold uppercase mb-2"
-                >Email</label
-              >
               <input
                 type="email"
                 id="email"
                 name="email"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                placeholder="Email"
+                aria-label="Email"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all"
                 required
               />
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label
-                for="tipo_consulta"
-                class="text-p-small! font-bold uppercase mb-2"
-                >Tipo de consulta</label
-              >
               <div class="relative w-full">
                 <select
                   id="tipo_consulta"
                   name="tipo_consulta"
-                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all appearance-none cursor-pointer"
+                  aria-label="Tipo de consulta"
+                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                   required
                 >
                   <option value="" disabled selected
-                    >Seleccione una opción</option
+                    >Tipo de consulta</option
                   >
                   <option value="Banca Privada">Banca Privada</option>
                   <option value="Asset Management">Asset Management</option>
@@ -120,32 +110,27 @@
           <!-- Right Form Fields Column -->
           <div class="flex flex-col gap-5 h-full">
             <div data-form-field class="flex flex-col">
-              <label for="cargo" class="text-p-small! font-bold uppercase mb-2"
-                >Cargo de la empresa</label
-              >
               <input
                 type="text"
                 id="cargo"
                 name="cargo"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all"
+                placeholder="Cargo de la empresa"
+                aria-label="Cargo de la empresa"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all"
               />
             </div>
 
             <div data-form-field class="flex flex-col">
-              <label
-                for="nuevo_cliente"
-                class="text-p-small! font-bold uppercase mb-2"
-                >Es usted nuevo cliente?</label
-              >
               <div class="relative w-full">
                 <select
                   id="nuevo_cliente"
                   name="nuevo_cliente"
-                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all appearance-none cursor-pointer"
+                  aria-label="¿Es usted nuevo cliente?"
+                  class="w-full bg-white px-4 py-3 pr-10 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer"
                   required
                 >
                   <option value="" disabled selected
-                    >Seleccione una opción</option
+                    >¿Es usted nuevo cliente?</option
                   >
                   <option value="Si">Sí</option>
                   <option value="No">No</option>
@@ -174,14 +159,12 @@
               data-form-field
               class="flex flex-col flex-1 min-h-[200px] lg:min-h-0"
             >
-              <label
-                for="mensaje"
-                class="text-p-small! font-bold uppercase mb-2">Mensaje</label
-              >
               <textarea
                 id="mensaje"
                 name="mensaje"
-                class="w-full bg-white px-4 py-3 text-p text-black border border-transparent focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-sm transition-all flex-1 resize-none min-h-[120px] lg:min-h-[140px]"
+                placeholder="Mensaje"
+                aria-label="Mensaje"
+                class="w-full bg-white px-4 py-3 text-p text-black border-0 border-b-2 border-transparent focus:outline-none focus:border-primary transition-all flex-1 resize-none min-h-[120px] lg:min-h-[140px]"
                 required></textarea>
             </div>
           </div>
@@ -306,9 +289,15 @@
     }
   }
 
-  #contact-form input,
-  #contact-form select,
-  #contact-form textarea {
-    border-color: rgba(13, 13, 13, 0.15);
+  /* Muted placeholder hint (solid color, no opacity) */
+  #contact-form input::placeholder,
+  #contact-form textarea::placeholder {
+    color: #6b6b6b;
+    opacity: 1;
+  }
+
+  /* Match select placeholder until a real option is chosen */
+  #contact-form select:invalid {
+    color: #6b6b6b;
   }
 </style>
