@@ -30,14 +30,22 @@ import LinkMore from "../LinkMore.astro";
       </div>
 
       <!-- Center Graphic -->
-      <div class="lg:col-span-4 flex flex-col items-center justify-center">
+      <div class="lg:col-span-4 flex flex-col items-center justify-start h-full">
+        <!-- Invisible label placeholder so the figure aligns with the paragraph band -->
+        <p
+          class="uppercase font-bold mb-4 invisible hidden lg:block select-none"
+          aria-hidden="true"
+        >
+          Sostenibilidad
+        </p>
+
+        <!-- Stacked discs (inline SVG so the viewBox drives sizing exactly).
+             Linked positions are the CSS defaults (no-JS / reduced-motion safe). -->
         <div
           data-sostenibilidad-center
-          class="w-full max-w-[320px] aspect-square relative flex items-center justify-center"
+          data-disc-stack
+          class="relative w-full max-w-[320px] aspect-[409/254] lg:mt-4"
         >
-          <!-- Stacked discs (inline SVG so the viewBox drives sizing exactly).
-               Linked positions are the CSS defaults (no-JS / reduced-motion safe). -->
-          <div data-disc-stack class="relative w-full aspect-[409/254]">
             <svg
               data-disc="bottom"
               viewBox="0 0 409 166"
@@ -72,7 +80,6 @@ import LinkMore from "../LinkMore.astro";
               <path d="M392.606 60.7941V81.1393C361.394 59.4423 288.923 44.2305 204.491 44.2305C120.06 44.2305 47.6063 59.4252 16.3935 81.1222V60.777H0V104.992C0 138.564 91.5506 165.788 204.491 165.788C317.432 165.788 409 138.564 409 104.992V60.777H392.606V60.7941Z" fill="#89BA99"></path>
               <path d="M409 60.796C409 94.3681 317.449 121.592 204.491 121.592C91.5334 121.592 0 94.351 0 60.796C0 27.241 91.5506 0 204.491 0C317.432 0 409 27.2068 409 60.796Z" fill="#A6E2B9"></path>
             </svg>
-          </div>
         </div>
 
         <!-- Legend for Mobile/Tablet only -->
