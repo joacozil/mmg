@@ -144,13 +144,24 @@ const fallbackRotations = ["-rotate-2", "rotate-3", "-rotate-1"];
 <style>
   /* Dynamic layout switching */
   :global(.gallery-animated-active) {
+    /* Approx. height of the fixed header — tune here to nudge vertical balance. */
+    --gallery-header-offset: 4.5rem;
     height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  /* Center the content within the viewport area BELOW the fixed header.
+     The inner container is sized to (100vh - header) and pushed down by the
+     header height, so flex-centering inside it lands the stack in the true
+     visible center — no border-box padding math to fight. */
+  :global(.gallery-animated-active) .container-custom {
+    height: calc(100vh - var(--gallery-header-offset));
+    margin-top: var(--gallery-header-offset);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   :global(.gallery-animated-active) [data-gallery-fallback-grid] {
