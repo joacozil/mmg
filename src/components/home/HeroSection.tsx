@@ -169,8 +169,6 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
     // TABLET & MOBILE: width < 1024px
     // =====================================================================
     mm.add("(max-width: 1023px)", () => {
-      let stickyTrigger: ScrollTrigger;
-
       const createMobileScrollTrigger = () => {
         return ScrollTrigger.create({
           trigger: galleryWrapperRef.current,
@@ -186,67 +184,12 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
       if (isScrolledPastHero) {
         headerEl?.classList.add('is-sticky');
-        (window as any).heroScrollTriggerInitialized = true;
-        window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
-        createMobileScrollTrigger();
-        return;
       }
 
-      stickyTrigger = createMobileScrollTrigger();
-      stickyTrigger.disable(false);
+      createMobileScrollTrigger();
 
-      // Set initial hidden states
-      gsap.set(headerEl, { y: -100, opacity: 0 });
-      gsap.set(mainImageRef.current, { y: 30, opacity: 0 });
-      if (mainImg) {
-        gsap.set(mainImg, { scale: 1.1 });
-      }
-      gsap.set('.hero-subtitle', { y: 30, opacity: 0 });
-      gsap.set('.hero-title', { y: 40, opacity: 0 });
-      gsap.set('.hero-btn', { y: 30, opacity: 0 });
-
-      const entranceTl = gsap.timeline({
-        defaults: { ease: 'power3.out', duration: 1.2 }
-      });
-
-      const handleScroll = () => {
-        if (window.scrollY > 0) {
-          if (cleanupScrollListener) cleanupScrollListener();
-          if (entranceTl.isActive()) {
-            entranceTl.progress(1);
-          }
-        }
-      };
-      window.addEventListener('scroll', handleScroll);
-      cleanupScrollListener = () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-
-      entranceTl
-        .to(mainImageRef.current, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out' })
-        .to(mainImg || [], { scale: 1, duration: 1.4, ease: 'power3.out' }, 0)
-        .to(headerEl, { y: 0, opacity: 1, duration: 1.0, ease: 'power3.out' }, 0.4)
-        .to('.hero-subtitle', { y: 0, opacity: 1, duration: 0.8 }, 0.6)
-        .to('.hero-title', { y: 0, opacity: 1, duration: 0.8 }, 0.7)
-        .to('.hero-btn', { y: 0, opacity: 1, duration: 0.8 }, 0.8);
-
-      entranceTl.eventCallback('onComplete', () => {
-        if (cleanupScrollListener) {
-          cleanupScrollListener();
-          cleanupScrollListener = undefined;
-        }
-
-        gsap.set([mainImageRef.current, headerEl, '.hero-subtitle', '.hero-title', '.hero-btn'], { clearProps: 'all' });
-        if (mainImg) {
-          gsap.set(mainImg, { clearProps: 'all' });
-        }
-
-        (window as any).heroScrollTriggerInitialized = true;
-        window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
-
-        stickyTrigger.enable();
-        stickyTrigger.refresh();
-      });
+      (window as any).heroScrollTriggerInitialized = true;
+      window.dispatchEvent(new CustomEvent('hero-scroll-trigger-init'));
     });
 
     try { sessionStorage.removeItem('__mmg_scrollY'); } catch (e) { /* ignore */ }

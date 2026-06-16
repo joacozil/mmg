@@ -303,6 +303,11 @@ body {
 /* -------------------------------------------------------------
  * Base HTML Element Default Typography
  * ------------------------------------------------------------- */
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 h1 {
   font-size: var(--fs-h1);
   font-weight: 400;

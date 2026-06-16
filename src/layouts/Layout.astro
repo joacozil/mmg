@@ -1,14 +1,14 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 
 interface Props {
 	title?: string;
 	description?: string;
 }
 
-const { 
-	title = "MMG Bank | Soluciones globales para clientes ambiciosos", 
-	description = "En MMG Bank somos su socio estratégico en asesoría financiera, diseñados para acompañarle en su evolución y expansión con estrategias sólidas y diversificadas." 
+const {
+	title = "MMG Bank | Soluciones globales para clientes ambiciosos",
+	description = "En MMG Bank somos su socio estratégico en asesoría financiera, diseñados para acompañarle en su evolución y expansión con estrategias sólidas y diversificadas.",
 } = Astro.props;
 ---
 
@@ -26,9 +26,15 @@ const {
 			// Disable browser scroll restoration – GSAP's pin spacer changes
 			// document height, making the browser's restored position wrong.
 			// We handle restoration manually after GSAP sets up.
-			if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-			window.addEventListener('beforeunload', function() {
-				try { sessionStorage.setItem('__mmg_scrollY', String(window.scrollY)); } catch(e) {}
+			if ("scrollRestoration" in history)
+				history.scrollRestoration = "manual";
+			window.addEventListener("beforeunload", function () {
+				try {
+					sessionStorage.setItem(
+						"__mmg_scrollY",
+						String(window.scrollY),
+					);
+				} catch (e) {}
 			});
 		</script>
 	</head>
@@ -39,24 +45,38 @@ const {
 			// deferred/module scripts). This gets us to ~the right position
 			// so GSAP's isScrolledPastHero check works correctly.
 			try {
-				var __y = parseInt(sessionStorage.getItem('__mmg_scrollY') || '0', 10);
+				var __y = parseInt(
+					sessionStorage.getItem("__mmg_scrollY") || "0",
+					10,
+				);
 				if (__y > 0) window.scrollTo(0, __y);
-			} catch(e) {}
+			} catch (e) {}
 
 			// Smooth scroll to anchors
-			document.addEventListener('click', function(e) {
+			document.addEventListener("click", function (e) {
 				const target = e.target.closest('a[href^="#"]');
 				if (target) {
-					const href = target.getAttribute('href');
-					if (href.startsWith('#') && href !== '#') {
+					const href = target.getAttribute("href");
+					if (href.startsWith("#") && href !== "#") {
 						const el = document.querySelector(href);
 						if (el) {
 							e.preventDefault();
-							el.scrollIntoView({ behavior: 'smooth' });
+							el.scrollIntoView({ behavior: "smooth" });
 						}
 					}
 				}
 			});
+
+			// Prevent image dragging globally
+			document.addEventListener(
+				"dragstart",
+				function (e) {
+					if (e.target.closest("img")) {
+						e.preventDefault();
+					}
+				},
+				{ passive: false },
+			);
 		</script>
 	</body>
 </html>
