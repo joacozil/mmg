@@ -34,6 +34,10 @@ const {
 						"__mmg_scrollY",
 						String(window.scrollY),
 					);
+					sessionStorage.setItem(
+						"__mmg_scrollPath",
+						window.location.pathname,
+					);
 				} catch (e) {}
 			});
 		</script>
@@ -45,11 +49,13 @@ const {
 			// deferred/module scripts). This gets us to ~the right position
 			// so GSAP's isScrolledPastHero check works correctly.
 			try {
+				var __savedPath = sessionStorage.getItem("__mmg_scrollPath");
 				var __y = parseInt(
 					sessionStorage.getItem("__mmg_scrollY") || "0",
 					10,
 				);
-				if (__y > 0) window.scrollTo(0, __y);
+				if (__y > 0 && __savedPath === window.location.pathname)
+					window.scrollTo(0, __y);
 			} catch (e) {}
 
 			// Smooth scroll to anchors

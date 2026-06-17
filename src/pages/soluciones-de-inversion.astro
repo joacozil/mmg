@@ -1,0 +1,137 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import PageHero from "../components/PageHero.astro";
+import IntroList from "../components/IntroList.astro";
+import SplitRow from "../components/SplitRow.astro";
+import FeaturesGrid from "../components/FeaturesGrid.astro";
+import MarketStack from "../components/MarketStack.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+
+import heroImg from "../assets/img/soluciones-hero.jpg";
+
+// Benefit icons — raw SVG markup (brand green, inlined via ?raw).
+import iconDelegacion from "../assets/img/delegacion.svg?raw";
+import iconProteccion from "../assets/img/proteccion.svg?raw";
+import iconMetodologia from "../assets/img/metodologia.svg?raw";
+import iconRespaldos from "../assets/img/respaldos.svg?raw";
+import iconMonitoreo from "../assets/img/monitoreo.svg?raw";
+
+const portafolioBeneficios = [
+  {
+    icon: iconDelegacion,
+    title: "Delegación experta",
+    text: "Tercerización de las decisiones diarias de inversión.",
+  },
+  {
+    icon: iconProteccion,
+    title: "Protección y control",
+    text: "Estrategias enfocadas en la gestión, control de riesgos y diversificación de activos.",
+  },
+  {
+    icon: iconMetodologia,
+    title: "Metodología probada",
+    text: "Robusto y riguroso proceso de adjudicación de activos.",
+  },
+  {
+    icon: iconRespaldos,
+    title: "Respaldados por expertos",
+    text: "Capacidades propietarias de análisis e investigación de mercado.",
+  },
+  {
+    icon: iconMonitoreo,
+    title: "Monitoreo continuo",
+    text: "Supervisión constante de la estrategia y retroalimentación periódica al inversionista.",
+  },
+];
+---
+
+<Layout
+  title="Soluciones de Inversión | MMG Bank"
+  description="Estrategias de inversión a la medida para optimizar sus portafolios y resguardar su capital con acceso a los principales mercados del mundo."
+>
+  <Header />
+
+  <PageHero
+    title="Soluciones de <br /> inversiones"
+    image={heroImg}
+    imageAlt="Asesores de MMG Bank en reunión con vista a la ciudad de Panamá"
+  />
+
+  <IntroList
+    title="Invierta globalmente <br /> con nosotros."
+    paragraphs={[
+      "Haga crecer su patrimonio con total tranquilidad, dejando el día a día de sus inversiones en manos de expertos.",
+      "Lo acompañamos en la toma de decisiones estratégicas para sus portafolios, asegurándonos de que cada inversión responda directamente a sus metas financieras y perfil de riesgo.",
+    ]}
+    items={[
+      "Mandatos de asesoría",
+      "Portafolios administrados",
+      "Negociación y cuentas de custodia",
+      "Acceso a mercados mundiales",
+      "Gestión de liquidez",
+    ]}
+  />
+
+  <section class="w-full bg-cream py-section-gap overflow-hidden">
+    <div class="container-custom">
+      <SplitRow
+        badge="Portafolios administrados"
+        title='<span class="text-black text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
+        text="Diseñados para brindar total tranquilidad a aquellos clientes que buscan invertir sus activos bajo los más altos estándares de profesionalismo, enfoque en sus metas y una rigurosa gestión de riesgos, dejando el día a día de sus inversiones en manos expertas."
+        class="mb-12 lg:mb-20"
+      />
+    </div>
+
+    <FeaturesGrid
+      title="Beneficios para clientes individuales"
+      items={portafolioBeneficios}
+    />
+  </section>
+
+  <section class="w-full bg-cream py-section-gap overflow-hidden">
+    <div class="container-custom">
+      <SplitRow
+        badge="Negociación, mercados y cuentas de custodia"
+        title='Desde Panamá hacia las principales bolsas del mundo: <span class="text-black text-h2!">a través de nuestra plataforma digital, conectamos su capital con oportunidades globales sin fronteras.</span>'
+        text="A través de nuestro modelo de arquitectura abierta, ofrecemos una plataforma integral que brinda acceso a instrumentos financieros en múltiples monedas (más de diez divisas), utilizando la tecnología más avanzada para la gestión de las posiciones de los clientes. Trabajamos con custodios de renombre mundial para dar servicio a los activos de manera eficiente, garantizando una custodia panameña, regional y global."
+      />
+
+      <MarketStack class="mt-16 lg:mt-24" />
+    </div>
+  </section>
+
+  <section class="w-full bg-cream py-section-gap overflow-hidden">
+    <div class="container-custom">
+      <SplitRow
+        badge="Gestión de liquidez"
+        title='No deje que su efectivo se quede estático; <span class="text-black text-h2!">optimice el rendimiento de sus saldos en efectivo en múltiples monedas de forma eficiente y segura.</span>'
+        text="Optimice el rendimiento y logre un manejo eficiente de sus saldos en efectivo en múltiples monedas de forma segura. Nuestras soluciones están diseñadas para ofrecer una mayor rentabilidad a corto plazo."
+      />
+
+      <ProcessSteps
+        class="mt-12 lg:mt-16"
+        items={[
+          {
+            title: "Depósitos a plazo fijo",
+            text: "Rendimiento garantizado a una tasa y plazo determinados.",
+          },
+          {
+            title: "Cuentas Cash Plus",
+            text: "Ahorro especial con mayor rendimiento y disponibilidad de fondos en un plazo de 15 días.",
+          },
+          {
+            title: "Instrumentos líquidos a corto plazo",
+            text: "Valores de bajo riesgo para rentabilizar excedentes manteniendo un acceso rápido al efectivo.",
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  <Contact />
+
+  <Footer />
+</Layout>

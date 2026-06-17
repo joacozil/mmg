@@ -1,5 +1,9 @@
 ---
-import LinkMore from "../LinkMore.astro";
+import { Image } from "astro:assets";
+import topSvg from "../assets/img/top.svg";
+import centerSvg from "../assets/img/center.svg";
+import bottomSvg from "../assets/img/bottom.svg";
+import LinkMore from "./LinkMore.astro";
 ---
 
 <section id="sostenibilidad" data-sostenibilidad-section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
@@ -39,47 +43,33 @@ import LinkMore from "../LinkMore.astro";
           Sostenibilidad
         </p>
 
-        <!-- Stacked discs (inline SVG so the viewBox drives sizing exactly).
-             Linked positions are the CSS defaults (no-JS / reduced-motion safe). -->
+        <!-- Stacked discs (raster-backed SVGs). Linked positions are the CSS
+             defaults (no-JS / reduced-motion safe); --spread drives the link. -->
         <div
           data-sostenibilidad-center
           data-disc-stack
-          class="relative w-full max-w-[320px] aspect-[409/254] lg:mt-4"
+          class="relative w-full max-w-[320px] aspect-[400/358] lg:mt-4"
         >
-            <svg
-              data-disc="bottom"
-              viewBox="0 0 409 166"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              class="absolute top-0 left-0 w-full h-auto z-10 will-change-transform"
-            >
-              <path d="M392.606 60.7941V81.1393C361.394 59.4423 288.923 44.2305 204.491 44.2305C120.06 44.2305 47.6063 59.4252 16.3764 81.1393V60.7941H0V105.009C0 138.581 91.5506 165.805 204.491 165.805C317.432 165.805 409 138.581 409 105.009V60.7941H392.606Z" fill="#09261B"></path>
-              <path d="M409 60.796C409 94.3681 317.449 121.592 204.491 121.592C91.5334 121.592 0 94.3681 0 60.796C0 27.2239 91.5506 0 204.491 0C317.432 0 409 27.2239 409 60.796Z" fill="#124734"></path>
-            </svg>
-            <svg
-              data-disc="center"
-              viewBox="0 0 409 166"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              class="absolute top-0 left-0 w-full h-auto z-20 will-change-transform"
-            >
-              <path d="M392.606 60.7784V81.1236C361.394 59.4267 288.923 44.2148 204.491 44.2148C120.06 44.2148 47.6063 59.4267 16.3764 81.1236V60.7784H0V104.994C0 138.566 91.5506 165.773 204.491 165.773C317.432 165.773 409 138.549 409 104.994V60.7784H392.606Z" fill="#00804E"></path>
-              <path d="M409 60.7789C409 94.351 317.449 121.575 204.491 121.575C91.5334 121.575 0 94.351 0 60.7789C0 27.2068 91.5506 0 204.491 0C317.432 0 409 27.2068 409 60.7789Z" fill="#00AC69"></path>
-            </svg>
-            <svg
-              data-disc="top"
-              viewBox="0 0 409 166"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Sostenibilidad"
-              class="absolute top-0 left-0 w-full h-auto z-30 will-change-transform"
-            >
-              <path d="M392.606 60.7941V81.1393C361.394 59.4423 288.923 44.2305 204.491 44.2305C120.06 44.2305 47.6063 59.4252 16.3935 81.1222V60.777H0V104.992C0 138.564 91.5506 165.788 204.491 165.788C317.432 165.788 409 138.564 409 104.992V60.777H392.606V60.7941Z" fill="#89BA99"></path>
-              <path d="M409 60.796C409 94.3681 317.449 121.592 204.491 121.592C91.5334 121.592 0 94.351 0 60.796C0 27.241 91.5506 0 204.491 0C317.432 0 409 27.2068 409 60.796Z" fill="#A6E2B9"></path>
-            </svg>
+          <Image
+            data-disc="bottom"
+            src={bottomSvg}
+            alt=""
+            aria-hidden="true"
+            class="absolute top-0 left-0 w-full h-auto z-10 will-change-transform"
+          />
+          <Image
+            data-disc="center"
+            src={centerSvg}
+            alt=""
+            aria-hidden="true"
+            class="absolute top-0 left-0 w-full h-auto z-20 will-change-transform"
+          />
+          <Image
+            data-disc="top"
+            src={topSvg}
+            alt="Sostenibilidad"
+            class="absolute top-0 left-0 w-full h-auto z-30 will-change-transform"
+          />
         </div>
 
         <!-- Legend for Mobile/Tablet only -->
@@ -155,10 +145,10 @@ import LinkMore from "../LinkMore.astro";
     transform: translateY(calc(var(--spread) * -30%));
   }
   [data-disc="center"] {
-    transform: translateY(26.63%);
+    transform: translateY(15%);
   }
   [data-disc="bottom"] {
-    transform: translateY(calc(53.27% + var(--spread) * 30%));
+    transform: translateY(calc(30% + var(--spread) * 30%));
   }
   @media (prefers-reduced-motion: reduce) {
     [data-disc-stack] {

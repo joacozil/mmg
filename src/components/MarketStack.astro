@@ -1,0 +1,174 @@
+---
+import { Image } from "astro:assets";
+import bottomSvg from "../assets/img/mercado-bottom.svg";
+import midSvg from "../assets/img/mercado-mid.svg";
+import topSvg from "../assets/img/mercado-top.svg";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+---
+
+<div data-market-stack class={`relative ${className}`}>
+  <!-- Tiered disc stack. Widths are each SVG's native width as a fraction of
+       the bottom disc (267/400, 201/400); --spread drives the assemble. -->
+  <div
+    data-disc-stack
+    class="relative mx-auto w-full max-w-90 aspect-400/335"
+  >
+    <Image
+      data-disc="bottom"
+      src={bottomSvg}
+      alt=""
+      aria-hidden="true"
+      class="absolute left-1/2 w-full h-auto z-10 will-change-transform"
+    />
+    <Image
+      data-disc="mid"
+      src={midSvg}
+      alt=""
+      aria-hidden="true"
+      class="absolute left-1/2 w-[76%] h-auto z-20 will-change-transform"
+    />
+    <Image
+      data-disc="top"
+      src={topSvg}
+      alt="Mercados: local, regional y principales bolsas del mundo"
+      class="absolute left-1/2 w-[56%] h-auto z-30 will-change-transform"
+    />
+  </div>
+
+  <!-- Legend (same format as Sostenibilidad): below on mobile, pinned right on desktop -->
+  <div
+    data-market-legend
+    class="market-legend mt-10 w-fit mx-auto lg:mt-0 lg:mx-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
+  >
+    <div class="legend-item">
+      <span class="uppercase text-p-small">Mercado local</span>
+      <span class="legend-swatch bg-light-green"></span>
+    </div>
+    <div class="legend-item">
+      <span class="uppercase text-p-small">Plaza regional</span>
+      <span class="legend-swatch bg-primary"></span>
+    </div>
+    <div class="legend-item">
+      <span class="uppercase text-p-small">Principales bolsas del mundo</span>
+      <span class="legend-swatch bg-darker-green"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* --spread: 1 = tiers expanded apart (start), 0 = nested into the pyramid.
+     --rest-mid / --rest-bottom are the resting top offsets that seat each tier
+     on the one below with no gap — tune these two if the seams aren't flush.
+     translateX(-50%) keeps each tier centered; translateY carries the spread. */
+  [data-disc-stack] {
+    --spread: 1;
+    --rest-mid: 10%;
+    --rest-bottom: 20%;
+  }
+  [data-disc="top"] {
+    top: 0;
+    transform: translateX(-50%) translateY(calc(var(--spread) * -55%));
+  }
+  [data-disc="mid"] {
+    top: var(--rest-mid);
+    transform: translateX(-50%) translateY(calc(var(--spread) * -12%));
+  }
+  [data-disc="bottom"] {
+    top: var(--rest-bottom);
+    transform: translateX(-50%) translateY(calc(var(--spread) * 20%));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-disc-stack] {
+      --spread: 0;
+    }
+  }
+
+  .market-legend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const stacks = document.querySelectorAll<HTMLElement>("[data-market-stack]");
+
+  if (stacks.length && !prefersReduced) {
+    stacks.forEach((stack) => {
+      const discStack = stack.querySelector<HTMLElement>("[data-disc-stack]");
+      const legendItems = stack.querySelectorAll(
+        "[data-market-legend] .legend-item",
+      );
+
+      // Start separated; nest on scroll.
+      if (discStack) gsap.set(discStack, { "--spread": 1 });
+      if (legendItems.length) gsap.set(legendItems, { opacity: 0, y: 15 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: stack,
+          start: "top 70%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+            if (discStack)
+              tl.to(
+                discStack,
+                { "--spread": 0, duration: 1.2, ease: "power3.inOut" },
+                0,
+              );
+            if (legendItems.length)
+              tl.to(
+                legendItems,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.7,
+                  stagger: 0.08,
+                  ease: "power3.out",
+                },
+                0.3,
+              );
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>

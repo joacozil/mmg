@@ -1,0 +1,211 @@
+---
+interface Props {
+  title: string; // heading; supports inline HTML (e.g. <br />)
+  paragraphs?: string[]; // left-column body copy; supports inline HTML
+  items: string[]; // right-column list labels (count is variable)
+  id?: string;
+  class?: string;
+}
+
+const {
+  title,
+  paragraphs = [],
+  items,
+  id,
+  class: className = "",
+} = Astro.props;
+---
+
+<section
+  id={id}
+  data-intro-list
+  class={`w-full bg-light-green py-section-gap overflow-hidden ${className}`}
+>
+  <div class="container-custom">
+    <!-- Heading -->
+    <h2
+      data-intro-heading
+      class="text-darker-green text-balance max-w-2xl lg:max-w-3xl mb-10 lg:mb-16"
+      set:html={title}
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
+      <!-- Left: body copy -->
+      {
+        paragraphs.length > 0 && (
+          <div data-intro-copy class="lg:col-span-3 flex flex-col gap-6">
+            {paragraphs.map((p) => (
+              <p set:html={p} />
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Right: arrow list (right ~60% of the section) -->
+      <ul class="intro-list lg:col-span-7 lg:col-start-6" role="list">
+        {
+          items.map((item) => (
+            <li data-intro-item class="intro-list__item">
+              <span class="intro-list__node" aria-hidden="true" />
+              <svg
+                class="intro-list__arrow text-primary"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+              <span
+                class="intro-list__label text-h4! uppercase text-black"
+                set:html={item}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro-list {
+    --line: rgba(242, 239, 238, 0.6);
+    --node: var(--color-cream);
+
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Closing node at the bottom-left of the last divider */
+  .intro-list::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--node);
+    transform: translateY(50%);
+  }
+
+  .intro-list__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 1024px) {
+    .intro-list__item {
+      gap: 1.5rem;
+      padding: 1.75rem 0;
+    }
+  }
+
+  /* Square node sitting at the left of each divider line */
+  .intro-list__node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--node);
+    transform: translateY(-50%);
+  }
+
+  .intro-list__arrow {
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .intro-list__arrow {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  // Handle every instance on the page so the component stays reusable.
+  const sections = document.querySelectorAll<HTMLElement>("[data-intro-list]");
+
+  if (sections.length && !prefersReduced) {
+    sections.forEach((section) => {
+      const heading = section.querySelector<HTMLElement>("[data-intro-heading]");
+      const copy = section.querySelector<HTMLElement>("[data-intro-copy]");
+      const items = section.querySelectorAll<HTMLElement>("[data-intro-item]");
+
+      const reveal = [heading, copy].filter(Boolean) as HTMLElement[];
+      if (reveal.length) gsap.set(reveal, { opacity: 0, y: 24 });
+      if (items.length) gsap.set(items, { opacity: 0, x: 24 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 70%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+            if (reveal.length)
+              tl.to(
+                reveal,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.8,
+                  stagger: 0.1,
+                  ease: "power3.out",
+                },
+                0,
+              );
+            if (items.length)
+              tl.to(
+                items,
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.7,
+                  stagger: 0.08,
+                  ease: "power3.out",
+                },
+                0.15,
+              );
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>

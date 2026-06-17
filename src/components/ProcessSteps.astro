@@ -1,0 +1,155 @@
+---
+interface Step {
+  title: string;
+  text: string; // supports inline HTML
+}
+
+interface Props {
+  items: Step[];
+  id?: string;
+  class?: string;
+}
+
+const { items, id, class: className = "" } = Astro.props;
+---
+
+<div
+  id={id}
+  data-process
+  class={`w-full bg-light-green rounded-lg p-8 lg:p-12 ${className}`}
+>
+  <div class="process-grid">
+    {
+      items.map((item) => (
+        <div data-process-item class="process-grid__item">
+          <div class="flex items-center gap-3 mb-3">
+            <svg
+              class="process-grid__arrow text-primary"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
+            <p class="text-p-small! font-bold uppercase text-darker-green">
+              {item.title}
+            </p>
+          </div>
+          <p class="text-p-small! text-darker-green" set:html={item.text} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .process-grid {
+    --line: rgba(18, 71, 52, 0.28);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 2.5rem;
+  }
+
+  .process-grid__item {
+    position: relative;
+  }
+
+  .process-grid__arrow {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Tablet: 2 columns with a vertical divider between them */
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .process-grid__item {
+      padding: 0 1.5rem;
+      border-left: 1px solid var(--line);
+    }
+    .process-grid__item:nth-child(2n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .process-grid__item:nth-child(2n) {
+      padding-right: 0;
+    }
+  }
+
+  /* Desktop: 3 columns with vertical dividers between them */
+  @media (min-width: 1024px) {
+    .process-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .process-grid__item {
+      padding: 0 2rem;
+      border-left: 1px solid var(--line);
+    }
+    .process-grid__item:nth-child(3n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .process-grid__item:nth-child(3n) {
+      padding-right: 0;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const blocks = document.querySelectorAll<HTMLElement>("[data-process]");
+
+  if (blocks.length && !prefersReduced) {
+    blocks.forEach((block) => {
+      const items = block.querySelectorAll<HTMLElement>("[data-process-item]");
+      if (items.length) gsap.set(items, { opacity: 0, y: 24 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: block,
+          start: "top 80%",
+          once: true,
+          onEnter: () => {
+            if (items.length)
+              gsap.to(items, {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                ease: "power3.out",
+              });
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>

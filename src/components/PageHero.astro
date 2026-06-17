@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  title: string; // supports inline HTML (e.g. <br /> for line breaks)
+  image: ImageMetadata;
+  imageAlt?: string;
+  caption?: string; // optional faint bottom-left label from the comp
+  class?: string;
+}
+
+const {
+  title,
+  image,
+  imageAlt = "",
+  caption,
+  class: className = "",
+} = Astro.props;
+---
+
+<!-- Full-bleed image; text aligns to the standard .container-custom. -->
+<section
+  data-page-hero
+  class={`page-hero relative flex w-full overflow-hidden bg-cream min-h-110 sm:min-h-125 lg:min-h-140 ${className}`}
+>
+  <!-- Background image (full width) -->
+  <Image
+    src={image}
+    alt={imageAlt}
+    widths={[768, 1200, 1600, 2000, 2400]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="absolute inset-0 h-full w-full object-cover"
+  />
+
+  <!-- Brand gradient overlay (full width) -->
+  <div class="page-hero__overlay absolute inset-0" aria-hidden="true"></div>
+
+  <!-- Content (container-aligned) -->
+  <div class="container-custom relative z-10 flex w-full flex-col py-12 lg:py-16">
+    <div class="flex flex-1 flex-col justify-center">
+      <h1
+        class="uppercase text-white max-w-[16rem] sm:max-w-lg lg:max-w-2xl"
+        set:html={title}
+      />
+    </div>
+
+    {
+      caption && (
+        <span
+          class="page-hero__caption uppercase text-p-small text-white select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          {caption}
+        </span>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  /* Brand hero gradient — Soluciones spec:
+     #124734 (solid, 0–20%) → #00AC69 transparent (100%), left → right. */
+  .page-hero__overlay {
+    background: linear-gradient(
+      to right,
+      var(--color-darker-green) 0%,
+      rgba(0, 172, 105, 0) 80%
+    );
+  }
+
+  /* Faint ghosted label as shown in the comp (decorative, aria-hidden). */
+  .page-hero__caption {
+    opacity: 0.4;
+  }
+</style>
+
+<script>
+  // Interior-page header controller.
+  // The homepage drives the header's sticky state + scroll-trigger init from
+  // its React HeroSection; interior pages built on PageHero need an equivalent
+  // so (a) the transparent header becomes the white sticky bar after the hero,
+  // and (b) sections gated on `hero-scroll-trigger-init` still animate.
+  const header = document.querySelector<HTMLElement>(".main-header");
+  const hero = document.querySelector<HTMLElement>("[data-page-hero]");
+
+  if (header && hero) {
+    const update = () => {
+      // Flip to sticky as the hero scrolls out (stay transparent while over it).
+      const threshold = Math.max(hero.offsetHeight - 80, 120);
+      header.classList.toggle("is-sticky", window.scrollY > threshold);
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+
+    // Signal readiness once so gated section animations (Contact, etc.) run.
+    if (!(window as any).heroScrollTriggerInitialized) {
+      (window as any).heroScrollTriggerInitialized = true;
+      window.dispatchEvent(new CustomEvent("hero-scroll-trigger-init"));
+    }
+  }
+</script>

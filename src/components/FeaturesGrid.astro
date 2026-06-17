@@ -1,0 +1,182 @@
+---
+interface FeatureItem {
+  icon: string; // inline SVG markup (should use currentColor)
+  title: string;
+  text: string;
+}
+
+interface Props {
+  title?: string; // small label above the grid
+  items: FeatureItem[];
+  id?: string;
+  class?: string;
+}
+
+const { title, items, id, class: className = "" } = Astro.props;
+---
+
+<div id={id} data-features-grid class={`w-full ${className}`}>
+  <div class="container-custom">
+    {
+      title && (
+        <p
+          data-features-badge
+          class="text-primary! uppercase font-bold mb-4 mb-8 lg:mb-12"
+        >
+          {title}
+        </p>
+      )
+    }
+
+    <div class="features-grid">
+      {
+        items.map((item) => (
+          <div data-features-item class="features-grid__item flex flex-col">
+            <div class="flex items-center gap-4 mb-3">
+              <span
+                class="features-grid__icon"
+                set:html={item.icon}
+                aria-hidden="true"
+              />
+              <p class=" font-bold uppercase text-black">
+                {item.title}
+              </p>
+            </div>
+            <p class="text-p-small! mt-1" set:html={item.text} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .features-grid {
+    --line: var(--color-primary);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 2.5rem;
+  }
+
+  .features-grid__item {
+    position: relative;
+  }
+
+  /* Uniform square box; each icon's viewBox scales to fit (preserveAspectRatio),
+     so mixed aspect ratios read at a consistent size and never clip. */
+  .features-grid__icon {
+    display: inline-block;
+    width: 2.8rem;
+    height: 2.8rem;
+    flex-shrink: 0;
+  }
+  .features-grid__icon :global(svg) {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Tablet: 2 columns with a vertical divider between them */
+  @media (min-width: 640px) and (max-width: 1023.98px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 3rem;
+    }
+    .features-grid__item {
+      padding: 0 1.5rem;
+      border-left: 1px solid var(--line);
+    }
+    .features-grid__item:nth-child(2n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .features-grid__item:nth-child(2n) {
+      padding-right: 0;
+    }
+  }
+
+  /* Desktop: 3 columns with vertical dividers between them */
+  @media (min-width: 1024px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 3.5rem;
+    }
+    .features-grid__item {
+      padding: 0 2rem;
+      border-left: 1px solid var(--line);
+    }
+    .features-grid__item:nth-child(3n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .features-grid__item:nth-child(3n) {
+      padding-right: 0;
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  // Handle every instance on the page so the component stays reusable.
+  const blocks = document.querySelectorAll<HTMLElement>("[data-features-grid]");
+
+  if (blocks.length && !prefersReduced) {
+    blocks.forEach((block) => {
+      const badge = block.querySelector<HTMLElement>("[data-features-badge]");
+      const items = block.querySelectorAll<HTMLElement>("[data-features-item]");
+
+      if (badge) gsap.set(badge, { opacity: 0, y: 20 });
+      if (items.length) gsap.set(items, { opacity: 0, y: 24 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: block,
+          start: "top 75%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+            if (badge)
+              tl.to(
+                badge,
+                { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+                0,
+              );
+            if (items.length)
+              tl.to(
+                items,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.7,
+                  stagger: 0.1,
+                  ease: "power3.out",
+                },
+                0.1,
+              );
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>
