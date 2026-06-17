@@ -1,7 +1,7 @@
 ---
 interface FeatureItem {
-  icon: string; // inline SVG markup (should use currentColor)
-  title: string;
+  icon?: string; // inline SVG markup (should use currentColor); falls back to an arrow
+  title: string; // supports inline HTML (e.g. <br />)
   text: string;
 }
 
@@ -33,14 +33,29 @@ const { title, items, id, class: className = "" } = Astro.props;
         items.map((item) => (
           <div data-features-item class="features-grid__item flex flex-col">
             <div class="flex items-center gap-4 mb-3">
-              <span
-                class="features-grid__icon"
-                set:html={item.icon}
-                aria-hidden="true"
-              />
-              <p class=" font-bold uppercase text-black">
-                {item.title}
-              </p>
+              {item.icon ? (
+                <span
+                  class="features-grid__icon"
+                  set:html={item.icon}
+                  aria-hidden="true"
+                />
+              ) : (
+                <svg
+                  class="features-grid__arrow text-primary"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                  />
+                </svg>
+              )}
+              <p class="font-bold uppercase text-black" set:html={item.title} />
             </div>
             <p class="text-p-small! mt-1" set:html={item.text} />
           </div>
@@ -76,6 +91,13 @@ const { title, items, id, class: className = "" } = Astro.props;
     width: 100%;
     height: 100%;
     display: block;
+  }
+
+  /* Arrow fallback when an item has no icon. */
+  .features-grid__arrow {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
   }
 
   /* Tablet: 2 columns with a vertical divider between them */
