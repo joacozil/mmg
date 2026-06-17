@@ -1,0 +1,140 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Card {
+  title: string;
+  text: string; // supports inline HTML
+}
+
+interface Props {
+  image: ImageMetadata;
+  imageAlt?: string;
+  imagePosition?: string; // object-position class, e.g. "object-[50%_30%]"
+  items: Card[];
+  id?: string;
+  class?: string;
+}
+
+const {
+  image,
+  imageAlt = "",
+  imagePosition = "object-center",
+  items,
+  id,
+  class: className = "",
+} = Astro.props;
+---
+
+<div id={id} data-media-cards class={`w-full ${className}`}>
+  <div class="container-custom">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
+      <!-- Image with a soft gradient washed over the top -->
+      <div
+        data-media-image
+        class="lg:col-span-8 relative overflow-hidden min-h-75 lg:min-h-0"
+      >
+        <Image
+          src={image}
+          alt={imageAlt}
+          widths={[480, 768, 1024, 1400]}
+          sizes="(min-width: 1024px) 58vw, 100vw"
+          class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
+        />
+        <div
+          class="media-cards__overlay absolute inset-0"
+          aria-hidden="true"
+        >
+        </div>
+      </div>
+
+      <!-- Cards (styling consistent with Services.astro) -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        {
+          items.map((card) => (
+            <div data-media-card class="bg-white p-6 md:p-8">
+              <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
+                {card.title}
+              </p>
+              <p class="text-p-small!" set:html={card.text} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Soft brand gradient: transparent (top-right) → deep forest (bottom-left). */
+  .media-cards__overlay {
+    background: linear-gradient(
+      to bottom left,
+      rgba(0, 172, 105, 0) 0%,
+      rgba(18, 71, 52, 0.5) 100%
+    );
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const blocks = document.querySelectorAll<HTMLElement>("[data-media-cards]");
+
+  if (blocks.length && !prefersReduced) {
+    blocks.forEach((block) => {
+      const image = block.querySelector<HTMLElement>("[data-media-image]");
+      const cards = block.querySelectorAll<HTMLElement>("[data-media-card]");
+
+      if (image) gsap.set(image, { opacity: 0, y: 24 });
+      if (cards.length) gsap.set(cards, { opacity: 0, x: 24 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: block,
+          start: "top 75%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+            if (image)
+              tl.to(
+                image,
+                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+                0,
+              );
+            if (cards.length)
+              tl.to(
+                cards,
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.7,
+                  stagger: 0.12,
+                  ease: "power3.out",
+                },
+                0.1,
+              );
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>

@@ -6,6 +6,7 @@ interface Props {
   title: string; // supports inline HTML (e.g. <br /> for line breaks)
   image: ImageMetadata;
   imageAlt?: string;
+  imagePosition?: string; // object-position class, e.g. "object-[70%_50%]"
   caption?: string; // optional faint bottom-left label from the comp
   class?: string;
 }
@@ -14,6 +15,7 @@ const {
   title,
   image,
   imageAlt = "",
+  imagePosition = "object-center",
   caption,
   class: className = "",
 } = Astro.props;
@@ -32,7 +34,7 @@ const {
     sizes="100vw"
     loading="eager"
     fetchpriority="high"
-    class="absolute inset-0 h-full w-full object-cover"
+    class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
   />
 
   <!-- Brand gradient overlay (full width) -->
