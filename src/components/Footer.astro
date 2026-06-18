@@ -295,9 +295,7 @@ import linkedinIcon from "../assets/img/linkedin.svg";
       >
         <!-- Panamá Info -->
         <div>
-          <h4
-            class="text-p-small! font-bold uppercase text-black hover:text-primary transition-colors cursor-pointer mb-2"
-          >
+          <h4 class="text-p-small! font-bold uppercase text-black mb-2">
             Panamá
           </h4>
           <p class="text-p-small! text-darker-green! mb-3">
@@ -325,9 +323,13 @@ import linkedinIcon from "../assets/img/linkedin.svg";
                   d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                 ></path>
               </svg>
-              <span class="text-p-small! text-darker-green! leading-normal"
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Ave.%20Paseo%20del%20Mar.%20Costa%20del%20Este%20MMG%20Tower%2C%20Piso%2022%2C%20Ciudad%20de%20Panam%C3%A1%2C%20Rep%C3%BAblica%20de%20Panam%C3%A1"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-p-small! text-darker-green! leading-normal hover:underline"
                 >Ave. Paseo del Mar. Costa del Este MMG Tower, Piso 22, Ciudad
-                de Panamá, República de Panamá.</span
+                de Panamá, República de Panamá.</a
               >
             </li>
 
@@ -398,9 +400,7 @@ import linkedinIcon from "../assets/img/linkedin.svg";
 
         <!-- Puerto Rico Info -->
         <div>
-          <h4
-            class="text-p-small! font-bold uppercase text-black hover:text-primary transition-colors cursor-pointer mb-2"
-          >
+          <h4 class="text-p-small! font-bold uppercase text-black mb-2">
             Puerto Rico
           </h4>
           <p class="text-p-small! text-darker-green! mb-3">
@@ -428,9 +428,13 @@ import linkedinIcon from "../assets/img/linkedin.svg";
                   d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                 ></path>
               </svg>
-              <span class="text-p-small! text-darker-green! leading-normal"
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=250%20Mu%C3%B1oz%20Rivera%20Avenue%2C%20Suite%20315%2C%20San%20Juan%2C%20Puerto%20Rico%2000918"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-p-small! text-darker-green! leading-normal hover:underline"
                 >250 Muñoz Rivera Avenue. Suite 315, San Juan, Puerto Rico
-                00918.</span
+                00918.</a
               >
             </li>
 
@@ -631,12 +635,15 @@ import linkedinIcon from "../assets/img/linkedin.svg";
     background-color: currentColor;
     transform: scaleX(0);
     transform-origin: right center;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
   }
 
   .footer-group-heading:hover .footer-heading-text::after {
     transform: scaleX(1);
     transform-origin: left center;
+    /* Delay on enter so quick fly-overs never trigger the underline */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
   }
 
   @media (prefers-reduced-motion: reduce) {

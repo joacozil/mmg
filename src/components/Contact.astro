@@ -275,12 +275,15 @@
     background-color: currentColor;
     transform: scaleX(0);
     transform-origin: right center;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
   }
 
   .btn-more:hover::after {
     transform: scaleX(1);
     transform-origin: left center;
+    /* Delay on enter so quick fly-overs never trigger the underline */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
   }
 
   @media (prefers-reduced-motion: reduce) {

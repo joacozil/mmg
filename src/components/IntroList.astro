@@ -47,20 +47,6 @@ const {
           items.map((item) => (
             <li data-intro-item class="intro-list__item">
               <span class="intro-list__node" aria-hidden="true" />
-              <svg
-                class="intro-list__arrow text-primary"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                />
-              </svg>
               <span
                 class="intro-list__label text-h4! uppercase text-black"
                 set:html={item}
@@ -82,7 +68,7 @@ const {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 2px solid var(--line);
   }
 
   /* Closing node at the bottom-left of the last divider */
@@ -103,7 +89,7 @@ const {
     align-items: center;
     gap: 1rem;
     padding: 1.5rem 0;
-    border-top: 1px solid var(--line);
+    border-top: 2px solid var(--line);
   }
 
   @media (min-width: 1024px) {
@@ -124,18 +110,6 @@ const {
     transform: translateY(-50%);
   }
 
-  .intro-list__arrow {
-    width: 2rem;
-    height: 2rem;
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 1024px) {
-    .intro-list__arrow {
-      width: 2.25rem;
-      height: 2.25rem;
-    }
-  }
 </style>
 
 <script>

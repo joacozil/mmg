@@ -23,20 +23,7 @@ const { items, id, class: className = "" } = Astro.props;
       items.map((item) => (
         <div data-process-item class="process-grid__item">
           <div class="flex items-center gap-3 mb-3">
-            <svg
-              class="process-grid__arrow text-primary"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-              />
-            </svg>
+            <span class="process-grid__square" aria-hidden="true" />
             <p class="text-p-small! font-bold uppercase text-darker-green">
               {item.title}
             </p>
@@ -62,9 +49,10 @@ const { items, id, class: className = "" } = Astro.props;
     position: relative;
   }
 
-  .process-grid__arrow {
-    width: 1.75rem;
-    height: 1.75rem;
+  .process-grid__square {
+    width: 0.9rem;
+    height: 0.9rem;
+    background-color: var(--color-primary);
     flex-shrink: 0;
   }
 
