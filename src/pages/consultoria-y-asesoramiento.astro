@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import PageHero from "../components/PageHero.astro";
+import IntroList from "../components/IntroList.astro";
 import SplitRow from "../components/SplitRow.astro";
 import MediaCards from "../components/MediaCards.astro";
 import FeaturesGrid from "../components/FeaturesGrid.astro";
@@ -11,6 +12,11 @@ import Footer from "../components/Footer.astro";
 
 import heroImg from "../assets/img/consultorias-hero.jpg";
 import asesoriaImg from "../assets/img/business-being-made.jpg";
+
+// Banner icons — raw SVG markup (sage fill, inlined via ?raw).
+import iconFinanciamiento from "../assets/img/financiamento-estructurado.svg?raw";
+import iconMercado from "../assets/img/mercado-de-cap.svg?raw";
+import iconGarantia from "../assets/img/garantia-de-valores.svg?raw";
 ---
 
 <Layout
@@ -23,6 +29,18 @@ import asesoriaImg from "../assets/img/business-being-made.jpg";
     title="Asesoría Corporativa <br /> y Estratégica"
     image={heroImg}
     imageAlt="Equipo de asesores de MMG Bank en reunión estratégica"
+  />
+
+  <IntroList
+    title="El respaldo que tu <br /> negocio necesita."
+    paragraphs={[
+      "MMG te acompaña en cada decisión estratégica, dándote el impulso y la asesoría que necesitas para llevar tu empresa al siguiente nivel.",
+    ]}
+    items={[
+      "Asesoría Corporativa y Estratégica",
+      "Soluciones de estructura de financiamiento",
+      "Financiamiento con garantía de valores",
+    ]}
   />
 
   <section class="w-full bg-cream py-section-gap overflow-hidden">
@@ -100,14 +118,17 @@ import asesoriaImg from "../assets/img/business-being-made.jpg";
     <ThreeColumnBanner
       items={[
         {
+          icon: iconFinanciamiento,
           title: "Financiamiento <br /> estructurado",
           text: "Ofrecemos asesoría financiera en estructuraciones complejas, incluyendo titularizaciones de activos generadores de flujo y préstamos sindicados. Además, asesoramos a gestores de activos financieros e inmobiliarios en la constitución de sociedades de inversión para fortalecer y escalar sus operaciones.",
         },
         {
+          icon: iconMercado,
           title: "Mercado <br /> de capitales",
           text: "Asesoramos a empresas que buscan acceder al mercado de capitales como fuente alternativa de financiamiento. Las acompañamos durante todo el proceso de diseño, estructuración, autorización y registro de emisiones ante los reguladores correspondientes para su distribución en Panamá y la región.",
         },
         {
+          icon: iconGarantia,
           title: "Financiamiento con <br /> garantía de valores",
           text: "Te ayudamos a optimizar el capital de tu empresa para maximizar tus retornos controlando el riesgo. En caso de querer financiarte a través del Mercado de Capitales, te llevamos de la mano en todo el proceso de diseño, registro y distribución de tus emisiones en Panamá y la región.",
         },
