@@ -2,31 +2,31 @@
 import { Image } from "astro:assets";
 import LinkMore from "./LinkMore.astro";
 
-import image2 from "../assets/img/soluciones-de-inversion.jpg";
-import image3 from "../assets/img/servicios-bancarios.jpg";
-import image1 from "../assets/img/asesoria-corporativa-y-estrategica.jpg";
+import imgSoluciones from "../assets/img/Banner Nuestra Estrategia.jpg";
+import imgServicios from "../assets/img/Banner Nuestra Estrategia-1.jpg";
+import imgAsesoria from "../assets/img/Banner Nuestra Estrategia-2.jpg";
 
 const services = [
   {
     title: "Soluciones de inversión",
     text: "Como sus gestores de activos, en MMG Bank nos enfocamos en optimizar sus portafolios y resguardar su capital mediante <strong>estrategias sólidas y diversificadas.</strong>",
-    image: image1,
+    image: imgSoluciones,
     href: "#",
     position: "object-center",
   },
   {
     title: "Servicios bancarios",
     text: "Respaldamos sus metas con una <strong>infraestructura operativa y de financiamiento sólida</strong>, diseñada exclusivamente para que usted proteja y preserve su capital con total tranquilidad.",
-    image: image2,
+    image: imgServicios,
     href: "#",
-    position: "object-[50%_100%]",
+    position: "object-center",
   },
   {
     title: "Asesoría corporativa y estratégica",
     text: "Respondemos con precisión a sus necesidades de crecimiento, financiamiento y estructura en la región. Le ofrecemos un <strong>respaldo estratégico y solidez indispensables</strong> para asegurar su expansión y liderazgo en el mercado.",
-    image: image3,
+    image: imgAsesoria,
     href: "#",
-    position: "object-[50%_90 %]",
+    position: "object-center",
   },
 ];
 ---
@@ -44,7 +44,7 @@ const services = [
             class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch"
           >
             <!-- Image Container -->
-            <div data-service-image class="md:col-span-8 relative min-h-[220px] md:min-h-0 overflow-hidden">
+            <div data-service-image class={`md:col-span-8 relative min-h-[220px] md:min-h-0 overflow-hidden ${i === 1 ? "md:order-2" : ""}`}>
               <Image
                 src={service.image}
                 alt={service.title}
@@ -53,7 +53,7 @@ const services = [
             </div>
 
             <!-- Content Card -->
-            <div data-service-card class="md:col-span-4 flex">
+            <div data-service-card class={`md:col-span-4 flex ${i === 1 ? "md:order-1" : ""}`}>
               <div class="bg-white p-6 md:p-8 flex flex-col justify-between w-full h-full">
                 <div>
                   <p class="text-darker-green uppercase font-bold text-p-large! mb-3">

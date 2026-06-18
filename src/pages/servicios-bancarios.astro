@@ -12,12 +12,12 @@ import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 
 import heroImg from "../assets/img/servicios-bancarios-hero.jpeg";
-import creditoImg from "../assets/img/business-people-working.jpg";
+import creditoImg from "../assets/img/office.jpeg";
 import tarjetaImg from "../assets/img/tarjeta.png";
 
 // Banner icons — raw SVG markup (sage fill, inlined via ?raw).
 import iconAvion from "../assets/img/avion.svg?raw";
-import iconSeguro from "../assets/img/seguro.svg?raw";
+import iconSeguro from "../assets/img/seguro-green.svg?raw";
 import iconEstrella from "../assets/img/estrella.svg?raw";
 ---
 
@@ -107,7 +107,7 @@ import iconEstrella from "../assets/img/estrella.svg?raw";
           <Image
             src={tarjetaImg}
             alt="Tarjeta MMG Bank Mastercard Black"
-            class="w-full max-w-96 h-auto"
+            class="w-full max-w-96 h-auto filter-[drop-shadow(0_1px_2px_rgba(0,0,0,0.12))_drop-shadow(0_5px_10px_rgba(0,0,0,0.16))]"
           />
         </div>
 
