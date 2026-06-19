@@ -16,7 +16,6 @@ export interface Achievement {
 
 interface GallerySectionProps {
   title: string;
-  subtitle?: string;
   achievements: Achievement[];
   /** How many cards are revealed before the "Ver todo" button. */
   initialCount?: number;
@@ -24,7 +23,6 @@ interface GallerySectionProps {
 
 export default function GallerySection({
   title,
-  subtitle,
   achievements,
   initialCount = 4,
 }: GallerySectionProps) {
@@ -75,7 +73,6 @@ export default function GallerySection({
           {/* Left: sticky title + subtitle */}
           <div className="lg:sticky lg:top-32 lg:self-start">
             <h2 className="text-primary">{title}</h2>
-            {subtitle && <p className="mt-6 max-w-md">{subtitle}</p>}
           </div>
 
           {/* Right: scrolling stack of achievement cards */}

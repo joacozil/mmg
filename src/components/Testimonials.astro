@@ -55,45 +55,8 @@ const testimonials = [
       </div>
     </div>
 
-    <!-- Custom Swiper Navigation Arrows -->
-    <div data-testimonials-nav class="flex items-center justify-center gap-4 mt-12">
-      <button
-        data-testimonials-prev
-        class="swiper-prev-btn flex items-center justify-center w-12 h-12 border border-black/25 text-black hover:bg-primary hover:border-primary hover:text-white transition-colors duration-300 cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-5 h-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"></path>
-        </svg>
-      </button>
-      <button
-        data-testimonials-next
-        class="swiper-next-btn flex items-center justify-center w-12 h-12 border border-black/25 text-black hover:bg-primary hover:border-primary hover:text-white transition-colors duration-300 cursor-pointer"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-5 h-5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-        </svg>
-      </button>
-    </div>
+    <!-- Line-style pagination indicators -->
+    <div data-testimonials-pagination class="testimonials-pagination"></div>
   </div>
 </section>
 
@@ -104,21 +67,39 @@ const testimonials = [
     height: auto;
   }
 
-  /* Style disabled navigation buttons */
-  .swiper-prev-btn:disabled,
-  .swiper-next-btn:disabled {
-    opacity: 0.3;
-    pointer-events: none;
-    cursor: not-allowed;
+  /* Line-style pagination (matches the Team slider): the active line grows
+     and turns brand green; inactive lines stay short and muted. */
+  .testimonials-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 10;
+  }
+  :global(.testimonials-pagination .swiper-pagination-bullet) {
+    width: 24px;
+    height: 3px;
+    background-color: rgba(18, 71, 52, 0.25) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 1 !important;
+    cursor: pointer;
+  }
+  :global(.testimonials-pagination .swiper-pagination-bullet-active) {
+    width: 48px;
+    background-color: var(--color-primary) !important;
   }
 </style>
 
 <script>
   import Swiper from "swiper";
-  import { Autoplay, Navigation } from "swiper/modules";
+  import { Autoplay, Pagination } from "swiper/modules";
   import "swiper/css";
   import "swiper/css/autoplay";
-  import "swiper/css/navigation";
+  import "swiper/css/pagination";
 
   // Initialize Swiper on component load
   const swiperEl = document.querySelector<HTMLElement>(".testimonials-swiper");
@@ -126,15 +107,15 @@ const testimonials = [
 
   if (swiperEl) {
     swiper = new Swiper(".testimonials-swiper", {
-      modules: [Autoplay, Navigation],
+      modules: [Autoplay, Pagination],
       loop: false, // Not infinite loop
       autoplay: {
         delay: 5000,
         disableOnInteraction: false,
       },
-      navigation: {
-        nextEl: ".swiper-next-btn",
-        prevEl: ".swiper-prev-btn",
+      pagination: {
+        el: ".testimonials-pagination",
+        clickable: true,
       },
       slidesPerView: 1,
       spaceBetween: 24,

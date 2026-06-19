@@ -1,5 +1,7 @@
 ---
 // src/components/Contact.astro
+import { Image } from "astro:assets";
+import textureImage from "../assets/img/building-texture-2.svg";
 ---
 
 <section
@@ -7,7 +9,19 @@
   data-contact-section
   class="w-full bg-cream pt-0 pb-section-gap relative overflow-x-clip"
 >
-  <div class="container-custom">
+  <!-- Absolute building texture anchored to the bottom-left, behind the form. -->
+  <div
+    class="absolute bottom-0 left-0 hidden lg:block w-[280px] pointer-events-none z-0 select-none"
+  >
+    <Image
+      src={textureImage}
+      alt="Textura de arquitectura de fondo"
+      data-contact-texture
+      class="w-full h-auto object-contain"
+    />
+  </div>
+
+  <div class="container-custom relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
       <!-- Left Column: Title / Tagline -->
       <div data-contact-left class="lg:col-span-6 flex flex-col justify-start">
@@ -210,10 +224,16 @@
   const section = document.querySelector<HTMLElement>("[data-contact-section]");
   if (section && !prefersReduced) {
     const leftCol = section.querySelector<HTMLElement>("[data-contact-left]");
+    const texture = section.querySelector<HTMLElement>(
+      "[data-contact-texture]",
+    );
 
     // Set initial hidden states immediately to avoid visual jump (FOUC)
     if (leftCol) {
       gsap.set(leftCol, { opacity: 0, x: -40 });
+    }
+    if (texture) {
+      gsap.set(texture, { opacity: 0, y: 20 });
     }
 
     const createTriggers = () => {
@@ -229,6 +249,16 @@
               x: 0,
               duration: 0.9,
               ease: "power3.out",
+            });
+          }
+          // Building texture fade-in
+          if (texture) {
+            gsap.to(texture, {
+              opacity: 1,
+              y: 0,
+              duration: 1.1,
+              ease: "power3.out",
+              delay: 0.2,
             });
           }
         },

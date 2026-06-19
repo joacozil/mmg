@@ -17,10 +17,9 @@ const metrics = [
   data-stats-section
   class="w-full bg-light-green py-section-gap relative overflow-hidden"
 >
-  <!-- Absolute texture image: flipped to the bottom-right on mobile & tablet so
-       it doesn't cover the full-width metrics; back to the bottom-left on lg. -->
+  <!-- Absolute texture image anchored to the bottom-left, desktop only. -->
   <div
-    class="absolute bottom-0 right-0 -scale-x-100 lg:left-0 lg:right-auto lg:scale-x-100 w-[100px] sm:w-[150px] md:w-[200px] pointer-events-none z-0 select-none"
+    class="absolute bottom-0 left-0 hidden lg:block w-[280px] pointer-events-none z-0 select-none"
   >
     <Image
       src={textureImage}

@@ -5,10 +5,10 @@ import GallerySection from "./GallerySection.tsx";
 import imgHito1 from "../assets/img/hito-1.jpeg";
 import imgHito2 from "../assets/img/hito-2.jpeg";
 import imgHito3 from "../assets/img/hito-3.jpeg";
-import imgHito4 from "../assets/img/hito-4.jpeg";
+import imgAccion from "../assets/img/chart.jpg";
 // Placeholder images for the remaining achievements (swap these out later)
 import imgColleagues from "../assets/img/servicios-bancarios.jpg";
-import imgTeamWork from "../assets/img/soluciones-de-inversion.jpg";
+import imgBonoVerde from "../assets/img/TorreMorganMorgan.jpeg";
 import imgChart from "../assets/img/report.jpg";
 import imgContract from "../assets/img/asesoria-corporativa-y-estrategica.jpg";
 import imgForo from "../assets/img/foro.jpg";
@@ -36,7 +36,7 @@ const achievements = [
       "Participante del programa de Creadores de Mercado de la Deuda soberana doméstica Panamá.",
   },
   {
-    src: imgHito4.src,
+    src: imgAccion.src,
     alt: "Primer creador privado para una acción corporativa",
     year: "2016",
     description: "Primer creador privado para una acción corporativa.",
@@ -45,7 +45,7 @@ const achievements = [
   {
     src: imgChart.src,
     alt: "Emisiones públicas de MMG Bank",
-    year: "",
+    year: "2016",
     description:
       "+50 emisiones públicas de 35 emisores distintos, más de 4,000 millones de dólares recaudados.",
   },
@@ -57,7 +57,7 @@ const achievements = [
       "Pioneros en la integración de los mercados regionales mediante el programa Operador Remoto entre la Bolsa de Valores Latinoamericana de Valores y la Bolsa de Valores de El Salvador.",
   },
   {
-    src: imgTeamWork.src,
+    src: imgBonoVerde.src,
     alt: "Primer Bono Verde en Centroamérica",
     year: "2019",
     description:
@@ -82,8 +82,7 @@ const achievements = [
 
 <GallerySection
   client:load
-  title="Nuestros logros"
-  subtitle="Hitos que reflejan nuestro compromiso con el crecimiento sostenible de la región."
+  title="Los momentos que forjan nuestra identidad. Una mirada a nuestra historia, nuestros logros y el compromiso que define nuestro rumbo."
   achievements={achievements}
   initialCount={4}
 />

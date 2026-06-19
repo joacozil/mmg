@@ -1,146 +1,24 @@
 ---
 import mapSvgRaw from "../assets/img/map.svg?raw";
-import LinkMore from "./LinkMore.astro";
-import SplitRow from "./SplitRow.astro";
+import WorldMap from "./WorldMap.tsx";
 
-/* Location marker centers (from SVG coordinate space 1684×819) */
-const pulseCenter = { x: 445, y: 393 };
-
-const locations = [
-  { name: "Panamá", x: 421, y: 422, labelX: 180, side: "left" },
-  { name: "Bahamas", x: 445, y: 359, labelX: 570, side: "right" },
-  { name: "Puerto Rico", x: 494, y: 399, labelX: 570, side: "right" },
-];
-
-const legend = [
-  {
-    label: "Licencia bancarias",
-    fill: "var(--color-primary)",
-    stroke: null,
-  },
-  {
-    label: "Custodio y Partners",
-    fill: "var(--color-primary)",
-    stroke: "var(--color-light-green)",
-  },
-  {
-    label: "Clientes",
-    fill: "var(--color-darker-green)",
-    stroke: "var(--color-light-green)",
-  },
-];
+const title = "Soluciones globales para clientes ambiciosos.";
+const text =
+  "Nuestra propia sólida trayectoria nos permite operar en tres territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>, conectándote con mercados estratégicos para que tú y tu patrimonio sigan cruzando fronteras.";
 ---
 
-<section
-  data-map-section
-  class="w-full bg-cream pt-section-gap pb-0 overflow-hidden"
->
-  <!-- Header -->
-  <div class="container-custom">
-    <div data-map-header>
-      <SplitRow
-        title="Soluciones globales para clientes ambiciosos."
-        text="Nuestra propia sólida trayectoria nos permite operar en tres territorios clave: <strong>Panamá, Bahamas y Puerto Rico</strong>, conectándote con mercados estratégicos para que tú y tu patrimonio sigan cruzando fronteras."
-        class="mb-12 lg:mb-16"
-      />
-    </div>
-  </div>
+<WorldMap client:visible mapSvg={mapSvgRaw} title={title} text={text} />
 
-  <!-- Map area -->
-  <div class="map-wrapper">
-    <div class="map-container-zoom">
-      <div class="map-inner">
-        <!-- Base dotted map -->
-        <div data-map-svg class="map-svg" set:html={mapSvgRaw} />
-
-        <!-- Pulse + labels overlay (same viewBox as the map SVG) -->
-        <svg
-          data-map-overlay
-          class="map-overlay"
-          viewBox="0 0 1684 819"
-          preserveAspectRatio="xMidYMid meet"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <!-- Static concentric rings -->
-          <circle
-            class="static-ring"
-            cx={pulseCenter.x}
-            cy={pulseCenter.y}
-            r="30"
-          />
-          <circle
-            class="static-ring"
-            cx={pulseCenter.x}
-            cy={pulseCenter.y}
-            r="110"
-          />
-          <circle
-            class="static-ring"
-            cx={pulseCenter.x}
-            cy={pulseCenter.y}
-            r="200"
-          />
-
-          <!-- Label lines + text -->
-          {
-            locations.map((loc) => (
-              <>
-                <line
-                  data-map-line
-                  x1={loc.x}
-                  y1={loc.y}
-                  x2={loc.labelX}
-                  y2={loc.y}
-                  data-target-x2={loc.labelX}
-                  stroke="var(--color-black)"
-                  opacity="0.4"
-                />
-                <text
-                  data-map-label
-                  x={loc.side === "left" ? loc.labelX - 10 : loc.labelX + 10}
-                  y={loc.y}
-                  alignment-baseline="middle"
-                  text-anchor={loc.side === "left" ? "end" : "start"}
-                  fill="var(--color-black)"
-                >
-                  {loc.name}
-                </text>
-              </>
-            ))
-          }
-        </svg>
-      </div>
-    </div>
-
-    <!-- Legend -->
-    <div class="container-custom relative">
-      <div class="map-legend">
-        {
-          legend.map((item) => (
-            <div data-legend-item class="legend-item">
-              <span class="uppercase text-p-small!">{item.label}</span>
-              <span
-                class="legend-swatch"
-                style={`background-color: ${item.fill}; ${item.stroke ? `border: 3px solid ${item.stroke};` : ""}`}
-              />
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>  /* ── Map wrapper ─────────────────────────────── */
-  .map-wrapper {
+<style is:global>
+  /* ── Map wrapper ─────────────────────────────── */
+  .wm .wm-wrapper {
     position: relative;
     width: 100%;
     margin-bottom: 5.5rem;
   }
 
   @media (min-width: 1024px) {
-    .map-wrapper {
+    .wm .wm-wrapper {
       margin-left: auto;
       margin-right: auto;
       padding-left: var(--element-padding);
@@ -150,47 +28,49 @@ const legend = [
   }
 
   /* ── Map zoom container ──────────────────────── */
-  .map-container-zoom {
+  .wm .wm-zoom {
     position: relative;
     width: 100%;
   }
 
-  .map-inner {
+  .wm .wm-inner {
     position: relative;
     width: 100%;
   }
 
   @media (max-width: 1023px) {
-    .map-container-zoom {
+    .wm .wm-zoom {
       height: auto;
       overflow: hidden;
     }
-    .map-inner {
+    .wm .wm-inner {
       width: 170%;
       transform: none;
     }
   }
 
   @media (max-width: 639px) {
-    .map-container-zoom {
+    .wm .wm-zoom {
       height: auto;
       overflow: hidden;
     }
-    .map-inner {
+    .wm .wm-inner {
       width: 200%;
       transform: none;
     }
   }
 
-  /* Make the inlined SVG responsive */
-  .map-svg :global(svg) {
+  /* Make the inlined SVG responsive + monochromatic (neutralizes the
+     light/primary greens and the radial-gradient clusters in one pass). */
+  .wm .wm-svg svg {
     display: block;
     width: 100%;
     height: auto;
+    filter: grayscale(1);
   }
 
   /* Overlay sits exactly on top of the map */
-  .map-overlay {
+  .wm .wm-overlay {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -198,226 +78,51 @@ const legend = [
     pointer-events: none;
   }
 
-  /* ── Static concentric rings ─────────────────── */
-  .static-ring {
+  /* ── Expansion arcs from Panama ──────────────── */
+  .wm .wm-arc {
     fill: none;
     stroke: var(--color-primary);
-    stroke-width: 1;
-    opacity: 0.25;
+    opacity: 0.4;
+    /* non-scaling-stroke keeps the line a true 2px regardless of how the
+       SVG viewBox is scaled to the container. */
+    vector-effect: non-scaling-stroke;
+    stroke-width: 2px;
+    stroke-linecap: round;
   }
 
-  /* ── Legend ───────────────────────────────────── */
-  .map-legend {
-    position: absolute;
-    bottom: -4.5rem;
-    right: var(--element-padding);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.5rem;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-  }
-
-  .legend-swatch {
-    width: 14px;
-    height: 14px;
-    display: block;
-    flex-shrink: 0;
-    box-sizing: border-box;
+  /* Marker squares at the end of every arc and at each hub. */
+  .wm .wm-arc-dot {
+    fill: var(--color-primary);
   }
 
   /* ── Map Labels & Lines ───────────────────────── */
-  [data-map-label] {
+  .wm [data-map-label] {
     font-size: 18px;
     font-weight: 500;
   }
-  [data-map-line] {
+  .wm [data-map-line] {
     stroke-width: 0.8px;
   }
 
   @media (max-width: 1023px) {
-    [data-map-label] {
+    .wm [data-map-label] {
       font-size: 16px;
     }
-    [data-map-line] {
-      stroke-width: 1.0px;
+    .wm [data-map-line] {
+      stroke-width: 1px;
     }
   }
 
   @media (max-width: 639px) {
-    [data-map-label] {
+    .wm [data-map-label] {
       font-size: 26px;
     }
-    [data-map-line] {
+    .wm [data-map-line] {
       stroke-width: 1.4px;
     }
-  }
 
-  /* ── Responsive adjustments ──────────────────── */
-  @media (max-width: 639px) {
-    .map-wrapper {
+    .wm .wm-wrapper {
       margin-bottom: 4.5rem;
-    }
-
-    .map-legend {
-      bottom: -3.5rem;
     }
   }
 </style>
-
-<script>
-  import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const prefersReduced = window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
-
-  const section = document.querySelector<HTMLElement>("[data-map-section]");
-  if (section && !prefersReduced) {
-    const header = section.querySelector<HTMLElement>("[data-map-header]");
-    const mapSvg = section.querySelector<HTMLElement>("[data-map-svg]");
-    const overlay = section.querySelector<HTMLElement>("[data-map-overlay]");
-    const lines = section.querySelectorAll<SVGLineElement>("[data-map-line]");
-    const labels = section.querySelectorAll<SVGTextElement>("[data-map-label]");
-    const legendItems =
-      section.querySelectorAll<HTMLElement>("[data-legend-item]");
-
-    // Set initial hidden states immediately to avoid visual jump (FOUC)
-    if (header) {
-      gsap.set(header, { opacity: 0, y: 30 });
-    }
-    if (overlay) {
-      gsap.set(overlay, { opacity: 0 });
-    }
-    lines.forEach((line) => {
-      const x1 = line.getAttribute("x1");
-      if (x1) {
-        gsap.set(line, { attr: { x2: x1 }, opacity: 0 });
-      }
-    });
-    labels.forEach((label) => {
-      gsap.set(label, { opacity: 0 });
-    });
-    legendItems.forEach((item) => {
-      gsap.set(item, { opacity: 0, y: 15 });
-    });
-
-    const createTriggers = () => {
-      // 1. Trigger for Title/Header slide-up and fade-in
-      if (header) {
-        ScrollTrigger.create({
-          trigger: header,
-          start: "top 60%",
-          once: true,
-          onEnter: () => {
-            gsap.to(header, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-            });
-          },
-        });
-      }
-
-      // 2. Trigger for Map and overlay lines/text/legend
-      if (mapSvg) {
-        ScrollTrigger.create({
-          trigger: mapSvg,
-          start: "top 50%",
-          once: true,
-          onEnter: () => {
-            const tl = gsap.timeline();
-
-            // A. Fade in overlay (mapSvg is static and visible from start)
-            tl.addLabel("mapExpand");
-            if (overlay) {
-              tl.to(
-                overlay,
-                {
-                  opacity: 1,
-                  duration: 0.6,
-                },
-                "mapExpand",
-              );
-            }
-
-            // B. Draw location indicator lines and fade in text labels (staggered dynamically)
-            lines.forEach((line, index) => {
-              const targetX2 = line.getAttribute("data-target-x2");
-              const label = labels[index];
-              const delayOffset = index * 0.15;
-
-              if (targetX2) {
-                tl.to(
-                  line,
-                  {
-                    attr: { x2: targetX2 },
-                    opacity: 0.4,
-                    duration: 0.6,
-                    ease: "power2.out",
-                  },
-                  `mapExpand+=${0.4 + delayOffset}`,
-                );
-              }
-
-              if (label) {
-                tl.to(
-                  label,
-                  {
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: "power2.out",
-                  },
-                  `mapExpand+=${0.8 + delayOffset}`,
-                );
-              }
-            });
-
-            // C. Stagger legend item cards in
-            if (legendItems.length > 0) {
-              tl.to(
-                legendItems,
-                {
-                  opacity: 1,
-                  y: 0,
-                  duration: 0.6,
-                  stagger: 0.1,
-                  ease: "power3.out",
-                },
-                "mapExpand+=1.0",
-              );
-            }
-          },
-        });
-      }
-
-      // Recalculate ScrollTrigger coordinates now that Hero pin is set up
-      ScrollTrigger.refresh();
-    };
-
-    const initTriggers = () => {
-      // Defer to allow React hydration/rendering and pin spacing layout to settle completely
-      requestAnimationFrame(() => {
-        setTimeout(createTriggers, 100);
-      });
-    };
-
-    // Initialize ScrollTriggers immediately if Hero is already loaded, otherwise wait
-    if ((window as any).heroScrollTriggerInitialized) {
-      initTriggers();
-    } else {
-      window.addEventListener("hero-scroll-trigger-init", initTriggers, {
-        once: true,
-      });
-    }
-  }
-</script>
