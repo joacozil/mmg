@@ -328,6 +328,12 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
   /* Drawer Menu Panel classes */
   #drawer-menu {
     background: var(--gradient-green);
+    /* Keep the drawer scrollable on short screens, but hide the scrollbar. */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / old Edge */
+  }
+  #drawer-menu::-webkit-scrollbar {
+    display: none; /* Chrome / Safari */
   }
   #drawer-menu.is-active {
     transform: none !important;
