@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import textureImage from "../assets/img/building-texture.png";
+import textureImage from "../assets/img/building-texture-2.svg";
 import LinkMore from "./LinkMore.astro";
 
 const metrics = [
@@ -15,7 +15,7 @@ const metrics = [
 <section
   id="cliente"
   data-stats-section
-  class="w-full bg-light-green py-section-gap relative overflow-hidden"
+  class="w-full bg-darker-green! text-white py-section-gap relative overflow-hidden"
 >
   <!-- Absolute texture image anchored to the bottom-left, desktop only. -->
   <div
@@ -36,11 +36,11 @@ const metrics = [
         data-stats-left
         class="lg:col-span-5 flex flex-col justify-start lg:max-w-[480px]"
       >
-        <p class="font-bold">
+        <p class="font-bold text-white!">
           En MMG Bank somos tu socio estratégico en asesoría financiera,
           diseñados para acompañarte en tu evolución y expansión.
         </p>
-        <p class="mt-4">
+        <p class="mt-4 text-white!">
           Como sus gestores de activos, en MMG Bank nos enfocamos en optimizar
           sus portafolios y resguardar su capital mediante estrategias sólidas y
           diversificadas.
@@ -64,19 +64,19 @@ const metrics = [
               />
               <span
                 data-stat-value={metric.value}
-                class="font-light font-bornia whitespace-nowrap shrink-0 text-h1! md:text-h2!"
+                class="font-light font-bornia whitespace-nowrap shrink-0 text-h1! md:text-h2! text-white!"
                 set:html={
                   metric.value.includes("USD")
                     ? metric.value.replace(
                         "USD",
-                        '<span class="text-[0.55em] font-normal ml-1 inline-block align-baseline">USD</span>',
+                        '<span class="text-[0.55em] text-white! font-normal ml-1 inline-block align-baseline">USD</span>',
                       )
-                    : metric.value
+                    : metric.value 
                 }
               />
               <span
                 data-stat-label
-                class="font-bold text-left lg:text-right uppercase"
+                class="font-bold text-left lg:text-right uppercase text-white!"
               >
                 {metric.label}
               </span>
@@ -160,7 +160,7 @@ const metrics = [
     if (suffix.includes("USD")) {
       htmlSuffix = suffix.replace(
         "USD",
-        `<span class="text-[0.55em] font-normal ml-1 inline-block align-baseline">USD</span>`,
+        `<span class="text-[0.55em] font-normal ml-1 inline-block align-baseline text-white!">USD</span>`,
       );
     }
     return `${prefix}${valStr}${htmlSuffix}`;

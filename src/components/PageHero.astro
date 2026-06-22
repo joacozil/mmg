@@ -7,7 +7,6 @@ interface Props {
   image: ImageMetadata;
   imageAlt?: string;
   imagePosition?: string; // object-position class, e.g. "object-[70%_50%]"
-  caption?: string; // optional faint bottom-left label from the comp
   class?: string;
 }
 
@@ -16,7 +15,6 @@ const {
   image,
   imageAlt = "",
   imagePosition = "object-center",
-  caption,
   class: className = "",
 } = Astro.props;
 ---
@@ -48,17 +46,6 @@ const {
         set:html={title}
       />
     </div>
-
-    {
-      caption && (
-        <span
-          class="page-hero__caption uppercase text-p-small text-white select-none pointer-events-none"
-          aria-hidden="true"
-        >
-          {caption}
-        </span>
-      )
-    }
   </div>
 </section>
 
@@ -71,11 +58,6 @@ const {
       var(--color-darker-green) 0%,
       rgba(0, 172, 105, 0) 80%
     );
-  }
-
-  /* Faint ghosted label as shown in the comp (decorative, aria-hidden). */
-  .page-hero__caption {
-    opacity: 0.4;
   }
 </style>
 

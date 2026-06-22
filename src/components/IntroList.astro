@@ -19,13 +19,13 @@ const {
 <section
   id={id}
   data-intro-list
-  class={`w-full bg-light-green py-section-gap overflow-hidden ${className}`}
+  class={`w-full bg-darker-green  py-section-gap overflow-hidden ${className}`}
 >
   <div class="container-custom">
     <!-- Heading -->
     <h2
       data-intro-heading
-      class="text-darker-green text-balance max-w-2xl lg:max-w-3xl mb-10 lg:mb-16"
+      class="text-white text-balance max-w-2xl lg:max-w-3xl mb-10 lg:mb-16"
       set:html={title}
     />
 
@@ -33,9 +33,9 @@ const {
       <!-- Left: body copy -->
       {
         paragraphs.length > 0 && (
-          <div data-intro-copy class="lg:col-span-3 flex flex-col gap-6">
+          <div data-intro-copy class="lg:col-span-3 flex flex-col gap-6 ">
             {paragraphs.map((p) => (
-              <p set:html={p} />
+              <p class="text-white!" set:html={p} />
             ))}
           </div>
         )
@@ -48,7 +48,7 @@ const {
             <li data-intro-item class="intro-list__item">
               <span class="intro-list__node" aria-hidden="true" />
               <span
-                class="intro-list__label text-h4! uppercase text-black"
+                class="intro-list__label text-h4! uppercase text-white!"
                 set:html={item}
               />
             </li>

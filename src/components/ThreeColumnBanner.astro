@@ -5,6 +5,7 @@ interface BannerItem {
   icon?: string; // raw SVG markup; falls back to an arrow
   title: string;
   text: string; // supports inline HTML
+  bullets?: string[]; // optional bullet list below the text
   buttonLabel?: string; // omit to render the item without a button
   buttonHref?: string;
 }
@@ -51,9 +52,22 @@ const { items, id, class: className = "" } = Astro.props;
                 <p class="text-white! font-bold uppercase" set:html={item.title} />
               </div>
               <p
-                class:list={["text-p-small! text-white!", item.buttonLabel && "mb-6"]}
+                class:list={[
+                  "text-p-small! text-white!",
+                  (item.bullets?.length || item.buttonLabel) && "mb-6",
+                ]}
                 set:html={item.text}
               />
+              {item.bullets?.length && (
+                <ul
+                  class:list={["banner-grid__bullets", item.buttonLabel && "mb-6"]}
+                  role="list"
+                >
+                  {item.bullets.map((bullet) => (
+                    <li class="text-p-small! text-white!" set:html={bullet} />
+                  ))}
+                </ul>
+              )}
               {item.buttonLabel && (
                 <LinkMore
                   href={item.buttonHref ?? "#"}
@@ -104,6 +118,26 @@ const { items, id, class: className = "" } = Astro.props;
     width: 1.75rem;
     height: 1.75rem;
     flex-shrink: 0;
+  }
+
+  /* Bullet list under the paragraph copy. */
+  .banner-grid__bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .banner-grid__bullets li {
+    position: relative;
+    padding-left: 1rem;
+  }
+  .banner-grid__bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 
   /* Equal-width columns: equal padding on EVERY column (outer sides included),

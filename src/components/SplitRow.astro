@@ -1,7 +1,7 @@
 ---
 interface Props {
   title: string;
-  text: string;
+  text?: string; // omit to render the heading alone (full left column)
   badge?: string; // optional small label above the heading
   class?: string;
 }
@@ -24,8 +24,12 @@ const { title, text, badge, class: className = "" } = Astro.props;
     <slot />
   </div>
 
-  <!-- Right Column: Paragraph text -->
-  <div class="lg:col-span-5 flex items-start lg:justify-end w-full">
-    <p class="lg:max-w-[400px] w-full" set:html={text} />
-  </div>
+  <!-- Right Column: Paragraph text (omitted when no text is provided) -->
+  {
+    text && (
+      <div class="lg:col-span-5 flex items-start lg:justify-end w-full">
+        <p class="lg:max-w-100 w-full" set:html={text} />
+      </div>
+    )
+  }
 </div>
