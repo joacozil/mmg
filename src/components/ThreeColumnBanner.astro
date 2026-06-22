@@ -21,7 +21,7 @@ const { items, id, class: className = "" } = Astro.props;
 
 <div id={id} data-banner class={`w-full ${className}`}>
   <div class="container-custom">
-    <div class="bg-primary p-8 lg:p-12">
+    <div class="bg-light-green p-8 lg:p-12">
       <div class="banner-grid">
         {
           items.map((item) => (
@@ -49,11 +49,11 @@ const { items, id, class: className = "" } = Astro.props;
                     />
                   </svg>
                 )}
-                <p class="text-white! font-bold uppercase" set:html={item.title} />
+                <p class=" font-bold uppercase" set:html={item.title} />
               </div>
               <p
                 class:list={[
-                  "text-p-small! text-white!",
+                  "text-p-small! ",
                   (item.bullets?.length || item.buttonLabel) && "mb-6",
                 ]}
                 set:html={item.text}
@@ -64,14 +64,14 @@ const { items, id, class: className = "" } = Astro.props;
                   role="list"
                 >
                   {item.bullets.map((bullet) => (
-                    <li class="text-p-small! text-white!" set:html={bullet} />
+                    <li class="text-p-small! " set:html={bullet} />
                   ))}
                 </ul>
               )}
               {item.buttonLabel && (
                 <LinkMore
                   href={item.buttonHref ?? "#"}
-                  color="white"
+                  color="black"
                   class="mt-auto self-start"
                 >
                   {item.buttonLabel}

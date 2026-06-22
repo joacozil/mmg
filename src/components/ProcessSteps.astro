@@ -28,7 +28,7 @@ const { items, id, class: className = "" } = Astro.props;
               {item.title}
             </p>
           </div>
-          <p class="text-p-small! text-darker-green" set:html={item.text} />
+          <p class="text-p-small! text-darker-green text-balance" set:html={item.text} />
         </div>
       ))
     }
@@ -54,27 +54,16 @@ const { items, id, class: className = "" } = Astro.props;
     flex-shrink: 0;
   }
 
-  /* Equal-width columns: equal padding on EVERY column (outer sides included),
-     dividers at the true 1/3 & 2/3 track edges via border-left. This keeps both
-     the cells (divider-to-divider) and the text blocks identical. */
+  /* Equal-width columns: each track is minmax(0, 1fr) so all columns are
+     identical, and the spacing between them comes from column-gap — NOT inner
+     padding. With no per-item padding the content adapts to its track width
+     and the outer edges stay flush with the band. */
 
-  /* Tablet: 2 columns */
-  @media (min-width: 640px) and (max-width: 1023.98px) {
-    .process-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .process-grid__item {
-      padding: 0 1.5rem;
-    }
-  }
-
-  /* Desktop: 3 columns */
+  /* Desktop: 3 columns (tablet & mobile stay single-column) */
   @media (min-width: 1024px) {
     .process-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .process-grid__item {
-      padding: 0 2rem;
+      column-gap: 4rem;
     }
   }
 </style>
