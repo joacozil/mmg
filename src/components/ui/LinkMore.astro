@@ -1,7 +1,7 @@
 ---
 interface Props {
   href: string;
-  color?: "primary" | "black" | "white";
+  color?: "primary" | "black" | "white" | "light-green";
   lg?: boolean;
   class?: string;
   [key: string]: any; // Allow passing extra HTML anchor attributes
@@ -19,6 +19,7 @@ const colorClasses = {
   primary: "text-primary",
   black: "text-black ",
   white: "text-white ",
+  "light-green": "text-light-green ",
 };
 
 const activeColorClass = colorClasses[color] || colorClasses.primary;

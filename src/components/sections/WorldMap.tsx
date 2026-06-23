@@ -28,19 +28,19 @@ type Arc = { name: string; x: number; y: number; curvature?: number };
 // Expansion arcs from each hub toward the dense (high-presence) regions.
 const expansions: Arc[] = [
   { name: "Norteamérica", x: 380, y: 270, curvature: -0.4 },
-  { name: "Europa", x: 980, y: 230 },
+  { name: "Europa", x: 1030, y: 330 },
   { name: "África", x: 935, y: 500, curvature: -0.4 },
-  { name: "Suramérica", x: 550, y: 615, curvature: -0.4 },
+  { name: "Suramérica", x: 540, y: 655, curvature: -0.4 },
 ];
 
 const bahamasArcs: Arc[] = [
   { name: "Bahamas-1", x: 300, y: 150, curvature: -0.4 },
   { name: "Bahamas-2", x: 1280, y: 160 },
-  { name: "Bahamas-3", x: 600, y: 580, curvature: -0.4 },
+  { name: "Bahamas-3", x: 580, y: 600, curvature: -0.4 },
 ];
 
 const puertoRicoArcs: Arc[] = [
-  { name: "PuertoRico-1", x: 1150, y: 150 },
+  { name: "PuertoRico-1", x: 1150, y: 180 },
   { name: "PuertoRico-2", x: 1300, y: 330 },
   { name: "PuertoRico-3", x: 850, y: 370 },
 ];

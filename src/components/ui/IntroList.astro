@@ -44,7 +44,9 @@ const {
             {buttons.length > 0 && (
               <div class="flex flex-col items-start gap-3">
                 {buttons.map((b) => (
-                  <LinkMore href={b.href ?? "#"}>{b.label} +</LinkMore>
+                  <LinkMore href={b.href ?? "#"} color="light-green">
+                    {b.label} +
+                  </LinkMore>
                 ))}
               </div>
             )}
