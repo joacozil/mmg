@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import { Image } from "astro:assets";
 import LinkMore from "@/components/ui/LinkMore.astro";
 
@@ -13,7 +14,7 @@ import copaLogo from "@/assets/img/copa.png";
 import kuaraLogo from "@/assets/img/kuara.svg";
 ---
 
-<section data-banners-section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight" data-banners-section>
   <div class="container-custom">
     <!-- Swiper container -->
     <div class="swiper banners-swiper overflow-visible!">
@@ -300,7 +301,7 @@ import kuaraLogo from "@/assets/img/kuara.svg";
     <!-- Custom lines-based pagination indicator container -->
     <div class="banners-pagination"></div>
   </div>
-</section>
+</Section>
 
 <style>
   /* Swiper slide stretching */

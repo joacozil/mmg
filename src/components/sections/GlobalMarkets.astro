@@ -1,9 +1,10 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import MarketStack from "@/components/ui/MarketStack.astro";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight">
   <div class="container-custom">
     <SplitRow
       badge="Negociación, mercados y cuentas de custodia"
@@ -13,4 +14,4 @@ import MarketStack from "@/components/ui/MarketStack.astro";
 
     <MarketStack class="mt-12 lg:mt-16" />
   </div>
-</section>
+</Section>

@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import { Image } from "astro:assets";
 import topSvg from "@/assets/img/top.svg";
 import centerSvg from "@/assets/img/center.svg";
@@ -6,7 +7,7 @@ import bottomSvg from "@/assets/img/bottom.svg";
 import LinkMore from "@/components/ui/LinkMore.astro";
 ---
 
-<section id="sostenibilidad" data-sostenibilidad-section class="w-full bg-cream pt-0 pb-section-gap relative overflow-hidden">
+<Section spacing="tight" id="sostenibilidad" data-sostenibilidad-section class="relative">
 
 
   <div class="container-custom relative z-10">
@@ -130,7 +131,7 @@ import LinkMore from "@/components/ui/LinkMore.astro";
       </div>
     </div>
   </div>
-</section>
+</Section>
 
 <style>
   /* ── Disc stack ──────────────────────────────────────────────────────

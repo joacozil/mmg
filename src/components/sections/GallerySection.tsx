@@ -83,6 +83,8 @@ export default function GallerySection({
                   <img
                     src={item.src}
                     alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>

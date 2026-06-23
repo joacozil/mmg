@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import { Image } from "astro:assets";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import LinkMore from "@/components/ui/LinkMore.astro";
@@ -12,7 +13,7 @@ import iconSeguro from "@/assets/img/seguro.svg?raw";
 import iconEstrella from "@/assets/img/estrella.svg?raw";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight">
   <div class="container-custom">
     <!-- Part 1: SplitRow -->
     <SplitRow
@@ -87,4 +88,4 @@ import iconEstrella from "@/assets/img/estrella.svg?raw";
       },
     ]}
   />
-</section>
+</Section>

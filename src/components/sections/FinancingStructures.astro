@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
 
@@ -8,7 +9,7 @@ import iconMercado from "@/assets/img/mercado-de-cap.svg?raw";
 import iconGarantia from "@/assets/img/garantia-de-valores.svg?raw";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight">
   <div class="container-custom">
     <SplitRow
       badge="Soluciones de estructura de financiamiento"
@@ -37,4 +38,4 @@ import iconGarantia from "@/assets/img/garantia-de-valores.svg?raw";
       },
     ]}
   />
-</section>
+</Section>

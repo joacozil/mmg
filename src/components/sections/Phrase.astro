@@ -1,11 +1,9 @@
 ---
+import Section from "@/components/ui/Section.astro";
 
 ---
 
-<section
-  data-phrase-section
-  class="w-full bg-cream pt-section-gap pb-0 overflow-hidden"
->
+<Section spacing="open" data-phrase-section>
   <div class="container-custom">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
       <!-- Left Column: Title & Author info -->
@@ -44,7 +42,7 @@
       </div>
     </div>
   </div>
-</section>
+</Section>
 
 <style>
   :global(.phrase-word) {

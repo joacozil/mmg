@@ -1,16 +1,17 @@
 ---
 import { Image } from "astro:assets";
+import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 
-// Import images from src/assets/img/team
-import img1 from "@/assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral 2.jpg";
-import img2 from "@/assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-2 2.jpg";
-import img3 from "@/assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-3 2.jpg";
-import img4 from "@/assets/img/team/Gemini_Generated_Image_1ralm61ralm61ral-4 2.jpg";
-import img5 from "@/assets/img/team/Gemini_Generated_Image_28194f28194f2819 2.jpg";
-import img6 from "@/assets/img/team/Gemini_Generated_Image_asbb9basbb9basbb 2.jpg";
-import img7 from "@/assets/img/team/Gemini_Generated_Image_bl49h6bl49h6bl49 2.jpg";
-import img8 from "@/assets/img/team/Gemini_Generated_Image_kiawuxkiawuxkiaw 2.jpg";
+// Team member portraits (src/assets/img/team)
+import img1 from "@/assets/img/team/team-01.jpg";
+import img2 from "@/assets/img/team/team-02.jpg";
+import img3 from "@/assets/img/team/team-03.jpg";
+import img4 from "@/assets/img/team/team-04.jpg";
+import img5 from "@/assets/img/team/team-05.jpg";
+import img6 from "@/assets/img/team/team-06.jpg";
+import img7 from "@/assets/img/team/team-07.jpg";
+import img8 from "@/assets/img/team/team-08.jpg";
 
 const teamMembers = [
   {
@@ -40,11 +41,7 @@ const teamMembers = [
 ];
 ---
 
-<section
-  id="team-section"
-  data-team-section
-  class="pt-0 pb-section-gap bg-cream relative overflow-hidden"
->
+<Section spacing="tight" id="team-section" data-team-section class="relative">
   <div class="container-custom mb-12 lg:mb-16">
     <div data-team-header>
       <SplitRow
@@ -84,7 +81,7 @@ const teamMembers = [
     <!-- Custom lines-based pagination indicator container -->
     <div class="team-pagination"></div>
   </div>
-</section>
+</Section>
 
 <style>
   /* Swiper slide stretching */

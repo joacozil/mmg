@@ -1,5 +1,6 @@
 ---
 // src/components/Gallery.astro
+import { getImage } from "astro:assets";
 import GallerySection from "./GallerySection.tsx";
 
 import imgHito1 from "@/assets/img/hito-1.jpeg";
@@ -13,71 +14,80 @@ import imgChart from "@/assets/img/report.jpg";
 import imgContract from "@/assets/img/asesoria-corporativa-y-estrategica.jpg";
 import imgForo from "@/assets/img/foro.jpg";
 
-const achievements = [
+// Raw milestone data; images are optimized to WebP below before being passed
+// to the React island (which renders plain <img>).
+const milestones = [
   {
-    src: imgHito1.src,
+    img: imgHito1,
     alt: "Creadores de Mercado de la deuda soberana doméstica de Panamá",
     year: "2006",
     description:
       "Participa en programa Creadores de Mercado de la deuda soberana doméstica de Panamá.",
   },
   {
-    src: imgHito2.src,
+    img: imgHito2,
     alt: "Participación activa en la Bolsa de Valores de Panamá",
     year: "2006",
     description:
       "Inicia participación activa en la Bolsa de Valores de Panamá (BVP).",
   },
   {
-    src: imgHito3.src,
+    img: imgHito3,
     alt: "Creadores de Mercado de la Deuda soberana doméstica Panamá",
     year: "2011",
     description:
       "Participante del programa de Creadores de Mercado de la Deuda soberana doméstica Panamá.",
   },
   {
-    src: imgAccion.src,
+    img: imgAccion,
     alt: "Primer creador privado para una acción corporativa",
     year: "2016",
     description: "Primer creador privado para una acción corporativa.",
   },
   // --- Remaining achievements: placeholder images ---
   {
-    src: imgChart.src,
+    img: imgChart,
     alt: "Emisiones públicas de MMG Bank",
     year: "2016",
     description:
       "+50 emisiones públicas de 35 emisores distintos, más de 4,000 millones de dólares recaudados.",
   },
   {
-    src: imgColleagues.src,
+    img: imgColleagues,
     alt: "Integración de los mercados regionales",
     year: "2016",
     description:
       "Pioneros en la integración de los mercados regionales mediante el programa Operador Remoto entre la Bolsa de Valores Latinoamericana de Valores y la Bolsa de Valores de El Salvador.",
   },
   {
-    src: imgBonoVerde.src,
+    img: imgBonoVerde,
     alt: "Primer Bono Verde en Centroamérica",
     year: "2019",
     description:
       "Estructuración y colocación del primer Bono Verde en Centroamérica.",
   },
   {
-    src: imgContract.src,
+    img: imgContract,
     alt: "Primer Bono Sostenible para una institución financiera regional",
     year: "2020",
     description:
       "Estructuración y colocación del primer Bono Sostenible para una institución financiera regional.",
   },
   {
-    src: imgForo.src,
+    img: imgForo,
     alt: "Primera transacción fronteriza entre Panamá y Guatemala",
     year: "2021",
     description:
       "Ejecución de la primera transacción fronteriza entre Panamá y Guatemala.",
   },
 ];
+
+const achievements = await Promise.all(
+  milestones.map(async ({ img, ...rest }) => ({
+    src: (await getImage({ src: img, format: "webp", width: 1200 })).src,
+    ...rest,
+  })),
+);
 ---
 
 <GallerySection

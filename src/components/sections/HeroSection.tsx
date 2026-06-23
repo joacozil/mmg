@@ -211,12 +211,12 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
           {/* Left Side Image */}
           <div ref={leftImageRef} className="w-0 opacity-0 h-[80%] rounded-2xl overflow-hidden relative shrink-0 flex-none shadow-2xl">
-            <img src={leftSrc} alt="Team generating ideas" className="absolute inset-0 w-full h-full object-cover object-right" />
+            <img src={leftSrc} alt="Team generating ideas" loading="eager" decoding="async" className="absolute inset-0 w-full h-full object-cover object-right" />
           </div>
 
           {/* Middle Main Image */}
           <div ref={mainImageRef} className="w-full h-full rounded-2xl overflow-hidden relative shrink-0 shadow-2xl">
-            <img src={heroSrc} alt="Main Hero" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={heroSrc} alt="Main Hero" loading="eager" fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
 
             {/* Subtle gradient overlay for better text readability */}
             <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-black/60 lg:from-black/80 lg:via-black/20 lg:to-transparent"></div>
@@ -239,7 +239,7 @@ export default function HeroSection({ heroSrc, leftSrc, rightSrc }: HeroSectionP
 
           {/* Right Side Image */}
           <div ref={rightImageRef} className="w-0 opacity-0 h-[80%] rounded-2xl overflow-hidden relative shrink-0 flex-none shadow-2xl">
-            <img src={rightSrc} alt="Building texture" className="absolute inset-0 w-full h-full object-cover object-right" />
+            <img src={rightSrc} alt="Building texture" loading="eager" decoding="async" className="absolute inset-0 w-full h-full object-cover object-right" />
           </div>
 
         </div>

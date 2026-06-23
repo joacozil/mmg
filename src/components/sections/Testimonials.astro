@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 const testimonials = [
   {
     quote: `"Pensé que comprar mi primer apartamento en la ciudad sería un dolor de cabeza, pero <strong>el equipo de MMG me guió en cada paso del camino.</strong> El trato fue súper cercano y la aprobación fue mucho más rápida de lo que esperaba. Hoy ya tengo las llaves de mi hogar."`,
@@ -28,7 +29,7 @@ const testimonials = [
 ];
 ---
 
-<section data-testimonials-section class="w-full bg-cream pt-section-gap pb-0 overflow-hidden">
+<Section spacing="open" data-testimonials-section>
   <div class="container-custom">
     <!-- Swiper container -->
     <div data-testimonials-swiper class="swiper testimonials-swiper overflow-visible!">
@@ -58,7 +59,7 @@ const testimonials = [
     <!-- Line-style pagination indicators -->
     <div data-testimonials-pagination class="testimonials-pagination"></div>
   </div>
-</section>
+</Section>
 
 <style>
   /* Fix swiper slides height alignment */

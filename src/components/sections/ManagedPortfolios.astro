@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
 
@@ -38,7 +39,7 @@ const portafolioBeneficios = [
 ];
 ---
 
-<section class="w-full bg-cream py-section-gap overflow-hidden">
+<Section>
   <div class="container-custom">
     <SplitRow
       badge="Portafolios administrados"
@@ -52,4 +53,4 @@ const portafolioBeneficios = [
     title="Beneficios para clientes individuales"
     items={portafolioBeneficios}
   />
-</section>
+</Section>

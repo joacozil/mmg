@@ -1,0 +1,31 @@
+---
+// Shared full-width section wrapper. Centralizes the repeated
+// `w-full bg-cream … overflow-hidden` shell used across page sections.
+//
+// spacing controls the vertical section-gap padding:
+//   full  → top & bottom   (default)
+//   tight → bottom only     (stacked under a previous section)
+//   open  → top only        (flows into the next section)
+//
+// Any extra attributes (id, data-*, etc.) are forwarded to the <section>.
+interface Props {
+  spacing?: "full" | "tight" | "open";
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { spacing = "full", class: className = "", ...rest } = Astro.props;
+
+const padding = {
+  full: "py-section-gap",
+  tight: "pt-0 pb-section-gap",
+  open: "pt-section-gap pb-0",
+}[spacing];
+---
+
+<section
+  class:list={["w-full bg-cream overflow-hidden", padding, className]}
+  {...rest}
+>
+  <slot />
+</section>

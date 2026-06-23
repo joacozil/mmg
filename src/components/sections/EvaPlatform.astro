@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import { Image } from "astro:assets";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import LinkMore from "@/components/ui/LinkMore.astro";
@@ -6,7 +7,7 @@ import LinkMore from "@/components/ui/LinkMore.astro";
 import evaImg from "@/assets/img/eva.jpg";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight">
   <div class="container-custom">
     <SplitRow
       title='<span class=" text-h2!">Con nuestra plataforma digital</span> MMG EVA<span class=" text-h2!">, tienes el control de tu plata en la palma de la mano.</span>'
@@ -41,4 +42,4 @@ import evaImg from "@/assets/img/eva.jpg";
       </div>
     </div>
   </div>
-</section>
+</Section>

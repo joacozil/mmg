@@ -1,4 +1,5 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
 
@@ -8,7 +9,7 @@ import iconNegociacion from "@/assets/img/negociacion-mercados.svg?raw";
 import iconBancarios from "@/assets/img/servicios-bancarios.svg?raw";
 ---
 
-<section class="w-full bg-cream py-section-gap overflow-hidden">
+<Section>
   <div class="container-custom">
     <SplitRow
       title='<span class=" text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
@@ -55,4 +56,4 @@ import iconBancarios from "@/assets/img/servicios-bancarios.svg?raw";
       },
     ]}
   />
-</section>
+</Section>

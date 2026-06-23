@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-Light.ttf') format('truetype');
+  src: url('../assets/fonts/borniafont/Bornia-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -14,15 +14,7 @@
 
 @font-face {
   font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-Regular.ttf') format('truetype');
+  src: url('../assets/fonts/borniafont/Bornia-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -30,15 +22,7 @@
 
 @font-face {
   font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-RegularItalic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-Medium.ttf') format('truetype');
+  src: url('../assets/fonts/borniafont/Bornia-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -46,15 +30,7 @@
 
 @font-face {
   font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-SemiBold.ttf') format('truetype');
+  src: url('../assets/fonts/borniafont/Bornia-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -62,57 +38,9 @@
 
 @font-face {
   font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-Bold.ttf') format('truetype');
+  src: url('../assets/fonts/borniafont/Bornia-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-ExtraBold.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-ExtraBoldItalic.ttf') format('truetype');
-  font-weight: 800;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Bornia';
-  src: url('../assets/fonts/borniafont/Bornia-BlackItalic.ttf') format('truetype');
-  font-weight: 900;
-  font-style: italic;
   font-display: swap;
 }
 

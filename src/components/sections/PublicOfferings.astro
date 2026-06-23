@@ -1,8 +1,9 @@
 ---
+import Section from "@/components/ui/Section.astro";
 import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
 ---
 
-<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+<Section spacing="tight">
   <FeaturesGrid
     title="Emisiones públicas de valores"
     items={[
@@ -32,4 +33,4 @@ import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
       },
     ]}
   />
-</section>
+</Section>
