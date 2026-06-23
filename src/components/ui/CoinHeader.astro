@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// Section header used across the Sostenibilidad axes: a badge + two-tone
+// heading on the left and a 3D "coin" graphic on the right. The coin varies
+// per section, so it's passed in as a prop.
+interface Props {
+  title: string; // heading; supports inline HTML for two-tone color
+  badge?: string; // small label above the heading
+  coin: ImageMetadata; // coin/disc graphic (differs per section)
+  coinAlt?: string;
+  class?: string;
+}
+
+const { title, badge, coin, coinAlt = "", class: className = "" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 lg:items-center",
+    className,
+  ]}
+>
+  <!-- Left: badge + heading -->
+  <div class="lg:col-span-8 flex flex-col justify-center">
+    {
+      badge && (
+        <p class="text-primary! uppercase font-bold mb-4" set:html={badge} />
+      )
+    }
+    <h2 class="text-primary lg:max-w-150" set:html={title} />
+  </div>
+
+  <!-- Right: coin graphic (desktop only) -->
+  <div class="hidden lg:col-span-4 lg:flex lg:justify-end">
+    <Image
+      src={coin}
+      alt={coinAlt}
+      class="w-full max-w-55 sm:max-w-65 lg:max-w-full h-auto"
+    />
+  </div>
+</div>

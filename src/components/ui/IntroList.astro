@@ -1,8 +1,11 @@
 ---
+import LinkMore from "@/components/ui/LinkMore.astro";
+
 interface Props {
   title: string; // heading; supports inline HTML (e.g. <br />)
   paragraphs?: string[]; // left-column body copy; supports inline HTML
   items: string[]; // right-column list labels (count is variable)
+  buttons?: { label: string; href?: string }[]; // optional links under the copy
   id?: string;
   class?: string;
 }
@@ -11,6 +14,7 @@ const {
   title,
   paragraphs = [],
   items,
+  buttons = [],
   id,
   class: className = "",
 } = Astro.props;
@@ -30,13 +34,20 @@ const {
     />
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
-      <!-- Left: body copy -->
+      <!-- Left: body copy + optional links -->
       {
-        paragraphs.length > 0 && (
+        (paragraphs.length > 0 || buttons.length > 0) && (
           <div data-intro-copy class="lg:col-span-3 flex flex-col gap-6 ">
             {paragraphs.map((p) => (
               <p class="text-white!" set:html={p} />
             ))}
+            {buttons.length > 0 && (
+              <div class="flex flex-col items-start gap-3">
+                {buttons.map((b) => (
+                  <LinkMore href={b.href ?? "#"}>{b.label} +</LinkMore>
+                ))}
+              </div>
+            )}
           </div>
         )
       }

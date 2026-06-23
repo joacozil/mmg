@@ -4,54 +4,89 @@ import type { ImageMetadata } from "astro";
 
 interface Card {
   title: string;
-  text: string; // supports inline HTML
+  text?: string; // supports inline HTML
+  bullets?: string[]; // optional bullet list (supports inline HTML)
 }
 
 interface Props {
-  image: ImageMetadata;
+  title?: string; // optional small badge above the cards
+  image?: ImageMetadata; // omit to render a placeholder block
   imageAlt?: string;
   imagePosition?: string; // object-position class, e.g. "object-[50%_30%]"
+  cardBackground?: "white" | "cream"; // card surface color
   items: Card[];
   id?: string;
   class?: string;
 }
 
 const {
+  title,
   image,
   imageAlt = "",
   imagePosition = "object-center",
+  cardBackground = "white",
   items,
   id,
   class: className = "",
 } = Astro.props;
+
+const cardBgClass = cardBackground === "cream" ? "bg-cream" : "bg-white";
 ---
 
 <div id={id} data-media-cards class={`w-full ${className}`}>
   <div class="container-custom">
+    {
+      title && (
+        <p
+          data-media-badge
+          class="text-primary! uppercase font-bold mb-8 lg:mb-12"
+        >
+          {title}
+        </p>
+      )
+    }
+
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:items-stretch">
-      <!-- Image with a soft gradient washed over the top -->
+      <!-- Image (or placeholder block when no image is provided) -->
       <div
         data-media-image
         class="lg:col-span-8 relative overflow-hidden min-h-75 lg:min-h-0"
       >
-        <Image
-          src={image}
-          alt={imageAlt}
-          widths={[480, 768, 1024, 1400]}
-          sizes="(min-width: 1024px) 58vw, 100vw"
-          class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
-        />
+        {
+          image ? (
+            <Image
+              src={image}
+              alt={imageAlt}
+              widths={[480, 768, 1024, 1400]}
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
+            />
+          ) : (
+            <div class="absolute inset-0 flex items-center justify-center bg-light-green">
+              <span class="uppercase text-p-small text-darker-green/50">
+                Imagen
+              </span>
+            </div>
+          )
+        }
       </div>
 
       <!-- Cards (styling consistent with Services.astro) -->
       <div class="lg:col-span-4 flex flex-col gap-6">
         {
           items.map((card) => (
-            <div data-media-card class="bg-white p-6 md:p-8">
+            <div data-media-card class:list={["p-6 md:p-8", cardBgClass]}>
               <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
                 {card.title}
               </p>
-              <p class="text-p-small!" set:html={card.text} />
+              {card.text && <p class="text-p-small!" set:html={card.text} />}
+              {card.bullets?.length && (
+                <ul class="media-cards__bullets" role="list">
+                  {card.bullets.map((bullet) => (
+                    <li class="text-p-small!" set:html={bullet} />
+                  ))}
+                </ul>
+              )}
             </div>
           ))
         }
@@ -59,6 +94,28 @@ const {
     </div>
   </div>
 </div>
+
+<style>
+  /* Bullet list inside a card. */
+  .media-cards__bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .media-cards__bullets li {
+    position: relative;
+    padding-left: 1rem;
+  }
+  .media-cards__bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+</style>
 
 <script>
   import gsap from "gsap";

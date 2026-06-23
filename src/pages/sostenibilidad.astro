@@ -1,0 +1,253 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+import Header from "@/components/layout/Header.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import IntroList from "@/components/ui/IntroList.astro";
+import Section from "@/components/ui/Section.astro";
+import CoinHeader from "@/components/ui/CoinHeader.astro";
+import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
+import MediaCards from "@/components/ui/MediaCards.astro";
+import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
+import SplitRow from "@/components/ui/SplitRow.astro";
+import LinkMore from "@/components/ui/LinkMore.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Footer from "@/components/layout/Footer.astro";
+
+import coinAmbiental from "@/assets/img/coin-light-green.png";
+import coinSocial from "@/assets/img/coin-primary.png";
+import coinGobierno from "@/assets/img/coin-dark-green.png";
+import gerenciaImg from "@/assets/img/gerencia.jpg";
+import financiamientosImg from "@/assets/img/office3.jpeg";
+import programasImg from "@/assets/img/office4.jpeg";
+
+// ODS icons — raw SVG markup (primary green, inlined via ?raw).
+import iconOds12 from "@/assets/img/ods-12.svg?raw";
+import iconOds13 from "@/assets/img/ods-13.svg?raw";
+import iconOds4 from "@/assets/img/ods-2.svg?raw";
+
+// Environmental indicator icons — raw SVG markup (primary green).
+import iconEnergiaGenerada from "@/assets/img/energia-generada.svg?raw";
+import iconAireLimpio from "@/assets/img/aire-limpio.svg?raw";
+import iconReciclaje from "@/assets/img/reciclaje-mensual.svg?raw";
+import iconBosques from "@/assets/img/bosques-protegidos.svg?raw";
+import iconAguaPotable from "@/assets/img/agua-potable.svg?raw";
+import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
+---
+
+<Layout
+  title="Sostenibilidad | MMG Bank"
+  description="En MMG Bank promovemos una visión de largo plazo y un firme compromiso con el desarrollo sostenible en los ejes ambiental, social y de gobernanza responsable."
+>
+  <Header />
+
+  <PageHero title="Sostenibilidad" animated />
+
+  <IntroList
+    title="Legado con <br /> impacto."
+    paragraphs={[
+      "En MMG Bank, tenemos un profundo propósito de contribuir al desarrollo sostenible y crecimiento de Panamá, lo que, sumado a nuestro compromiso con los Objetivos de Desarrollo Sostenible (ODS), ha llevado a nuestra empresa a tener un enfoque integral para influir positivamente sobre todos nuestros grupos de interés o stakeholders en los ejes de medio ambiente, compromiso social y gobernanza responsable.",
+    ]}
+    items={["Ambiental", "Social", "Gobierno responsable"]}
+    buttons={[{ label: "Informes" }]}
+  />
+
+  <Section>
+    <div class="container-custom">
+      <CoinHeader
+        badge="Ambiental"
+        title='Financiamos el futuro protegiendo nuestro entorno: <span class="text-h2!">impulsamos un crecimiento económico que respete los límites del planeta y mitigue el cambio climático.</span>'
+        coin={coinAmbiental}
+        coinAlt="Eje ambiental de sostenibilidad de MMG Bank"
+        class="mb-12 lg:mb-16"
+      />
+    </div>
+
+    <ThreeColumnBanner
+      items={[
+        {
+          icon: iconOds12,
+          title: "ODS 12 Producción y <br /> consumo responsable",
+          text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
+        },
+        {
+          icon: iconOds13,
+          title: "ODS 13 Acción <br /> por el clima",
+          text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
+        },
+        {
+          icon: iconOds4,
+          title: "ODS 4 Educación <br /> de calidad",
+          text: "A través de nuestro Programa de Educación a Inversionistas y nuestro Programa de Ciudadanía Responsable y Derechos Humanos, promovemos el conocimiento como herramienta de transformación.",
+        },
+      ]}
+    />
+  </Section>
+
+  <Section spacing="tight">
+    <MediaCards
+      cardBackground="white"
+      image={financiamientosImg}
+      imageAlt="Iniciativas de finanzas sostenibles de MMG Bank"
+      items={[
+        {
+          title: "Financiamientos sostenibles",
+          bullets: [
+            "Primera emisión de bono verde en Panamá.",
+            "Primera emisión de bono verde certificado por CBI en Centroamérica.",
+            "Primera emisión de bono sostenible en Panamá.",
+          ],
+        },
+        {
+          title: "Oficinas con certificación LEED",
+          bullets: [
+            "Iluminación LED fluorescente y de alta eficiencia.",
+            "Sistema variable de aire acondicionado con alta eficiencia.",
+            "Cubierta reflectora y azotea ajardinada.",
+          ],
+        },
+        {
+          title: "Mes de las finanzas sostenibles",
+          text: "En octubre de 2020, MMG Bank lanza el Mes de las Finanzas Sostenibles, un evento anual que expone oportunidades para inversionistas y empresas buscando tener un impacto positivo sobre el desarrollo ambiental y social a través del mercado de capitales.",
+        },
+      ]}
+    />
+  </Section>
+
+  <Section spacing="tight">
+    <FeaturesGrid
+      title="Nuestros indicadores medioambientales"
+      items={[
+        {
+          icon: iconEnergiaGenerada,
+          title: "Energía generada",
+          text: "9 estadios de energía generada a través de paneles solares.",
+        },
+        {
+          icon: iconAireLimpio,
+          title: "Huella reducida",
+          text: "-97.8 toneladas de CO₂ menos en la atmósfera gracias al uso de paneles solares.",
+        },
+        {
+          icon: iconAireLimpio,
+          title: "Emisiones evitadas",
+          text: "-4,071 toneladas de CO₂ menos en la atmósfera por el uso de energía de fuente hídrica.",
+        },
+        {
+          icon: iconReciclaje,
+          title: "Reciclaje mensual",
+          text: "+50 toneladas al mes de aporte directo al proceso de reciclaje.",
+        },
+        {
+          icon: iconBosques,
+          title: "Bosques protegidos",
+          text: "405 árboles disponibles y protegidos en nuestros bosques.",
+        },
+        {
+          icon: iconAguaPotable,
+          title: "Agua potable",
+          text: "+600 m² de agua potable disponible preservada.",
+        },
+        {
+          icon: iconAireLimpio,
+          title: "Aire limpio",
+          text: "-25.79 toneladas reducción de emisiones de CO₂ en la atmósfera.",
+        },
+        {
+          icon: iconEnergiaOptimizada,
+          title: "Energía optimizada",
+          text: "31,596 kW de energía no renovable disponible y optimizada.",
+        },
+      ]}
+    />
+  </Section>
+
+  <Section spacing="tight">
+    <div class="container-custom">
+      <CoinHeader
+        badge="Social"
+        title='El centro de nuestra estrategia son las personas: <span class="text-h2!">promovemos el bienestar, la equidad y el desarrollo de nuestro talento y las comunidades donde operamos.</span>'
+        coin={coinSocial}
+        coinAlt="Eje social de sostenibilidad de MMG Bank"
+        class="mb-12 lg:mb-16"
+      />
+    </div>
+
+    <ThreeColumnBanner
+      items={[
+        {
+          icon: iconOds12,
+          title: "ODS 5 Igualdad <br /> de género",
+          text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
+        },
+        {
+          icon: iconOds13,
+          title: "ODS 17 Alianzas para <br /> lograr los objetivos",
+          text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
+        },
+        {
+          icon: iconOds4,
+          title: "ODS 4 Educación <br /> de calidad",
+          text: "A través de nuestro Programa de Educación a Inversionistas y nuestro Programa de Ciudadanía Responsable y Derechos Humanos, promovemos el conocimiento como herramienta de transformación.",
+        },
+      ]}
+    />
+  </Section>
+
+  <Section spacing="tight">
+    <MediaCards
+      title="Programas"
+      image={programasImg}
+      imageAlt="Programas sociales de MMG Bank"
+      items={[
+        {
+          title: "Bienestar corporativo",
+          text: "Priorizamos la calidad de vida de nuestros colaboradores y sus familias a través de un programa de bienestar corporativo referente en Panamá. Promovemos el balance vida-trabajo mediante beneficios clave en educación, transporte, salud física y mental, y asistencia económica.",
+        },
+        {
+          title: "Educación a inversionistas",
+          text: "La educación financiera es una parte esencial de nuestra estrategia de sostenibilidad. Contribuimos a través de nuestra participación recurrente en programas de educación al inversionista con aliados estratégicos y a través de nuestra estrategia de comunicación digital.",
+        },
+        {
+          title: "Ciudadanía responsable y derechos humanos",
+          text: "Desde 2014, impulsamos el desarrollo de más de 12 mil jóvenes mediante talleres, proyectos comunitarios y espacios radiales. Nuestro programa de ciudadanía y derechos humanos los forma como ciudadanos íntegros, responsables y solidarios, capaces de ejercer sus derechos y deberes con criterio propio.",
+        },
+      ]}
+    />
+  </Section>
+
+  <!-- Provisional section (heading + link only). -->
+  <Section spacing="tight">
+    <div class="container-custom">
+      <SplitRow
+        title='Fundamorgan <span class="text-h2!">es el brazo ejecutor de los programas comunitarios de nuestra estrategia de sostenibilidad, incluyendo los esfuerzos de voluntariado que trascienden los distintos ODS.</span>'
+      >
+        <LinkMore href="#" class="mt-6">Fundamorgan +</LinkMore>
+      </SplitRow>
+    </div>
+  </Section>
+
+  <Section spacing="tight">
+    <div class="container-custom">
+      <CoinHeader
+        badge="Gobierno responsable"
+        title='Gobernamos con integridad: <span class="text-h2!">aseguramos la sostenibilidad del banco mediante una gestión ética, transparente y alineada con las mejores prácticas globales.</span>'
+        coin={coinGobierno}
+        coinAlt="Eje de gobierno responsable de sostenibilidad de MMG Bank"
+        class="mb-12 lg:mb-16"
+      />
+
+      <Image
+        src={gerenciaImg}
+        alt="Equipo de gerencia de MMG Bank"
+        widths={[768, 1200, 1600, 2000]}
+        sizes="100vw"
+        class="w-full h-auto"
+      />
+    </div>
+  </Section>
+
+  <Contact />
+
+  <Footer />
+</Layout>

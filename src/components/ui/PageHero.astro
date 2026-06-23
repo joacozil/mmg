@@ -4,9 +4,10 @@ import type { ImageMetadata } from "astro";
 
 interface Props {
   title: string; // supports inline HTML (e.g. <br /> for line breaks)
-  image: ImageMetadata;
+  image?: ImageMetadata; // omit when using the animated background
   imageAlt?: string;
   imagePosition?: string; // object-position class, e.g. "object-[70%_50%]"
+  animated?: boolean; // use the homepage's animated gradient instead of an image
   class?: string;
 }
 
@@ -15,28 +16,40 @@ const {
   image,
   imageAlt = "",
   imagePosition = "object-center",
+  animated = false,
   class: className = "",
 } = Astro.props;
 ---
 
-<!-- Full-bleed image; text aligns to the standard .container-custom. -->
+<!-- Full-bleed background (image or animated gradient); text aligns to .container-custom. -->
 <section
   data-page-hero
-  class={`page-hero relative flex w-full overflow-hidden bg-cream min-h-110 sm:min-h-125 lg:min-h-140 ${className}`}
+  class:list={[
+    "page-hero relative flex w-full overflow-hidden bg-cream min-h-110 sm:min-h-125 lg:min-h-140",
+    animated && "gradient-bg",
+    className,
+  ]}
 >
-  <!-- Background image (full width) -->
-  <Image
-    src={image}
-    alt={imageAlt}
-    widths={[768, 1200, 1600, 2000, 2400]}
-    sizes="100vw"
-    loading="eager"
-    fetchpriority="high"
-    class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
-  />
+  {/* Animated gradient background (reuses the homepage hero's CSS). */}
+  {animated && <div class="gradient-bg__canvas" aria-hidden="true" />}
 
-  <!-- Brand gradient overlay (full width) -->
-  <div class="page-hero__overlay absolute inset-0" aria-hidden="true"></div>
+  {/* Background image + brand gradient overlay. */}
+  {
+    !animated && image && (
+      <>
+        <Image
+          src={image}
+          alt={imageAlt}
+          widths={[768, 1200, 1600, 2000, 2400]}
+          sizes="100vw"
+          loading="eager"
+          fetchpriority="high"
+          class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
+        />
+        <div class="page-hero__overlay absolute inset-0" aria-hidden="true" />
+      </>
+    )
+  }
 
   <!-- Content (container-aligned) -->
   <div class="container-custom relative z-10 flex w-full flex-col py-12 lg:py-16">
