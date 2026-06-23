@@ -1,0 +1,32 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import ProcessSteps from "@/components/ui/ProcessSteps.astro";
+---
+
+<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      badge="Gestión de liquidez"
+      title='No deje que su efectivo se quede estático; <span class="text-black text-h2!">optimice el rendimiento de sus saldos en efectivo en múltiples monedas de forma eficiente y segura.</span>'
+      text="Optimice el rendimiento y logre un manejo eficiente de sus saldos en efectivo en múltiples monedas de forma segura. Nuestras soluciones están diseñadas para ofrecer una mayor rentabilidad a corto plazo."
+    />
+
+    <ProcessSteps
+      class="mt-12 lg:mt-16"
+      items={[
+        {
+          title: "Instrumentos líquidos a corto plazo",
+          text: "Valores de bajo riesgo para rentabilizar excedentes manteniendo un acceso rápido al efectivo.",
+        },
+        {
+          title: "Depósitos a plazo fijo",
+          text: "Rendimiento garantizado para su inversión, bajo una tasa de interés y un plazo determinados.",
+        },
+        {
+          title: "Cuentas Cash Plus",
+          text: "Ahorro especial con mayor rendimiento y disponibilidad de fondos en un plazo de 15 días.",
+        },
+      ]}
+    />
+  </div>
+</section>

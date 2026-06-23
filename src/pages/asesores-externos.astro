@@ -1,22 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import Header from "../components/Header.astro";
-import PageHero from "../components/PageHero.astro";
-import IntroList from "../components/IntroList.astro";
-import SplitRow from "../components/SplitRow.astro";
-import ThreeColumnBanner from "../components/ThreeColumnBanner.astro";
-import LinkMore from "../components/LinkMore.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import IntroList from "@/components/ui/IntroList.astro";
+import ExternalServices from "@/components/sections/ExternalServices.astro";
+import EvaPlatform from "@/components/sections/EvaPlatform.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Footer from "@/components/layout/Footer.astro";
 
-import heroImg from "../assets/img/ventana.jpeg";
-import evaImg from "../assets/img/eva.jpg";
-
-// Banner icons — raw SVG markup (white fill, inlined via ?raw).
-import iconCustodia from "../assets/img/custodia.svg?raw";
-import iconNegociacion from "../assets/img/negociacion-mercados.svg?raw";
-import iconBancarios from "../assets/img/servicios-bancarios.svg?raw";
+import heroImg from "@/assets/img/ventana.jpeg";
 ---
 
 <Layout
@@ -29,8 +21,7 @@ import iconBancarios from "../assets/img/servicios-bancarios.svg?raw";
     title="Asesores <br /> Externos"
     image={heroImg}
     imageAlt="Vista desde la ventana de las oficinas de MMG Bank"
-      imagePosition="object-[80%_40%]"
-
+    imagePosition="object-[80%_40%]"
   />
 
   <IntroList
@@ -45,91 +36,9 @@ import iconBancarios from "../assets/img/servicios-bancarios.svg?raw";
     ]}
   />
 
-  <section class="w-full bg-cream py-section-gap overflow-hidden">
-    <div class="container-custom">
-      <SplitRow
-        title='<span class=" text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
-        class="mb-12 lg:mb-16"
-      />
-    </div>
+  <ExternalServices />
 
-    <ThreeColumnBanner
-      items={[
-        {
-          icon: iconCustodia,
-          title: "Servicios de custodia",
-          text: "Ofrecemos la apertura de cuentas multi-moneda en Panamá o Las Bahamas con arquitectura abierta de productos y custodia de activos locales e internacionales. También gestionamos la recaudación de ingresos, acciones corporativas y tarifas de retrocesión (trailer fees).",
-          bullets: [
-            "Apertura de cuenta multi-moneda con opción Panamá o Las Bahamas",
-            "Arquitectura abierta de productos",
-            "Custodia de activos locales e internacionales",
-            "Recaudación de ingresos",
-            "Acciones corporativas",
-            'Recaudación de tarifas de retrocesiones / "trailer"',
-          ],
-        },
-        {
-          icon: iconNegociacion,
-          title: "Negociación y mercados",
-          text: "Brindamos acceso a instrumentos financieros en múltiples monedas con ejecución en mercados locales e internacionales, complementado con cambio de divisas y reportes o análisis especializados del mercado.",
-          bullets: [
-            "Acceso a instrumentos financieros en múltiples monedas",
-            "Ejecución en el mercado local e internacional",
-            "Cambio de divisas",
-            "Acceso a reportes y análisis del mercado",
-          ],
-        },
-        {
-          icon: iconBancarios,
-          title: "Servicios bancarios",
-          text: "Facilitamos transferencias locales e internacionales, gestión de efectivo mediante tarjetas de débito y MMG Mastercard Black©, financiamiento con garantía de valores (margin lending) y custodia segura de activos físicos.",
-          bullets: [
-            "Transferencias de efectivo local e internacional",
-            "Gestión de efectivo (Tarjeta Débito y MMG Mastercard Black ©)",
-            "Financiamientos con Garantía de Valores (Margin Lending)",
-            "Custodia segura de activos físicos",
-          ],
-        },
-      ]}
-    />
-  </section>
-
-  <section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
-    <div class="container-custom">
-      <SplitRow
-        title='<span class=" text-h2!">Con nuestra plataforma digital</span> MMG EVA<span class=" text-h2!">, tienes el control de tu plata en la palma de la mano.</span>'
-        class="mb-12 lg:mb-16"
-      />
-
-      <!-- Platform card: wide image + content card (mirrors Services layout) -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch lg:min-h-60">
-        <!-- Image -->
-        <div class="lg:col-span-8 relative aspect-3/2 lg:aspect-auto overflow-hidden">
-          <Image
-            src={evaImg}
-            alt="Plataforma digital MMG EVA"
-            class="w-full h-full object-cover lg:absolute lg:inset-0 object-center"
-          />
-        </div>
-
-        <!-- Content Card -->
-        <div class="lg:col-span-4 flex">
-          <div class="bg-white p-6 lg:p-8 flex flex-col justify-between w-full h-full">
-            <div>
-              <p >
-                Entra de forma segura cuando quieras para revisar tus cuentas,
-                ver como van tus inversiones y chequear el desempeño de tu
-                portafolio sin complicaciones.
-              </p>
-            </div>
-            <div class="mt-6">
-              <LinkMore href="#">MMG EVA +</LinkMore>
-            </div>
-          </div>
-        </div>
-      </>
-    </div>
-  </section>
+  <EvaPlatform />
 
   <Contact />
 

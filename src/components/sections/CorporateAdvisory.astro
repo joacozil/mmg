@@ -1,0 +1,36 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import MediaCards from "@/components/ui/MediaCards.astro";
+
+import asesoriaImg from "@/assets/img/lobby.jpeg";
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      badge="Asesoría Corporativa y Estratégica"
+      title='MMG te acompaña en cada decisión estratégica, <span class="text-black text-h2!">dándote el impulso y la asesoría que necesitas para llevar tu empresa al siguiente nivel.</span>'
+      text="<strong>Ponemos a tu disposición una estructura financiera de primer nivel que se adapta a tus metas y a tu estilo de vida.</strong> Desde la gestión eficiente de tus cuentas y divisas hasta el acceso a mercados globales y financiamientos a tu medida, te acompañamos con un modelo transparente y sin complicaciones. Todo lo que necesitas para manejar y proteger tu patrimonio, respaldado por la excelencia de siempre."
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <MediaCards
+    image={asesoriaImg}
+    imageAlt="Asesores de MMG Bank cerrando un acuerdo corporativo"
+    items={[
+      {
+        title: "Fusiones y adquisiciones",
+        text: "Asesoramos a nuestros clientes en la toma de decisiones estratégicas relacionadas con la evaluación, negociación y ejecución de la compra o venta de activos, negocios o empresas. Nuestra experiencia financiera y asesoría objetiva nos permite maximizar el valor y obtener resultados en transacciones complejas.",
+      },
+      {
+        title: "Estructura de capital",
+        text: "Brindamos asesoría financiera y estratégica a empresas que buscan optimizar su estructura de capital mediante mecanismos públicos y privados, con el objetivo de maximizar el retorno sobre el patrimonio manteniendo niveles de riesgo adecuados.",
+      },
+      {
+        title: "Valoraciones",
+        text: "Ayudamos a nuestros clientes a determinar el valor intrínseco y de mercado de sus activos y empresas. Nuestras valoraciones sirven como herramienta de apoyo para la toma de decisiones financieras e inversiones en compañías privadas.",
+      },
+    ]}
+  />
+</section>

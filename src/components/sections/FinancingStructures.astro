@@ -1,0 +1,40 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
+
+// Banner icons — raw SVG markup (sage fill, inlined via ?raw).
+import iconFinanciamiento from "@/assets/img/financiamiento-estructurado.svg?raw";
+import iconMercado from "@/assets/img/mercado-de-cap.svg?raw";
+import iconGarantia from "@/assets/img/garantia-de-valores.svg?raw";
+---
+
+<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      badge="Soluciones de estructura de financiamiento"
+      title='MMG te acompaña en cada decisión estratégica, <span class="text-black text-h2!">dándote el impulso y la asesoría que necesitas para llevar tu empresa al siguiente nivel.</span>'
+      text="<strong>Diseñamos soluciones de financiamiento a la medida de tu empresa.</strong> Te acompañamos en la estructuración, acceso a mercados de capital y gestión de garantías para impulsar tu crecimiento con el respaldo de la excelencia de siempre."
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <ThreeColumnBanner
+    items={[
+      {
+        icon: iconFinanciamiento,
+        title: "Financiamiento <br /> estructurado",
+        text: "Ofrecemos asesoría financiera en estructuraciones complejas, incluyendo titularizaciones de activos generadores de flujo y préstamos sindicados. Además, asesoramos a gestores de activos financieros e inmobiliarios en la constitución de sociedades de inversión para fortalecer y escalar sus operaciones.",
+      },
+      {
+        icon: iconMercado,
+        title: "Mercado <br /> de capitales",
+        text: "Asesoramos a empresas que buscan acceder al mercado de capitales como fuente alternativa de financiamiento. Las acompañamos durante todo el proceso de diseño, estructuración, autorización y registro de emisiones ante los reguladores correspondientes para su distribución en Panamá y la región.",
+      },
+      {
+        icon: iconGarantia,
+        title: "Financiamiento con <br /> garantía de valores",
+        text: "Te ayudamos a optimizar el capital de tu empresa para maximizar tus retornos controlando el riesgo. En caso de querer financiarte a través del Mercado de Capitales, te llevamos de la mano en todo el proceso de diseño, registro y distribución de tus emisiones en Panamá y la región.",
+      },
+    ]}
+  />
+</section>

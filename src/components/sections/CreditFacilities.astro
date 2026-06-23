@@ -1,0 +1,35 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import MediaCards from "@/components/ui/MediaCards.astro";
+
+import creditoImg from "@/assets/img/office.jpeg";
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      title='Estructuramos las facilidades de crédito que necesitas, <span class="text-black text-h2!">respaldando tu crecimiento con soluciones flexibles y sin complicaciones.</span>'
+      text="<strong>Queremos que sigas creciendo sin detener tus planes.</strong> Por eso, complementamos nuestra asesoría financiera y servicios bancarios estructurando facilidades de crédito diseñadas exclusivamente para adaptarse a tus necesidades y objetivos."
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <MediaCards
+    image={creditoImg}
+    imageAlt="Ejecutivos analizando documentos y reportes financieros"
+    items={[
+      {
+        title: "Crédito",
+        text: "Te acompañamos paso a paso a evaluar, valorar y negociar la compra o venta de tus activos o negocios, asegurando que captes el máximo valor real y obtengas los resultados que buscas.",
+      },
+      {
+        title: "Financiamientos con garantía de valores",
+        text: "Te ayudamos a optimizar el capital de tu empresa para maximizar tus retornos controlando el riesgo. En caso de querer financiarte a través del Mercado de Capitales, te llevamos de la mano en todo el proceso de diseño, registro y distribución de tus emisiones en Panamá y la región.",
+      },
+      {
+        title: "Facilidades crediticias",
+        text: "Si necesitas liquidez o quieres incrementar tus retornos sin tocar tus inversiones, usamos tu portafolio actual (acciones o renta fija local e internacional) como garantía. Te damos el financiamiento que buscas con términos mucho más flexibles y rápidos que la banca tradicional.",
+      },
+    ]}
+  />
+</section>

@@ -1,0 +1,58 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
+
+// Banner icons — raw SVG markup (white fill, inlined via ?raw).
+import iconCustodia from "@/assets/img/custodia.svg?raw";
+import iconNegociacion from "@/assets/img/negociacion-mercados.svg?raw";
+import iconBancarios from "@/assets/img/servicios-bancarios.svg?raw";
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      title='<span class=" text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <ThreeColumnBanner
+    items={[
+      {
+        icon: iconCustodia,
+        title: "Servicios de custodia",
+        text: "Ofrecemos la apertura de cuentas multi-moneda en Panamá o Las Bahamas con arquitectura abierta de productos y custodia de activos locales e internacionales. También gestionamos la recaudación de ingresos, acciones corporativas y tarifas de retrocesión (trailer fees).",
+        bullets: [
+          "Apertura de cuenta multi-moneda con opción Panamá o Las Bahamas",
+          "Arquitectura abierta de productos",
+          "Custodia de activos locales e internacionales",
+          "Recaudación de ingresos",
+          "Acciones corporativas",
+          'Recaudación de tarifas de retrocesiones / "trailer"',
+        ],
+      },
+      {
+        icon: iconNegociacion,
+        title: "Negociación y mercados",
+        text: "Brindamos acceso a instrumentos financieros en múltiples monedas con ejecución en mercados locales e internacionales, complementado con cambio de divisas y reportes o análisis especializados del mercado.",
+        bullets: [
+          "Acceso a instrumentos financieros en múltiples monedas",
+          "Ejecución en el mercado local e internacional",
+          "Cambio de divisas",
+          "Acceso a reportes y análisis del mercado",
+        ],
+      },
+      {
+        icon: iconBancarios,
+        title: "Servicios bancarios",
+        text: "Facilitamos transferencias locales e internacionales, gestión de efectivo mediante tarjetas de débito y MMG Mastercard Black©, financiamiento con garantía de valores (margin lending) y custodia segura de activos físicos.",
+        bullets: [
+          "Transferencias de efectivo local e internacional",
+          "Gestión de efectivo (Tarjeta Débito y MMG Mastercard Black ©)",
+          "Financiamientos con Garantía de Valores (Margin Lending)",
+          "Custodia segura de activos físicos",
+        ],
+      },
+    ]}
+  />
+</section>

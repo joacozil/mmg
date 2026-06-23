@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import SplitRow from "@/components/ui/SplitRow.astro";
+import LinkMore from "@/components/ui/LinkMore.astro";
+
+import evaImg from "@/assets/img/eva.jpg";
+---
+
+<section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      title='<span class=" text-h2!">Con nuestra plataforma digital</span> MMG EVA<span class=" text-h2!">, tienes el control de tu plata en la palma de la mano.</span>'
+      class="mb-12 lg:mb-16"
+    />
+
+    <!-- Platform card: wide image + content card (mirrors Services layout) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch lg:min-h-60">
+      <!-- Image -->
+      <div class="lg:col-span-8 relative aspect-3/2 lg:aspect-auto overflow-hidden">
+        <Image
+          src={evaImg}
+          alt="Plataforma digital MMG EVA"
+          class="w-full h-full object-cover lg:absolute lg:inset-0 object-center"
+        />
+      </div>
+
+      <!-- Content Card -->
+      <div class="lg:col-span-4 flex">
+        <div class="bg-white p-6 lg:p-8 flex flex-col justify-between w-full h-full">
+          <div>
+            <p>
+              Entra de forma segura cuando quieras para revisar tus cuentas,
+              ver como van tus inversiones y chequear el desempeño de tu
+              portafolio sin complicaciones.
+            </p>
+          </div>
+          <div class="mt-6">
+            <LinkMore href="#">MMG EVA +</LinkMore>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

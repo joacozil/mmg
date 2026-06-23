@@ -1,22 +1,15 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import PageHero from "../components/PageHero.astro";
-import IntroList from "../components/IntroList.astro";
-import SplitRow from "../components/SplitRow.astro";
-import MediaCards from "../components/MediaCards.astro";
-import FeaturesGrid from "../components/FeaturesGrid.astro";
-import ThreeColumnBanner from "../components/ThreeColumnBanner.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import IntroList from "@/components/ui/IntroList.astro";
+import CorporateAdvisory from "@/components/sections/CorporateAdvisory.astro";
+import PublicOfferings from "@/components/sections/PublicOfferings.astro";
+import FinancingStructures from "@/components/sections/FinancingStructures.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Footer from "@/components/layout/Footer.astro";
 
-import heroImg from "../assets/img/consultorias-hero.jpg";
-import asesoriaImg from "../assets/img/lobby.jpeg";
-
-// Banner icons — raw SVG markup (sage fill, inlined via ?raw).
-import iconFinanciamiento from "../assets/img/financiamiento-estructurado.svg?raw";
-import iconMercado from "../assets/img/mercado-de-cap.svg?raw";
-import iconGarantia from "../assets/img/garantia-de-valores.svg?raw";
+import heroImg from "@/assets/img/consultorias-hero.jpg";
 ---
 
 <Layout
@@ -29,7 +22,7 @@ import iconGarantia from "../assets/img/garantia-de-valores.svg?raw";
     title="Asesoría Corporativa <br /> y Estratégica"
     image={heroImg}
     imageAlt="Equipo de asesores de MMG Bank en reunión estratégica"
-      imagePosition="object-[80%_50%]"
+    imagePosition="object-[80%_50%]"
   />
 
   <IntroList
@@ -44,98 +37,11 @@ import iconGarantia from "../assets/img/garantia-de-valores.svg?raw";
     ]}
   />
 
-  <section class="w-full bg-cream py-section-gap overflow-hidden">
-    <div class="container-custom">
-      <SplitRow
-        badge="Asesoría Corporativa y Estratégica"
-        title='MMG te acompaña en cada decisión estratégica, <span class="text-black text-h2!">dándote el impulso y la asesoría que necesitas para llevar tu empresa al siguiente nivel.</span>'
-        text="<strong>Ponemos a tu disposición una estructura financiera de primer nivel que se adapta a tus metas y a tu estilo de vida.</strong> Desde la gestión eficiente de tus cuentas y divisas hasta el acceso a mercados globales y financiamientos a tu medida, te acompañamos con un modelo transparente y sin complicaciones. Todo lo que necesitas para manejar y proteger tu patrimonio, respaldado por la excelencia de siempre."
-        class="mb-12 lg:mb-16"
-      />
-    </div>
+  <CorporateAdvisory />
 
-    <MediaCards
-      image={asesoriaImg}
-      imageAlt="Asesores de MMG Bank cerrando un acuerdo corporativo"
-      items={[
-        {
-          title: "Fusiones y adquisiciones",
-          text: "Asesoramos a nuestros clientes en la toma de decisiones estratégicas relacionadas con la evaluación, negociación y ejecución de la compra o venta de activos, negocios o empresas. Nuestra experiencia financiera y asesoría objetiva nos permite maximizar el valor y obtener resultados en transacciones complejas.",
-        },
-        {
-          title: "Estructura de capital",
-          text: "Brindamos asesoría financiera y estratégica a empresas que buscan optimizar su estructura de capital mediante mecanismos públicos y privados, con el objetivo de maximizar el retorno sobre el patrimonio manteniendo niveles de riesgo adecuados.",
-        },
-        {
-          title: "Valoraciones",
-          text: "Ayudamos a nuestros clientes a determinar el valor intrínseco y de mercado de sus activos y empresas. Nuestras valoraciones sirven como herramienta de apoyo para la toma de decisiones financieras e inversiones en compañías privadas.",
-        },
-      ]}
-    />
-  </section>
+  <PublicOfferings />
 
-  <section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
-    <FeaturesGrid
-      title="Emisiones públicas de valores"
-      items={[
-        {
-          title: "Estructuración <br /> de emisiones de deuda",
-          text: "Diseño de bonos y títulos para que las empresas obtengan financiamiento con plazos y tasas fijas.",
-        },
-        {
-          title: "Estructuración <br /> de emisiones de capital",
-          text: "Creación y diseño de acciones para captar recursos mediante nuevos inversionistas o socios.",
-        },
-        {
-          title: "Estructuración <br /> de sociedades de inversión",
-          text: "Diseño legal y operativo de fondos comunes para gestionar el capital de múltiples inversionistas.",
-        },
-        {
-          title: "Colocación <br /> de emisiones",
-          text: "Distribución y venta activa de los títulos (deuda o capital) directamente en el mercado financiero.",
-        },
-        {
-          title: "Servicio de agente de pago, <br /> registro y transferencia",
-          text: "Gestión oficial de inversionistas, control de propiedad y distribución segura de rendimientos.",
-        },
-        {
-          title: "Servicio de agente fiduciario <br /> de garantía",
-          text: "Custodia y administración neutral de activos en garantía para asegurar cumplimiento del contrato.",
-        },
-      ]}
-    />
-  </section>
-
-  <section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
-    <div class="container-custom">
-      <SplitRow
-        badge="Soluciones de estructura de financiamiento"
-        title='MMG te acompaña en cada decisión estratégica, <span class="text-black text-h2!">dándote el impulso y la asesoría que necesitas para llevar tu empresa al siguiente nivel.</span>'
-        text="<strong>Diseñamos soluciones de financiamiento a la medida de tu empresa.</strong> Te acompañamos en la estructuración, acceso a mercados de capital y gestión de garantías para impulsar tu crecimiento con el respaldo de la excelencia de siempre."
-        class="mb-12 lg:mb-16"
-      />
-    </div>
-
-    <ThreeColumnBanner
-      items={[
-        {
-          icon: iconFinanciamiento,
-          title: "Financiamiento <br /> estructurado",
-          text: "Ofrecemos asesoría financiera en estructuraciones complejas, incluyendo titularizaciones de activos generadores de flujo y préstamos sindicados. Además, asesoramos a gestores de activos financieros e inmobiliarios en la constitución de sociedades de inversión para fortalecer y escalar sus operaciones.",
-        },
-        {
-          icon: iconMercado,
-          title: "Mercado <br /> de capitales",
-          text: "Asesoramos a empresas que buscan acceder al mercado de capitales como fuente alternativa de financiamiento. Las acompañamos durante todo el proceso de diseño, estructuración, autorización y registro de emisiones ante los reguladores correspondientes para su distribución en Panamá y la región.",
-        },
-        {
-          icon: iconGarantia,
-          title: "Financiamiento con <br /> garantía de valores",
-          text: "Te ayudamos a optimizar el capital de tu empresa para maximizar tus retornos controlando el riesgo. En caso de querer financiarte a través del Mercado de Capitales, te llevamos de la mano en todo el proceso de diseño, registro y distribución de tus emisiones en Panamá y la región.",
-        },
-      ]}
-    />
-  </section>
+  <FinancingStructures />
 
   <Contact />
 

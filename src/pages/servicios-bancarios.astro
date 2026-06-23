@@ -1,24 +1,14 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import PageHero from "../components/PageHero.astro";
-import IntroList from "../components/IntroList.astro";
-import SplitRow from "../components/SplitRow.astro";
-import MediaCards from "../components/MediaCards.astro";
-import ThreeColumnBanner from "../components/ThreeColumnBanner.astro";
-import LinkMore from "../components/LinkMore.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
-import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import IntroList from "@/components/ui/IntroList.astro";
+import CreditFacilities from "@/components/sections/CreditFacilities.astro";
+import MastercardBenefits from "@/components/sections/MastercardBenefits.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Footer from "@/components/layout/Footer.astro";
 
-import heroImg from "../assets/img/servicios-bancarios-hero.jpeg";
-import creditoImg from "../assets/img/office.jpeg";
-import tarjetaImg from "../assets/img/tarjeta.png";
-
-// Banner icons — raw SVG markup (sage fill, inlined via ?raw).
-import iconAvion from "../assets/img/avion.svg?raw";
-import iconSeguro from "../assets/img/seguro.svg?raw";
-import iconEstrella from "../assets/img/estrella.svg?raw";
+import heroImg from "@/assets/img/servicios-bancarios-hero.jpeg";
 ---
 
 <Layout
@@ -49,111 +39,9 @@ import iconEstrella from "../assets/img/estrella.svg?raw";
     ]}
   />
 
-  <section class="w-full bg-cream py-section-gap overflow-hidden">
-    <div class="container-custom">
-      <SplitRow
-        title='Estructuramos las facilidades de crédito que necesitas, <span class="text-black text-h2!">respaldando tu crecimiento con soluciones flexibles y sin complicaciones.</span>'
-        text="<strong>Queremos que sigas creciendo sin detener tus planes.</strong> Por eso, complementamos nuestra asesoría financiera y servicios bancarios estructurando facilidades de crédito diseñadas exclusivamente para adaptarse a tus necesidades y objetivos."
-        class="mb-12 lg:mb-16"
-      />
-    </div>
+  <CreditFacilities />
 
-    <MediaCards
-      image={creditoImg}
-      imageAlt="Ejecutivos analizando documentos y reportes financieros"
-      items={[
-        {
-          title: "Crédito",
-          text: "Te acompañamos paso a paso a evaluar, valorar y negociar la compra o venta de tus activos o negocios, asegurando que captes el máximo valor real y obtengas los resultados que buscas.",
-        },
-        {
-          title: "Financiamientos con garantía de valores",
-          text: "Te ayudamos a optimizar el capital de tu empresa para maximizar tus retornos controlando el riesgo. En caso de querer financiarte a través del Mercado de Capitales, te llevamos de la mano en todo el proceso de diseño, registro y distribución de tus emisiones en Panamá y la región.",
-        },
-        {
-          title: "Facilidades crediticias",
-          text: "Si necesitas liquidez o quieres incrementar tus retornos sin tocar tus inversiones, usamos tu portafolio actual (acciones o renta fija local e internacional) como garantía. Te damos el financiamiento que buscas con términos mucho más flexibles y rápidos que la banca tradicional.",
-        },
-      ]}
-    />
-  </section>
-
-  <section class="w-full bg-cream pt-0 pb-section-gap overflow-hidden">
-    <div class="container-custom">
-      <!-- Part 1: SplitRow -->
-      <SplitRow
-        badge="Mastercard Black"
-        title='<span class="text-black text-h2!">Paga a nivel global y</span> acumula beneficios a tu ritmo.'
-        text="<strong>Usa tu tarjeta alrededor del mundo y paga en cualquier moneda sin preocuparte por comisiones de intercambio.</strong> Además, cada dólar que compras se convierte en un punto dentro de nuestro programa de lealtad para que acumules beneficios en cada movimiento. Aplican términos y condiciones."
-        class="mb-12 lg:mb-20"
-      />
-
-      <!-- Part 2: text — card — text -->
-      <div
-        class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 lg:items-center"
-      >
-        <!-- Left disclaimer -->
-        <div class="order-2 lg:order-1 lg:col-span-3">
-          <p class="text-p-small!">
-            MMG Bank se reserva el derecho de añadir, modificar o excluir
-            beneficios y/o términos y condiciones del producto. Mastercard y
-            Priceless son marcas registradas y el diseño de los círculos es marca
-            de Mastercard International Incorporated. © 2019
-          </p>
-        </div>
-
-        <!-- Card image -->
-        <div class="order-1 lg:order-2 lg:col-span-6 flex justify-center">
-          <Image
-            src={tarjetaImg}
-            alt="Tarjeta MMG Bank Mastercard Black"
-            class="w-full max-w-96 h-auto filter-[drop-shadow(0_8px_9px_rgba(0,0,0,0.5))]"
-          />
-        </div>
-
-        <!-- Right disclaimer + links -->
-        <div class="order-3 lg:col-span-3 flex flex-col gap-6">
-          <p class="text-p-small!">
-            *Las compras y retiros en efectivo hechos en moneda extranjera están
-            sujetas a la tasa de cambio de Mastercard y serán cargados en USD
-            (dólares estadounidenses).
-          </p>
-          <div class="flex flex-col items-start gap-3">
-            <LinkMore href="#">MMG CARD | TARIFAS +</LinkMore>
-            <LinkMore href="#">MMG CARD | CONTRATO +</LinkMore>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Part 3: three-column benefits banner -->
-    <ThreeColumnBanner
-      class="mt-12 lg:mt-24"
-      items={[
-        {
-          icon: iconAvion,
-          title: "Redención de puntos",
-          text: "Tus puntos pueden ser redimidos por:<br />• Compras en agencias de viajes afiliadas (Viajes Ejecutivo y Viajes Tivoli).<br />• Canje de puntos por millas Connect Miles.",
-          buttonLabel: "PREGUNTAS FRECUENTES +",
-          buttonHref: "#",
-        },
-        {
-          icon: iconSeguro,
-          title: "Seguros de viajes",
-          text: "Seguros que respaldan tus viajes para ti y tus adicionales.<br />Para descargar tus certificados de cobertura solo ingresa a <a href='https://www.aig.com/mastercard' target='_blank' rel='noopener noreferrer' class=' underline'>www.aig.com/mastercard</a>",
-          buttonLabel: "CERTIFICADOS DE COBERTURA +",
-          buttonHref: "#",
-        },
-        {
-          icon: iconEstrella,
-          title: "Experiencias únicas",
-          text: "Experiencias únicas con el programa de beneficios Mastercard Black que incluye acceso preferencial a ofertas exclusivas, oportunidades privilegiadas y mucho más.",
-          buttonLabel: "GUÍA DE BENEFICIOS +",
-          buttonHref: "#",
-        },
-      ]}
-    />
-  </section>
+  <MastercardBenefits />
 
   <Contact />
 

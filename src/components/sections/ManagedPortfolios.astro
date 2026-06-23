@@ -1,0 +1,55 @@
+---
+import SplitRow from "@/components/ui/SplitRow.astro";
+import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
+
+// Benefit icons — raw SVG markup (brand green, inlined via ?raw).
+import iconDelegacion from "@/assets/img/delegacion.svg?raw";
+import iconProteccion from "@/assets/img/proteccion.svg?raw";
+import iconMetodologia from "@/assets/img/metodologia.svg?raw";
+import iconRespaldos from "@/assets/img/respaldos.svg?raw";
+import iconMonitoreo from "@/assets/img/monitoreo.svg?raw";
+
+const portafolioBeneficios = [
+  {
+    icon: iconDelegacion,
+    title: "Delegación experta",
+    text: "Tercerización de las decisiones diarias de inversión.",
+  },
+  {
+    icon: iconProteccion,
+    title: "Protección y control",
+    text: "Estrategias enfocadas en la gestión, control de riesgos y diversificación de activos.",
+  },
+  {
+    icon: iconMetodologia,
+    title: "Metodología probada",
+    text: "Robusto y riguroso proceso de adjudicación de activos.",
+  },
+  {
+    icon: iconRespaldos,
+    title: "Respaldados por expertos",
+    text: "Capacidades propietarias de análisis e investigación de mercado.",
+  },
+  {
+    icon: iconMonitoreo,
+    title: "Monitoreo continuo",
+    text: "Supervisión constante de la estrategia y retroalimentación periódica al inversionista.",
+  },
+];
+---
+
+<section class="w-full bg-cream py-section-gap overflow-hidden">
+  <div class="container-custom">
+    <SplitRow
+      badge="Portafolios administrados"
+      title='<span class="text-black text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
+      text="Diseñados para brindar total tranquilidad a aquellos clientes que buscan invertir sus activos bajo los más altos estándares de profesionalismo, enfoque en sus metas y una rigurosa gestión de riesgos, dejando el día a día de sus inversiones en manos expertas."
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <FeaturesGrid
+    title="Beneficios para clientes individuales"
+    items={portafolioBeneficios}
+  />
+</section>
