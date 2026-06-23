@@ -9,7 +9,6 @@ import CoinHeader from "@/components/ui/CoinHeader.astro";
 import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
 import MediaCards from "@/components/ui/MediaCards.astro";
 import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
-import SplitRow from "@/components/ui/SplitRow.astro";
 import LinkMore from "@/components/ui/LinkMore.astro";
 import Contact from "@/components/sections/Contact.astro";
 import Footer from "@/components/layout/Footer.astro";
@@ -20,8 +19,11 @@ import coinGobierno from "@/assets/img/coin-dark-green.png";
 import gerenciaImg from "@/assets/img/gerencia.jpg";
 import financiamientosImg from "@/assets/img/office3.jpeg";
 import programasImg from "@/assets/img/office4.jpeg";
+import fundamorganImg from "@/assets/img/banner-fundamorgan.jpg";
 
-// ODS icons — raw SVG markup (primary green, inlined via ?raw).
+// ODS icons — raw SVG markup (inlined via ?raw).
+import iconOds12Prod from "@/assets/img/ods-12-prod.svg?raw";
+import iconOds13Accion from "@/assets/img/ods-13-accion.svg?raw";
 import iconOds12 from "@/assets/img/ods-12.svg?raw";
 import iconOds13 from "@/assets/img/ods-13.svg?raw";
 import iconOds4 from "@/assets/img/ods-2.svg?raw";
@@ -66,12 +68,12 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     <ThreeColumnBanner
       items={[
         {
-          icon: iconOds12,
+          icon: iconOds12Prod,
           title: "ODS 12 Producción y <br /> consumo responsable",
           text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
         },
         {
-          icon: iconOds13,
+          icon: iconOds13Accion,
           title: "ODS 13 Acción <br /> por el clima",
           text: "Operamos con certificación LEED, medimos nuestra huella de carbono e implementamos programas de reforestación y reciclaje activo. Complementamos esto con financiamiento sostenible para proyectos de impacto real.",
         },
@@ -86,7 +88,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
 
   <Section spacing="tight">
     <MediaCards
-      cardBackground="white"
+      cardBackground="cream"
       image={financiamientosImg}
       imageAlt="Iniciativas de finanzas sostenibles de MMG Bank"
       items={[
@@ -197,6 +199,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
   <Section spacing="tight">
     <MediaCards
       title="Programas"
+      cardBackground="cream"
       image={programasImg}
       imageAlt="Programas sociales de MMG Bank"
       items={[
@@ -216,14 +219,41 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     />
   </Section>
 
-  <!-- Provisional section (heading + link only). -->
   <Section spacing="tight">
     <div class="container-custom">
-      <SplitRow
-        title='Fundamorgan <span class="text-h2!">es el brazo ejecutor de los programas comunitarios de nuestra estrategia de sostenibilidad, incluyendo los esfuerzos de voluntariado que trascienden los distintos ODS.</span>'
+      <!-- Image + content card (mirrors the EVA section, light-green card). -->
+      <div
+        class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch lg:min-h-60"
       >
-        <LinkMore href="#" class="mt-6">Fundamorgan +</LinkMore>
-      </SplitRow>
+        <!-- Image -->
+        <div
+          class="lg:col-span-8 relative aspect-3/2 lg:aspect-auto overflow-hidden"
+        >
+          <Image
+            src={fundamorganImg}
+            alt="Fundamorgan, brazo ejecutor de los programas comunitarios de MMG Bank"
+            class="w-full h-full object-cover lg:absolute lg:inset-0 object-center"
+          />
+        </div>
+
+        <!-- Content Card (light-green) -->
+        <div class="lg:col-span-4 flex">
+          <div
+            class="bg-light-green p-6 lg:p-8 flex flex-col justify-between w-full h-full"
+          >
+            <div>
+              <p>
+                <strong>Fundamorgan</strong> es el brazo ejecutor de los programas comunitarios
+                de nuestra estrategia de sostenibilidad, incluyendo los esfuerzos
+                de voluntariado que trascienden los distintos ODS.
+              </p>
+            </div>
+            <div class="mt-6">
+              <LinkMore href="#">Fundamorgan +</LinkMore>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </Section>
 
@@ -251,3 +281,19 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
 
   <Footer />
 </Layout>
+
+<!-- This page uses a white background instead of the site-wide cream, so cards
+     and the contact form (kept cream) stand out. Contact keeps its cream bg. -->
+<style is:global>
+  body {
+    background-color: #ffffff;
+  }
+  section.bg-cream:not([data-contact-section]) {
+    background-color: #ffffff !important;
+  }
+  /* Contact normally flows seamlessly under a cream section (pt-0); on this
+     white page its cream band needs its own top padding. */
+  section[data-contact-section] {
+    padding-top: var(--section-gap);
+  }
+</style>

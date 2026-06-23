@@ -74,16 +74,19 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
           class="flex flex-col justify-center items-center w-8 h-8 z-1000 relative focus:outline-none cursor-pointer"
           aria-label="Toggle menu"
         >
-          <!-- Hamburger Icon Wrapper -->
-          <div class="relative w-6 h-5">
+          <!-- Hamburger Icon Wrapper. Flex column with three equal bars so they
+               render at identical thickness/positions (avoids sub-pixel rounding
+               that made the top bar look thinner). The ±7px gap keeps the open
+               animation's translateY values collapsing the bars to the center. -->
+          <div class="relative flex flex-col justify-between w-6 h-4">
             <span
-              class="hamburger-line absolute left-0 top-[2px] w-full h-0.5 transition-all duration-300 origin-center"
+              class="hamburger-line w-full h-0.5 transition-all duration-300 origin-center"
             ></span>
             <span
-              class="hamburger-line absolute left-0 top-[9px] w-full h-0.5 transition-all duration-300"
+              class="hamburger-line w-full h-0.5 transition-all duration-300"
             ></span>
             <span
-              class="hamburger-line absolute left-0 top-[16px] w-full h-0.5 transition-all duration-300 origin-center"
+              class="hamburger-line w-full h-0.5 transition-all duration-300 origin-center"
             ></span>
           </div>
         </button>
