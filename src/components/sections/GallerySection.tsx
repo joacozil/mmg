@@ -72,7 +72,10 @@ export default function GallerySection({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-start">
           {/* Left: sticky title + subtitle */}
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <h2 className="text-primary">{title}</h2>
+            <h2
+              className="text-primary"
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
           </div>
 
           {/* Right: scrolling stack of achievement cards */}
