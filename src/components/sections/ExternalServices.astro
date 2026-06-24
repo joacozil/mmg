@@ -4,13 +4,16 @@ import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
 import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
 
-import blockImg from "@/assets/img/banner-fundamorgan.jpg";
+import custodiaImg from "@/assets/img/servicios-de-custodia.jpg";
+import negociacionImg from "@/assets/img/negociacion-mercado.jpg";
+import bancariosImg from "@/assets/img/servicios-bancarios-banner.jpg";
 
 // Each block: an image + a short intro card, followed by its detail items
 // (green-square markers, no description) to decompress the dense banner copy.
 const blocks = [
   {
     title: "Servicios de custodia",
+    image: custodiaImg,
     text: "Ofrecemos la apertura de cuentas multi-moneda en Panamá o Las Bahamas con arquitectura abierta de productos y custodia de activos locales e internacionales. También gestionamos la recaudación de ingresos, acciones corporativas y tarifas de retrocesión (trailer fees).",
     items: [
       "Apertura de cuenta multi-moneda con opción Panamá o Las Bahamas",
@@ -23,6 +26,7 @@ const blocks = [
   },
   {
     title: "Negociación y mercados",
+    image: negociacionImg,
     text: "Brindamos acceso a instrumentos financieros en múltiples monedas con ejecución en mercados locales e internacionales, complementado con cambio de divisas y reportes o análisis especializados del mercado.",
     items: [
       "Acceso a instrumentos financieros en múltiples monedas",
@@ -33,6 +37,7 @@ const blocks = [
   },
   {
     title: "Servicios bancarios",
+    image: bancariosImg,
     text: "Facilitamos transferencias locales e internacionales, gestión de efectivo mediante tarjetas de débito y MMG Mastercard Black©, financiamiento con garantía de valores (margin lending) y custodia segura de activos físicos.",
     items: [
       "Transferencias de efectivo local e internacional",
@@ -58,11 +63,11 @@ const blocks = [
         <div>
           {/* Image + intro card (mirrors the EVA/Fundamorgan layout). */}
           <div class="container-custom">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch lg:min-h-60 mb-10 lg:mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch mb-10 lg:mb-12">
               {/* Image */}
-              <div class="lg:col-span-8 relative aspect-3/2 lg:aspect-auto overflow-hidden">
+              <div class="lg:col-span-8 relative aspect-3/2 sm:aspect-auto sm:h-50 lg:h-auto overflow-hidden">
                 <Image
-                  src={blockImg}
+                  src={block.image}
                   alt={block.title}
                   class="w-full h-full object-cover lg:absolute lg:inset-0 object-center"
                 />
@@ -70,7 +75,7 @@ const blocks = [
 
               {/* Intro card */}
               <div class="lg:col-span-4 flex">
-                <div class="bg-white p-6 lg:p-8 flex flex-col justify-center w-full h-full">
+                <div class="bg-white p-8 lg:p-12 flex flex-col justify-center w-full h-full">
                   <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
                     {block.title}
                   </p>
