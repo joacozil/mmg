@@ -334,7 +334,7 @@ export default function HeroSection({
               </div>
               <div className="w-full lg:w-auto flex flex-col lg:flex-row items-stretch lg:items-end gap-6">
                 <a
-                  href="#contact"
+                  href="#contact-section"
                   className="hero-btn bg-cream text-black px-8 py-3 text-btn uppercase hover:bg-white transition-colors text-center whitespace-nowrap self-start lg:self-auto"
                 >
                   Contactanos

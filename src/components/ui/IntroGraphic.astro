@@ -1,0 +1,72 @@
+---
+import { Image } from "astro:assets";
+import LinkMore from "@/components/ui/LinkMore.astro";
+
+interface Props {
+  title: string; // heading; supports inline HTML (e.g. <br />)
+  paragraphs?: string[]; // body copy; supports inline HTML
+  buttons?: { label: string; href?: string; newTab?: boolean }[]; // optional links under the copy
+  image: ImageMetadata; // graphic shown on the right
+  imageAlt?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  title,
+  paragraphs = [],
+  buttons = [],
+  image,
+  imageAlt = "",
+  id,
+  class: className = "",
+} = Astro.props;
+---
+
+<!-- Same darker-green band + heading/copy/button as IntroList, but the right
+     column shows a graphic instead of the arrow list. -->
+<section
+  id={id}
+  class={`w-full bg-super-dark-green py-section-gap overflow-hidden ${className}`}
+>
+  <div class="container-custom">
+    <div
+      class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 lg:items-center"
+    >
+      <!-- Left: heading + copy + button -->
+      <div class="lg:col-span-5 flex flex-col">
+        <h2 class="text-white text-balance mb-8 lg:mb-10" set:html={title} />
+        <div class="flex flex-col gap-6 lg:max-w-md">
+          {paragraphs.map((p) => <p class="text-white!" set:html={p} />)}
+          {
+            buttons.length > 0 && (
+              <div class="flex flex-col items-start gap-3">
+                {buttons.map((b) => (
+                  <LinkMore
+                    href={b.href ?? "#"}
+                    color="light-green"
+                    target={b.newTab ? "_blank" : undefined}
+                    rel={b.newTab ? "noopener noreferrer" : undefined}
+                  >
+                    {b.label} +
+                  </LinkMore>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Right: graphic -->
+      <div
+        class="lg:col-span-6 lg:col-start-7 flex justify-center lg:justify-end"
+      >
+        <Image
+          src={image}
+          alt={imageAlt}
+          class="w-full max-w-[420px] lg:max-w-[515px] h-auto"
+        />
+      </div>
+    </div>
+  </div>
+</section>

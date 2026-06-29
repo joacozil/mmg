@@ -3,7 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import { Image } from "astro:assets";
 import Header from "@/components/layout/Header.astro";
 import PageHero from "@/components/ui/PageHero.astro";
-import IntroList from "@/components/ui/IntroList.astro";
+import IntroGraphic from "@/components/ui/IntroGraphic.astro";
 import Section from "@/components/ui/Section.astro";
 import CoinHeader from "@/components/ui/CoinHeader.astro";
 import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
@@ -20,6 +20,7 @@ import gerenciaImg from "@/assets/img/gerencia.jpg";
 import financiamientosImg from "@/assets/img/office3.jpeg";
 import programasImg from "@/assets/img/office4.jpeg";
 import fundamorganImg from "@/assets/img/banner-fundamorgan.jpg";
+import sostenibilidadGraph from "@/assets/img/sostenibilidad-graph.svg";
 
 // Certification / alliance / award logos.
 import logoParidad from "@/assets/img/paridad.svg";
@@ -52,16 +53,19 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
 
   <PageHero title="Sostenibilidad" animated />
 
-  <IntroList
+  <IntroGraphic
     title="Legado con <br /> impacto."
     paragraphs={[
-      "En MMG Bank, tenemos un profundo propósito de contribuir al desarrollo sostenible y crecimiento de Panamá, lo que, sumado a nuestro compromiso con los Objetivos de Desarrollo Sostenible (ODS), ha llevado a nuestra empresa a tener un enfoque integral para influir positivamente.",
+      "En MMG Bank, tenemos un profundo propósito de contribuir al desarrollo sostenible y crecimiento de Panamá, lo que, sumado a nuestro compromiso con los Objetivos de Desarrollo Sostenible (ODS), ha llevado a nuestra empresa a tener un enfoque integral para influir positivamente sobre todos nuestros grupos de interés o stakeholders en los ejes de medio ambiente, compromiso social y gobernanza responsable.",
     ]}
-    items={["Ambiental", "Social", "Gobierno responsable"]}
-    buttons={[{ label: "Informes" }]}
+    buttons={[
+      { label: "Informes", href: "/pdf/informes-sostenibilidad.pdf", newTab: true },
+    ]}
+    image={sostenibilidadGraph}
+    imageAlt="Ejes de sostenibilidad de MMG Bank: ambiental, social y gobierno corporativo"
   />
 
-  <Section>
+  <Section id="ambiental">
     <div class="container-custom">
       <CoinHeader
         badge="Ambiental"
@@ -171,7 +175,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     />
   </Section>
 
-  <Section spacing="tight">
+  <Section spacing="tight" id="social">
     <div class="container-custom">
       <CoinHeader
         badge="Social"
@@ -226,7 +230,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     />
   </Section>
 
-  <Section spacing="tight">
+  <Section spacing="tight" id="fundamorgan">
     <div class="container-custom">
       <!-- Image + content card (mirrors the EVA section, light-green card). -->
       <div
@@ -268,7 +272,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     </div>
   </Section>
 
-  <Section spacing="tight">
+  <Section spacing="tight" id="gobierno">
     <div class="container-custom">
       <CoinHeader
         badge="Gobierno responsable"

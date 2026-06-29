@@ -5,7 +5,7 @@ interface Props {
   title: string; // heading; supports inline HTML (e.g. <br />)
   paragraphs?: string[]; // left-column body copy; supports inline HTML
   items: string[]; // right-column list labels (count is variable)
-  buttons?: { label: string; href?: string }[]; // optional links under the copy
+  buttons?: { label: string; href?: string; newTab?: boolean }[]; // optional links under the copy
   id?: string;
   class?: string;
 }
@@ -44,7 +44,12 @@ const {
             {buttons.length > 0 && (
               <div class="flex flex-col items-start gap-3">
                 {buttons.map((b) => (
-                  <LinkMore href={b.href ?? "#"} color="light-green">
+                  <LinkMore
+                    href={b.href ?? "#"}
+                    color="light-green"
+                    target={b.newTab ? "_blank" : undefined}
+                    rel={b.newTab ? "noopener noreferrer" : undefined}
+                  >
                     {b.label} +
                   </LinkMore>
                 ))}
