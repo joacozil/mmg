@@ -2,18 +2,17 @@
 import { Image } from "astro:assets";
 import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
-import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
 
-import custodiaImg from "@/assets/img/servicios-de-custodia.jpg";
-import negociacionImg from "@/assets/img/negociacion-mercado.jpg";
-import bancariosImg from "@/assets/img/servicios-bancarios-banner.jpg";
+import coinLightGreen from "@/assets/img/coin-light-green.png";
+import coinPrimary from "@/assets/img/coin-primary.png";
+import coinDarkGreen from "@/assets/img/coin-dark-green.png";
 
-// Each block: an image + a short intro card, followed by its detail items
-// (green-square markers, no description) to decompress the dense banner copy.
+// Each block reads as three columns: a title + intro on the left, a coin in the
+// center, and the detail items (green-square markers) on the right.
 const blocks = [
   {
     title: "Servicios de custodia",
-    image: custodiaImg,
+    coin: coinLightGreen,
     text: "Ofrecemos la apertura de cuentas multi-moneda en Panamá o Las Bahamas con arquitectura abierta de productos y custodia de activos locales e internacionales. También gestionamos la recaudación de ingresos, acciones corporativas y tarifas de retrocesión (trailer fees).",
     items: [
       "Apertura de cuenta multi-moneda con opción Panamá o Las Bahamas",
@@ -26,7 +25,7 @@ const blocks = [
   },
   {
     title: "Negociación y mercados",
-    image: negociacionImg,
+    coin: coinPrimary,
     text: "Brindamos acceso a instrumentos financieros en múltiples monedas con ejecución en mercados locales e internacionales, complementado con cambio de divisas y reportes o análisis especializados del mercado.",
     items: [
       "Acceso a instrumentos financieros en múltiples monedas",
@@ -37,7 +36,7 @@ const blocks = [
   },
   {
     title: "Servicios bancarios",
-    image: bancariosImg,
+    coin: coinDarkGreen,
     text: "Facilitamos transferencias locales e internacionales, gestión de efectivo mediante tarjetas de débito y MMG Mastercard Black©, financiamiento con garantía de valores (margin lending) y custodia segura de activos físicos.",
     items: [
       "Transferencias de efectivo local e internacional",
@@ -55,40 +54,51 @@ const blocks = [
       title='<span class=" text-h2!">El camino hacia sus metas financieras se recorre mejor acompañado;</span> co-creemos la estrategia ideal para su portafolio.'
       class="mb-12 lg:mb-16"
     />
-  </div>
 
-  <div class="flex flex-col gap-16 lg:gap-24">
-    {
-      blocks.map((block) => (
-        <div>
-          {/* Image + intro card (mirrors the EVA/Fundamorgan layout). */}
-          <div class="container-custom">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-6 items-stretch mb-10 lg:mb-12">
-              {/* Image */}
-              <div class="lg:col-span-8 relative aspect-3/2 sm:aspect-auto sm:h-50 lg:h-auto overflow-hidden">
-                <Image
-                  src={block.image}
-                  alt={block.title}
-                  class="w-full h-full object-cover lg:absolute lg:inset-0 object-center"
-                />
-              </div>
+    <div class="flex flex-col gap-16 lg:gap-24">
+      {
+        blocks.map((block) => (
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left: title + intro */}
+            <div class="lg:col-span-4 flex flex-col">
+              <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
+                {block.title}
+              </p>
+              <p class="text-p-small!">{block.text}</p>
+            </div>
 
-              {/* Intro card */}
-              <div class="lg:col-span-4 flex">
-                <div class="bg-white p-8 lg:p-12 flex flex-col justify-center w-full h-full">
-                  <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
-                    {block.title}
-                  </p>
-                  <p class="text-p-small!">{block.text}</p>
+            {/* Center: coin */}
+            <div class="lg:col-span-4 flex justify-center">
+              <Image
+                src={block.coin}
+                alt={block.title}
+                class="w-full max-w-70 h-auto"
+              />
+            </div>
+
+            {/* Right: detail items with green-square markers */}
+            <div class="lg:col-span-4 flex flex-col gap-3">
+              {block.items.map((item) => (
+                <div class="flex items-start gap-3">
+                  <span class="external-services__square" aria-hidden="true" />
+                  <p class="text-p-small!" set:html={item} />
                 </div>
-              </div>
+              ))}
             </div>
           </div>
-
-          {/* Detail items as green-square markers. */}
-          <FeaturesGrid items={block.items.map((label) => ({ title: label }))} />
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
 </Section>
+
+<style>
+  /* Green square bullet, aligned to the first line of the item label. */
+  .external-services__square {
+    width: 0.7rem;
+    height: 0.7rem;
+    background-color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+  }
+</style>

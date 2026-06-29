@@ -44,6 +44,7 @@ const {
           sizes="100vw"
           loading="eager"
           fetchpriority="high"
+          data-hero-img
           class={`absolute inset-0 h-full w-full object-cover ${imagePosition}`}
         />
         <div class="page-hero__overlay absolute inset-0" aria-hidden="true" />
@@ -55,6 +56,7 @@ const {
   <div class="container-custom relative z-10 flex w-full flex-col py-12 lg:py-16">
     <div class="flex flex-1 flex-col justify-center">
       <h1
+        data-hero-title
         class="uppercase text-white max-w-[16rem] sm:max-w-lg lg:max-w-2xl"
         set:html={title}
       />
@@ -72,9 +74,27 @@ const {
       rgba(0, 172, 105, 0) 80%
     );
   }
+
+  /* Entrance initial states — applied only while JS is active and motion is
+     allowed, and removed once the hero has revealed (see the script below).
+     The `html.js` gate keeps content visible for no-JS users; the media query
+     keeps it visible for reduced-motion users. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js:not(.hero-revealed) .main-header) {
+      opacity: 0;
+    }
+    :global(html.js:not(.hero-revealed) [data-page-hero] [data-hero-title]) {
+      opacity: 0;
+    }
+    :global(html.js:not(.hero-revealed) [data-page-hero] [data-hero-img]) {
+      transform: scale(1.06);
+    }
+  }
 </style>
 
 <script>
+  import gsap from "gsap";
+
   // Interior-page header controller.
   // The homepage drives the header's sticky state + scroll-trigger init from
   // its React HeroSection; interior pages built on PageHero need an equivalent
@@ -98,6 +118,42 @@ const {
     if (!(window as any).heroScrollTriggerInitialized) {
       (window as any).heroScrollTriggerInitialized = true;
       window.dispatchEvent(new CustomEvent("hero-scroll-trigger-init"));
+    }
+
+    // --- Entrance animation ---
+    // Header eases down, the hero image settles from a gentle zoom, and the
+    // title fades up. Initial hidden states live in CSS (gated on `html.js` +
+    // prefers-reduced-motion) so nothing flashes before this runs; revealing
+    // adds `.hero-revealed` to drop those rules, then clears the inline tween
+    // styles so the elements sit at their natural values.
+    const heroTitle = hero.querySelector<HTMLElement>("[data-hero-title]");
+    const heroImg = hero.querySelector<HTMLElement>("[data-hero-img]");
+    const targets = [header, heroTitle, heroImg].filter(Boolean) as HTMLElement[];
+
+    const reveal = () => {
+      document.documentElement.classList.add("hero-revealed");
+      gsap.set(targets, { clearProps: "opacity,transform" });
+    };
+
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    // On a reload past the hero (scroll already restored), skip the entrance.
+    const alreadyScrolled = window.scrollY > 4;
+
+    if (prefersReduced || alreadyScrolled) {
+      reveal();
+    } else {
+      gsap.set(header, { y: -16 });
+      if (heroTitle) gsap.set(heroTitle, { y: 24 });
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
+      if (heroImg)
+        tl.to(heroImg, { scale: 1, duration: 1.6, ease: "power2.out" }, 0);
+      if (heroTitle)
+        tl.to(heroTitle, { y: 0, opacity: 1, duration: 1 }, 0.25);
+      tl.add(reveal);
     }
   }
 </script>

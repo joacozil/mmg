@@ -306,15 +306,18 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
     height: 2px;
     background-color: currentColor;
     transform: scaleX(0);
-    transform-origin: right center;
-    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
+    /* Single fixed origin (grow + collapse both from the left): flipping the
+       origin between states made an interrupted underline teleport across on
+       fast hovers. No transition delay either — delays queued up on rapid
+       passes and made the line feel stuck. This stays fully interruptible. */
+    transform-origin: left center;
+    /* Small delay so quick fly-overs don't flash the underline. Kept short and
+       symmetric (same on enter/leave) so rapid passes stay smooth, not stuck. */
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s;
+    will-change: transform;
   }
   .drawer-nav-link:hover::after {
     transform: scaleX(1);
-    transform-origin: left center;
-    /* Delay on enter so quick fly-overs never trigger the underline */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
   }
   @media (prefers-reduced-motion: reduce) {
     .drawer-nav-link::after {

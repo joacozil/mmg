@@ -26,6 +26,12 @@ const {
 			// Disable browser scroll restoration – GSAP's pin spacer changes
 			// document height, making the browser's restored position wrong.
 			// We handle restoration manually after GSAP sets up.
+
+			// Mark JS as available before first paint so CSS can hide the
+			// entrance-animated header/hero without ever hiding them for
+			// no-JS users. See PageHero.astro.
+			document.documentElement.classList.add("js");
+
 			if ("scrollRestoration" in history)
 				history.scrollRestoration = "manual";
 			window.addEventListener("beforeunload", function () {
