@@ -1,0 +1,41 @@
+---
+import Section from "@/components/ui/Section.astro";
+import SplitRow from "@/components/ui/SplitRow.astro";
+import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
+
+// Reach icons — raw SVG markup (primary green), inlined via ?raw.
+import iconSede from "@/assets/img/sede-panama.svg?raw";
+import iconOffshore from "@/assets/img/offshore.svg?raw";
+import iconInternacional from "@/assets/img/internacional.svg?raw";
+---
+
+<Section spacing="tight">
+  <div class="container-custom">
+    <SplitRow
+      badge="Alcance e infraestructura"
+      title='Una sólida plataforma local <span class="text-black text-h2!">con el alcance global que necesitas para crecer.</span>'
+      text="En MMG Bank, conectamos tus objetivos con las principales plazas financieras del mundo. Desde nuestra sede central en el hub de Panamá y a través de nuestra presencia internacional en Bahamas, combinamos una infraestructura de primer nivel con una sólida red de corresponsales globales. Así, te brindamos la seguridad jurídica, la diversificación y el respaldo internacional que tú y tu empresa necesitan para operar sin fronteras."
+      class="mb-12 lg:mb-16"
+    />
+  </div>
+
+  <ThreeColumnBanner
+    items={[
+      {
+        icon: iconSede,
+        title: "Sede central <br /> (Panamá)",
+        text: "Operamos desde la Torre MMG en Panamá como el hub financiero y operativo de la región. Contamos con Licencia General de la Superintendencia de Bancos y licencia de Casa de Valores, garantizando la máxima solidez regulatoria.",
+      },
+      {
+        icon: iconOffshore,
+        title: "Presencia offshore <br /> (Bahamas)",
+        text: "A través de MMG Bank & Trust Ltd. (banco de licencia internacional), ampliamos nuestras capacidades de estructuración internacional, custodia y ventajas fiscales y corporativas para clientes globales.",
+      },
+      {
+        icon: iconInternacional,
+        title: "Alcance <br /> internacional",
+        text: "Atendemos a clientes de Latinoamérica y Europa, conectándolos con las principales plazas e instrumentos financieros del mundo gracias a una sólida red de bancos corresponsales y custodios globales de primer nivel.",
+      },
+    ]}
+  />
+</Section>

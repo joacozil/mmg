@@ -31,14 +31,18 @@
     aria-labelledby="en-linea-toggle"
   >
     <a
-      href="#"
+      href="https://www.mmgbank.com/scripts/mmg.dll?lang=1"
+      target="_blank"
+      rel="noopener noreferrer"
       class="menu-item-link block px-4 py-2.5 text-p font-semibold transition-colors duration-200"
       role="menuitem"
     >
-      <span class="menu-link-text">Banca en Línea</span>
+      <span class="menu-link-text">BANCA EN LÍNEA</span>
     </a>
     <a
-      href="#"
+      href="https://www.mmgbank.com/eConsulting_prod/index.jsp"
+      target="_blank"
+      rel="noopener noreferrer"
       class="menu-item-link block px-4 py-2.5 text-p font-semibold transition-colors duration-200"
       role="menuitem"
     >
@@ -66,10 +70,18 @@
     opacity: 0.8;
   }
 
-  /* Active Menu overlay overrides */
+  /* Menu open over the white drawer: dark text below lg (En Línea sits over the
+     white full-width panel) and light on lg (it sits over the dark backdrop).
+     The sticky rule below still wins when the header has a white background. */
   :global(.main-header.is-active-menu) .en-linea-btn,
   :global(.main-header.is-active-menu) .en-linea-btn span {
-    color: var(--color-white) !important;
+    color: var(--color-black) !important;
+  }
+  @media (min-width: 1024px) {
+    :global(.main-header.is-active-menu) .en-linea-btn,
+    :global(.main-header.is-active-menu) .en-linea-btn span {
+      color: var(--color-white) !important;
+    }
   }
   :global(.main-header.is-active-menu) .en-linea-btn:hover,
   :global(.main-header.is-active-menu) .en-linea-btn.is-active,
@@ -135,16 +147,16 @@
     height: 1.5px;
     background-color: currentColor;
     transform: scaleX(0);
-    transform-origin: right center;
-    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
+    /* Single fixed origin (grow + collapse both from the left) with a short,
+       symmetric delay — matches the drawer menu links so the line never
+       teleports across or feels stuck on fast hovers. */
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s;
+    will-change: transform;
   }
 
   .menu-item-link:hover .menu-link-text::after {
     transform: scaleX(1);
-    transform-origin: left center;
-    /* Delay on enter so quick fly-overs never trigger the underline */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
   }
 
   @media (prefers-reduced-motion: reduce) {

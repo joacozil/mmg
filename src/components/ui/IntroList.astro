@@ -84,7 +84,9 @@ const {
     border-bottom: 2px solid var(--line);
   }
 
-  /* Closing node at the bottom-left of the last divider */
+  /* Closing node at the bottom-left of the last divider. --close-node drives
+     the reveal (0 = hidden, 1 = shown); it defaults to 1 so the node stays
+     visible without JS / with reduced motion. */
   .intro-list::after {
     content: "";
     position: absolute;
@@ -93,7 +95,8 @@ const {
     width: 10px;
     height: 10px;
     background: var(--node);
-    transform: translate(-50%, 50%);
+    transform: translate(-50%, 50%) scale(var(--close-node, 1));
+    opacity: var(--close-node, 1);
   }
 
   .intro-list__item {
@@ -143,10 +146,14 @@ const {
       const heading = section.querySelector<HTMLElement>("[data-intro-heading]");
       const copy = section.querySelector<HTMLElement>("[data-intro-copy]");
       const items = section.querySelectorAll<HTMLElement>("[data-intro-item]");
+      const list = section.querySelector<HTMLElement>(".intro-list");
 
       const reveal = [heading, copy].filter(Boolean) as HTMLElement[];
       if (reveal.length) gsap.set(reveal, { opacity: 0, y: 24 });
       if (items.length) gsap.set(items, { opacity: 0, x: 24 });
+      // Closing line + node start hidden so they animate in with the list
+      // instead of sitting there statically.
+      if (list) gsap.set(list, { borderBottomColor: "transparent", "--close-node": 0 });
 
       const createTrigger = () => {
         ScrollTrigger.create({
@@ -179,6 +186,26 @@ const {
                 },
                 0.15,
               );
+            // Slot the closing line into the SAME stagger rhythm as the items
+            // (one beat after the last one), with matching duration/ease, so it
+            // reads as the final divider rather than a delayed afterthought.
+            if (list) {
+              const lineAt = 0.15 + 0.08 * items.length;
+              tl.to(
+                list,
+                {
+                  borderBottomColor: "rgba(242, 239, 238, 0.6)",
+                  duration: 0.7,
+                  ease: "power3.out",
+                },
+                lineAt,
+              );
+              tl.to(
+                list,
+                { "--close-node": 1, duration: 0.4, ease: "back.out(2)" },
+                lineAt,
+              );
+            }
           },
         });
 

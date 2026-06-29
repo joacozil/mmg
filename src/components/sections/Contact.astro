@@ -293,6 +293,10 @@ import textureImage from "@/assets/img/building-texture-2.svg";
     font-weight: 600;
     line-height: var(--lh-btn);
     letter-spacing: var(--ls-btn);
+    /* Pin to a stable compositor layer so the animated underline below
+       doesn't re-snap the text by a subpixel on fractional-DPI displays. */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .btn-more::after {
@@ -304,16 +308,16 @@ import textureImage from "@/assets/img/building-texture-2.svg";
     height: 2px;
     background-color: currentColor;
     transform: scaleX(0);
-    transform-origin: right center;
-    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
+    /* Single fixed origin (grow + collapse both from the left) with a short,
+       symmetric delay — matches the drawer menu links so the line never
+       teleports across or feels stuck on fast hovers. */
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s;
+    will-change: transform;
   }
 
   .btn-more:hover::after {
     transform: scaleX(1);
-    transform-origin: left center;
-    /* Delay on enter so quick fly-overs never trigger the underline */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -228,6 +228,12 @@ body {
   color: var(--color-black);
 }
 
+/* Offset anchor targets so they don't land under the fixed header when
+   reached via a footer/nav link like /clientes#cliente-individual. */
+:target {
+  scroll-margin-top: 6rem;
+}
+
 /* -------------------------------------------------------------
  * Base HTML Element Default Typography
  * ------------------------------------------------------------- */

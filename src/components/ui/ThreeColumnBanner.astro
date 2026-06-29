@@ -8,6 +8,7 @@ interface BannerItem {
   bullets?: string[]; // optional bullet list below the text
   buttonLabel?: string; // omit to render the item without a button
   buttonHref?: string;
+  buttonNewTab?: boolean; // open the button's href in a new tab
 }
 
 interface Props {
@@ -73,6 +74,8 @@ const { items, id, class: className = "" } = Astro.props;
                   href={item.buttonHref ?? "#"}
                   color="black"
                   class="mt-auto self-start"
+                  target={item.buttonNewTab ? "_blank" : undefined}
+                  rel={item.buttonNewTab ? "noopener noreferrer" : undefined}
                 >
                   {item.buttonLabel}
                 </LinkMore>

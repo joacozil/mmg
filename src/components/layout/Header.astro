@@ -105,12 +105,12 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
 <!-- Drawer Menu Panel (outside transform header context) -->
 <div
   id="drawer-menu"
-  class="fixed left-0 top-0 h-full w-full max-w-full lg:max-w-[450px] text-cream flex flex-col justify-between px-(--element-padding) py-8 md:py-12 lg:p-16 transform -translate-x-full transition-transform duration-500 ease-out z-998 shadow-2xl overflow-y-auto"
+  class="fixed left-0 top-0 h-full w-full max-w-full lg:max-w-[450px] text-black flex flex-col justify-between px-(--element-padding) py-8 md:py-12 lg:p-16 transform -translate-x-full transition-transform duration-500 ease-out z-998 shadow-2xl overflow-y-auto"
 >
   <!-- Content Space -->
   <div class="mt-24 flex-1 flex flex-col justify-center">
     <nav class="flex flex-col gap-5 md:gap-7 uppercase font-bold">
-      <a href="/clientes" class="drawer-nav-link">Cliente</a>
+      <a href="/clientes" class="drawer-nav-link">Clientes</a>
       <a href="/soluciones-de-inversion" class="drawer-nav-link"
         >Soluciones de Inversión</a
       >
@@ -125,26 +125,36 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
 
       <!-- Mobile-only En Línea section -->
       <div
-        class="sm:hidden flex flex-col gap-4 mt-2 pt-4 border-t border-cream/20"
+        class="sm:hidden flex flex-col gap-4 mt-2 pt-4 border-t border-black/10"
       >
-        <a href="#" class="drawer-nav-link text-lg">Banca en Línea</a>
-        <a href="#" class="drawer-nav-link text-lg">EVA</a>
+        <a
+          href="https://www.mmgbank.com/scripts/mmg.dll?lang=1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="drawer-nav-link text-lg">BANCA EN LÍNEA</a
+        >
+        <a
+          href="https://www.mmgbank.com/eConsulting_prod/index.jsp"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="drawer-nav-link text-lg">EVA</a
+        >
       </div>
     </nav>
   </div>
 
   <div
-    class="hidden sm:flex mt-8 pt-8 border-t border-cream/20 text-white! text-sm flex-col gap-4"
+    class="hidden sm:flex mt-8 pt-8 border-t border-black/10 text-black! text-sm flex-col gap-4"
   >
     <div>
-      <p class="font-bold text-white! uppercase mb-1">MMG Bank</p>
-      <p class="text-white! text-p-small!">Panamá, República de Panamá</p>
+      <p class="font-bold text-black! uppercase mb-1">MMG Bank</p>
+      <p class="text-black! text-p-small!">Panamá, República de Panamá</p>
     </div>
     <div>
-      <p class="font-bold text-white! uppercase mb-1">Contacto</p>
+      <p class="font-bold text-black! uppercase mb-1">Contacto</p>
       <a
         href="mailto:info@mmgbank.com"
-        class="hover:text-white transition-colors text-p-small!"
+        class="hover:text-primary transition-colors text-p-small!"
         >info@mmgbank.com</a
       >
     </div>
@@ -231,9 +241,10 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
       background-color 0.4s ease;
   }
 
-  /* Hamburger button active (open) state */
+  /* Hamburger button active (open) state — the drawer is white, and the
+     header sits transparent over it, so the X must be dark to stay visible. */
   .main-header.is-active-menu #menu-toggle .hamburger-line {
-    background-color: var(--color-white) !important;
+    background-color: var(--color-darker-green) !important;
   }
 
   /* Hamburger button sticky state */
@@ -258,8 +269,17 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
     background-color: transparent !important;
     box-shadow: none !important;
   }
+  /* Menu open over the white drawer: the logo is centered, so it sits over the
+     white panel below lg (needs dark) but over the dark backdrop on lg (needs
+     light). The sticky rule further down still wins when the header itself has
+     a white background. */
   .main-header.is-active-menu .logo-link {
-    color: var(--color-white) !important;
+    color: var(--color-primary) !important;
+  }
+  @media (min-width: 1024px) {
+    .main-header.is-active-menu .logo-link {
+      color: var(--color-white) !important;
+    }
   }
 
   /* Sticky class styling */
@@ -287,15 +307,19 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
   /* Drawer Navigation Links styles */
   .drawer-nav-link {
     font-family: "Bornia", sans-serif;
-    color: var(--color-cream);
+    color: var(--color-black);
     transition: color 0.3s ease;
     display: inline-block;
     position: relative;
     padding-bottom: 4px;
     width: fit-content;
+    /* Pin to a stable compositor layer so the animated underline below
+       doesn't re-snap the text by a subpixel on fractional-DPI displays. */
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
   .drawer-nav-link:hover {
-    color: var(--color-white) !important;
+    color: var(--color-primary) !important;
   }
   .drawer-nav-link::after {
     content: "";
@@ -333,7 +357,7 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
 
   /* Drawer Menu Panel classes */
   #drawer-menu {
-    background: var(--gradient-green);
+    background: var(--color-white);
     /* Keep the drawer scrollable on short screens, but hide the scrollbar. */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE / old Edge */

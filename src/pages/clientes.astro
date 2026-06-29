@@ -1,0 +1,46 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import PageHero from "@/components/ui/PageHero.astro";
+import IntroList from "@/components/ui/IntroList.astro";
+import ClientDivisions from "@/components/sections/ClientDivisions.astro";
+import ClientReach from "@/components/sections/ClientReach.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Footer from "@/components/layout/Footer.astro";
+
+import heroImg from "@/assets/img/hero-clientes.jpeg";
+---
+
+<Layout
+  title="Clientes | MMG Bank"
+  description="En MMG Bank acompañamos a individuos, familias, empresas e instituciones con asesoría financiera estratégica diseñada para cada etapa de su evolución."
+>
+  <Header />
+
+  <PageHero
+    title="Cliente"
+    image={heroImg}
+    imageAlt="Asesores de MMG Bank en reunión con un cliente y vista a la ciudad de Panamá"
+    imagePosition="object-[80%_60%]"
+  />
+
+  <IntroList
+    title="Su gestión, nuestra <br /> infraestructura."
+    paragraphs={[
+      "Ya sea que busques proteger tu patrimonio familiar o impulsar el crecimiento de tu empresa, aquí encuentras el respaldo de una banca de primera. Desde nuestra sólida plataforma en Panamá y nuestra presencia internacional en Bahamas, conectamos tus objetivos con los mercados del mundo para que avances con total seguridad y paso firme.",
+    ]}
+    items={[
+      "Cliente individual",
+      "Cliente corporativo",
+      "Alcance e infraestructura",
+    ]}
+  />
+
+  <ClientDivisions />
+
+  <ClientReach />
+
+  <Contact />
+
+  <Footer />
+</Layout>

@@ -28,26 +28,27 @@ const regulators = [
       <div
         class="lg:col-span-8 bg-cream p-8 lg:p-12 rounded-[24px] flex flex-col justify-between"
       >
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_auto] gap-8 lg:gap-12">
           <!-- Column 1: Links (Clientes, Soluciones, Servicios) -->
           <div class="footer-menu-col flex flex-col gap-10">
             <div>
-              <h4
-                class="footer-group-heading w-fit text-p-small! font-bold uppercase text-black hover:text-primary transition-colors cursor-pointer mb-2"
+              <a
+                href="/clientes"
+                class="footer-group-heading w-fit text-p-small! font-bold uppercase text-black hover:text-primary transition-colors block mb-2"
               >
                 <span class="footer-heading-text">Clientes</span>
-              </h4>
+              </a>
               <ul class="flex flex-col gap-0.5">
                 <li>
                   <a
-                    href="#"
+                    href="/clientes#cliente-individual"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Individuales</a
                   >
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/clientes#cliente-corporativo"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Corporativo</a
                   >
@@ -71,14 +72,14 @@ const regulators = [
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/soluciones-de-inversion#clientes-individuales"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Cliente Individual</a
                   >
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/soluciones-de-inversion#negociacion-mercados"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Fondos Comunes</a
                   >
@@ -102,14 +103,14 @@ const regulators = [
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/servicios-bancarios#facilidades-credito"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Cliente Individual</a
                   >
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/servicios-bancarios#tarjetas-credito"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Tarjeta De Crédito</a
                   >
@@ -127,22 +128,23 @@ const regulators = [
             </div>
 
             <div>
-              <h4
-                class="footer-group-heading w-fit text-p-small! font-bold uppercase text-black hover:text-primary transition-colors cursor-pointer mb-2"
+              <a
+                href="/asesores-externos"
+                class="footer-group-heading w-fit text-p-small! font-bold uppercase text-black hover:text-primary transition-colors block mb-2"
               >
                 <span class="footer-heading-text">Asesores Externos</span>
-              </h4>
+              </a>
               <ul class="flex flex-col gap-0.5">
                 <li>
                   <a
-                    href="#"
+                    href="/asesores-externos#soluciones"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Soluciones</a
                   >
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/asesores-externos#herramientas"
                     class="text-p-small text-black hover:text-primary transition-colors"
                     >Herramientas</a
                   >
@@ -152,7 +154,7 @@ const regulators = [
 
             <div>
               <a
-                href="#"
+                href="/sostenibilidad"
                 class="footer-group-heading w-fit text-p-small! font-bold uppercase text-black hover:text-primary transition-colors block"
               >
                 <span class="footer-heading-text">Sostenibilidad</span>
@@ -203,7 +205,9 @@ const regulators = [
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/pdf/codigo-de-etica.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="text-p-small text-black hover:text-primary transition-colors inline-flex items-center gap-2"
                   >
                     Código de Ética
@@ -230,15 +234,18 @@ const regulators = [
             </div>
           </div>
 
-          <!-- Column 3: MMG Bank Logo & Social Media Icons (Desktop only) -->
-          <div class="hidden lg:flex flex-col justify-between items-end h-full">
+          <!-- Column 3: Social Media Icons (Desktop only). Kept narrow (sizes to
+               its content) so the two link columns get the extra width and the
+               section headings stop wrapping. Regulator logos moved to the
+               full-width row below. -->
+          <div class="hidden lg:flex flex-col items-end">
             <!-- Social Media Links -->
             <div class="flex items-center gap-5 select-none">
               <a
                 href="https://www.linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                
+
               >
                 <Image src={linkedinIcon} alt="LinkedIn" class="size-6" />
               </a>
@@ -246,7 +253,7 @@ const regulators = [
                 href="https://www.facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                
+
               >
                 <Image src={facebookIcon} alt="Facebook" class="size-6" />
               </a>
@@ -254,33 +261,18 @@ const regulators = [
                 href="https://www.instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                
+
               >
                 <Image src={instagramIcon} alt="Instagram" class="size-6" />
               </a>
             </div>
-
-            <!-- Regulatory logos (uniform height for equal sizing) -->
-            <div class="flex flex-col items-end gap-8">
-              <div class="flex items-center justify-end gap-8">
-                {
-                  regulators.map((r) => (
-                    <Image
-                      src={r.src}
-                      alt={r.alt}
-                      class="h-10 w-auto object-contain"
-                    />
-                  ))
-                }
-              </div>
-            </div>
           </div>
         </div>
 
-        <!-- Regulatory logos: mobile/tablet only, bottom-right of the card.
-             2-column grid on phones, single row from sm up. -->
+        <!-- Regulatory logos: full-width row at the bottom-right of the card.
+             2-column grid on phones, single right-aligned row from sm up. -->
         <div
-          class="grid grid-cols-2 gap-x-8 gap-y-5 justify-items-center mt-10 lg:hidden sm:flex sm:items-center sm:justify-end sm:gap-6"
+          class="grid grid-cols-2 gap-x-8 gap-y-5 justify-items-center mt-10 sm:flex sm:items-center sm:justify-end sm:gap-6 lg:gap-8"
         >
           {
             regulators.map((r) => (
@@ -671,39 +663,33 @@ const regulators = [
      The underline uses currentColor, so it turns primary along with the
      heading's hover:text-primary. */
   .footer-heading-text {
-    position: relative;
-    display: inline-block;
+    display: inline;
     padding-bottom: 2px;
     /* Override global `p, span` rule so the heading keeps the h4's size and
        inherits its color (black -> primary on hover, for text and underline). */
     font-size: inherit;
     line-height: 1.1;
     color: inherit;
+    /* Underline is drawn as a clipped background gradient (not an ::after box)
+       so that when the heading wraps to two lines, the line hugs each line's
+       text instead of spanning the full container width. It still grows from
+       the left like the menu links; box-decoration-break: clone gives every
+       wrapped line its own underline sized to that line's text. */
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
-  .footer-heading-text::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: right center;
-    /* Delay on leave keeps the collapse from feeling abrupt on fast passes */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.25s;
-  }
-
-  .footer-group-heading:hover .footer-heading-text::after {
-    transform: scaleX(1);
-    transform-origin: left center;
-    /* Delay on enter so quick fly-overs never trigger the underline */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+  .footer-group-heading:hover .footer-heading-text {
+    background-size: 100% 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .footer-heading-text::after {
+    .footer-heading-text {
       transition: none;
     }
   }

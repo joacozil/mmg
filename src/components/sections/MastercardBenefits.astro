@@ -7,13 +7,17 @@ import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
 
 import tarjetaImg from "@/assets/img/tarjeta.png";
 
+// PDFs live in public/ so they're served at a stable root path.
+const connectmilesPdf = "/pdf/mmg-connectmiles.pdf";
+const guiaBeneficiosPdf = "/pdf/guia-de-beneficios.pdf";
+
 // Banner icons — raw SVG markup (sage fill, inlined via ?raw).
 import iconAvion from "@/assets/img/avion.svg?raw";
 import iconSeguro from "@/assets/img/seguro.svg?raw";
 import iconEstrella from "@/assets/img/estrella.svg?raw";
 ---
 
-<Section spacing="tight">
+<Section spacing="tight" id="tarjetas-credito">
   <div class="container-custom">
     <!-- Part 1: SplitRow -->
     <SplitRow
@@ -70,21 +74,24 @@ import iconEstrella from "@/assets/img/estrella.svg?raw";
         title: "Redención de puntos",
         text: "Tus puntos pueden ser redimidos por:<br />• Compras en agencias de viajes afiliadas (Viajes Ejecutivo y Viajes Tivoli).<br />• Canje de puntos por millas Connect Miles.",
         buttonLabel: "PREGUNTAS FRECUENTES +",
-        buttonHref: "#",
+        buttonHref: connectmilesPdf,
+        buttonNewTab: true,
       },
       {
         icon: iconSeguro,
         title: "Seguros de viajes",
         text: "Seguros que respaldan tus viajes para ti y tus adicionales.<br />Para descargar tus certificados de cobertura solo ingresa a <a href='https://www.aig.com/mastercard' target='_blank' rel='noopener noreferrer' class=' underline'>www.aig.com/mastercard</a>",
         buttonLabel: "CERTIFICADOS DE COBERTURA +",
-        buttonHref: "#",
+        buttonHref: "https://www-180.aig.com/mc/regional/en/",
+        buttonNewTab: true,
       },
       {
         icon: iconEstrella,
         title: "Experiencias únicas",
         text: "Experiencias únicas con el programa de beneficios Mastercard Black que incluye acceso preferencial a ofertas exclusivas, oportunidades privilegiadas y mucho más.",
         buttonLabel: "GUÍA DE BENEFICIOS +",
-        buttonHref: "#",
+        buttonHref: guiaBeneficiosPdf,
+        buttonNewTab: true,
       },
     ]}
   />
