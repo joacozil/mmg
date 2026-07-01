@@ -10,7 +10,6 @@ import ThreeColumnBanner from "@/components/ui/ThreeColumnBanner.astro";
 import MediaCards from "@/components/ui/MediaCards.astro";
 import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
 import LinkMore from "@/components/ui/LinkMore.astro";
-import Contact from "@/components/sections/Contact.astro";
 import Footer from "@/components/layout/Footer.astro";
 
 import coinAmbiental from "@/assets/img/coin-light-green.png";
@@ -338,24 +337,16 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
     </div>
   </Section>
 
-  <Contact />
-
   <Footer />
 </Layout>
 
 <!-- This page uses an ultra-light-green background instead of the site-wide
-     cream, so the white cards stand out. Contact keeps its cream bg. -->
+     cream, so the white cards stand out. -->
 <style is:global>
   body {
     background-color: var(--color-ultra-light-green);
   }
-  section.bg-cream:not([data-contact-section]) {
+  section.bg-cream {
     background-color: var(--color-ultra-light-green) !important;
-  }
-  /* Contact normally flows seamlessly under a cream section (pt-0); on this
-     page its band gets a white background and its own top padding. */
-  section[data-contact-section] {
-    background-color: #ffffff !important;
-    padding-top: var(--section-gap);
   }
 </style>

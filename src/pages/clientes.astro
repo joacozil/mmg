@@ -17,30 +17,49 @@ import heroImg from "@/assets/img/hero-clientes.jpeg";
 >
   <Header />
 
-  <PageHero
-    title="Clientes"
-    image={heroImg}
-    imageAlt="Asesores de MMG Bank en reunión con un cliente y vista a la ciudad de Panamá"
-    imagePosition="object-[80%_60%]"
-  />
+  <div class="clientes-white">
+    <PageHero
+      title="Clientes"
+      image={heroImg}
+      imageAlt="Asesores de MMG Bank en reunión con un cliente y vista a la ciudad de Panamá"
+      imagePosition="object-[80%_60%]"
+    />
 
-  <IntroList
-    title="Su gestión, nuestra <br /> infraestructura."
-    paragraphs={[
-      "Ya sea que busques proteger tu patrimonio familiar o impulsar el crecimiento de tu empresa, aquí encuentras el respaldo de una banca de primera. Desde nuestra sólida plataforma en Panamá y nuestra presencia internacional en Bahamas, conectamos tus objetivos con los mercados del mundo para que avances con total seguridad y paso firme.",
-    ]}
-    items={[
-      "Cliente individual",
-      "Cliente corporativo",
-      "Alcance e infraestructura",
-    ]}
-  />
+    <IntroList
+      title="Su gestión, nuestra <br /> infraestructura."
+      paragraphs={[
+        "Ya sea que busques proteger tu patrimonio familiar o impulsar el crecimiento de tu empresa, aquí encuentras el respaldo de una banca de primera. Desde nuestra sólida plataforma en Panamá y nuestra presencia internacional en Bahamas, conectamos tus objetivos con los mercados del mundo para que avances con total seguridad y paso firme.",
+      ]}
+      items={[
+        "Cliente individual",
+        "Cliente corporativo",
+        "Alcance e infraestructura",
+      ]}
+    />
 
-  <ClientDivisions />
+    <ClientDivisions />
 
-  <ClientReach />
+    <ClientReach />
 
-  <Contact />
+    <Contact />
+  </div>
 
   <Footer />
 </Layout>
+
+<style is:global>
+  /* Clientes page uses white surfaces instead of the default cream.
+     IntroList stays dark (bg-darker-green) and Contact keeps its cream band
+     (with white form fields) — both are excluded below. */
+  body:has(.clientes-white) {
+    background-color: var(--color-white);
+  }
+  .clientes-white .bg-cream:not([data-contact-section]) {
+    background-color: var(--color-white);
+  }
+  /* Contact normally flows seamlessly under a cream section (pt-0); here it's a
+     standalone cream band on white, so give it its own top padding. */
+  .clientes-white [data-contact-section] {
+    padding-top: var(--section-gap);
+  }
+</style>

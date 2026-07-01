@@ -1,47 +1,63 @@
 ---
 import Section from "@/components/ui/Section.astro";
 import SplitRow from "@/components/ui/SplitRow.astro";
-import FeaturesGrid from "@/components/ui/FeaturesGrid.astro";
+import { Image } from "astro:assets";
 
-const individual = [
-  {
-    title: "Administración de patrimonios",
-    text: "Asesoría financiera personalizada orientada a proteger, estructurar y hacer crecer el patrimonio familiar a largo plazo, alineada con los objetivos de vida del cliente.",
-  },
-  {
-    title: "Correduría y casa de valores",
-    text: "Custodia de activos financieros y acceso directo a los mercados de capitales locales e internacionales para personas que buscan diversificar sus inversiones en acciones, bonos u otros instrumentos.",
-  },
-  {
-    title: "Gestión de activos",
-    text: "Acceso a fondos de inversión administrados por expertos y portafolios diseñados según el perfil de riesgo del cliente (conservador, moderado, crecimiento).",
-  },
-  {
-    title: "Servicios de depósito y <br /> financiamiento práctico",
-    text: "Cuentas corrientes y de ahorros (locales e internacionales), depósitos a plazo fijo y servicios de tarjetas de crédito diseñados para un estilo de vida exclusivo.",
-  },
-  {
-    title: "Préstamos garantizados",
-    text: "Financiamiento respaldado por sus propios activos financieros (depósitos o carteras de inversión), lo que permite obtener liquidez sin necesidad de liquidar sus inversiones.",
-  },
-];
+import imgIndividual from "@/assets/img/cliente-individual.png";
+import imgCorporativo from "@/assets/img/cliente-corporativo.png";
 
-const corporativo = [
+// Two client divisions rendered side by side. Each column leads with an image
+// and a vertical list of features marked with the brand green square.
+const divisions = [
   {
-    title: "Banca de inversión y <br /> mercado de capitales",
-    text: "Asesoría y estructuración para el financiamiento de proyectos, emisiones de deuda pública o privada (bonos, valores comerciales negociables - VCNs), fusiones y adquisiciones (M&A), y reorganizaciones financieras.",
+    id: "cliente-individual",
+    badge: "Cliente individual",
+    image: imgIndividual,
+    imageAlt:
+      "Clienta individual de MMG Bank realizando una gestión financiera desde su teléfono",
+    features: [
+      {
+        title: "Administración de patrimonios",
+        text: "Asesoría financiera personalizada orientada a proteger, estructurar y hacer crecer el patrimonio familiar a largo plazo, alineada con los objetivos de vida del cliente.",
+      },
+      {
+        title: "Correduría y casa de valores",
+        text: "Custodia de activos financieros y acceso directo a los mercados de capitales locales e internacionales para personas que buscan diversificar sus inversiones en acciones, bonos u otros instrumentos.",
+      },
+      {
+        title: "Gestión de activos",
+        text: "Acceso a fondos de inversión administrados por expertos y portafolios diseñados según el perfil de riesgo del cliente (conservador, moderado, crecimiento).",
+      },
+      {
+        title: "Servicios de depósito y financiamiento integral",
+        text: "Cuentas locales e internacionales, tarjetas exclusivas y depósitos a plazo fijo. Incluye financiamiento respaldado por tus activos para obtener liquidez inmediata sin vender tus inversiones.",
+      },
+    ],
   },
   {
-    title: "Gestión de tesorería y liquidez",
-    text: "Soluciones eficientes para el manejo de excedentes de caja de las empresas mediante instrumentos de inversión de corto y mediano plazo con perfiles de riesgo controlados.",
-  },
-  {
-    title: "Cuentas corporativas y <br /> operaciones comerciales",
-    text: "Cuentas bancarias operativas para optimizar el flujo de efectivo diario, transferencias internacionales de fondos y banca en línea avanzada para empresas.",
-  },
-  {
-    title: "Fideicomisos y <br /> estructuras de custodia",
-    text: "En alianza con las capacidades legales y fiduciarias de su grupo, ofrecen la administración de fideicomisos comerciales, de garantía o de pago, asegurando la transparencia y mitigación de riesgos en transacciones complejas.",
+    id: "cliente-corporativo",
+    badge: "Cliente corporativo",
+    image: imgCorporativo,
+    imageAlt:
+      "Cliente corporativo de MMG Bank trabajando en su computadora portátil",
+    features: [
+      {
+        title: "Gestión de tesorería y liquidez",
+        text: "Soluciones eficientes para el manejo de excedentes de caja de las empresas mediante instrumentos de inversión de corto y mediano plazo con perfiles de riesgo controlados.",
+      },
+      {
+        title: "Banca de inversión y mercado de capitales",
+        text: "Asesoría y estructuración para el financiamiento de proyectos, emisiones de deuda pública o privada (bonos, valores comerciales negociables - VCNs), fusiones y adquisiciones (M&A), y reorganizaciones financieras.",
+      },
+      {
+        title: "Cuentas corporativas y operaciones comerciales",
+        text: "Cuentas bancarias operativas para optimizar el flujo de efectivo diario, transferencias internacionales de fondos y banca en línea avanzada para empresas.",
+      },
+      {
+        title: "Fideicomisos y estructuras de custodia",
+        text: "En alianza con las capacidades legales y fiduciarias de su grupo, ofrecen la administración de fideicomisos comerciales, de garantía o de pago, asegurando la transparencia y mitigación de riesgos en transacciones complejas.",
+      },
+    ],
   },
 ];
 ---
@@ -52,20 +68,145 @@ const corporativo = [
       badge="Cliente"
       title='Transformamos tus metas en realidades financieras sostenibles <span class="text-black text-h2!">para asegurar tu futuro y el de tu empresa.</span>'
       text="En MMG Bank diseñamos soluciones a tu medida a través de dos divisiones especializadas: Clientes Individuales, enfocada en proteger y hacer crecer tu patrimonio familiar, y Clientes Corporativos, creada para potenciar la competitividad de tu empresa. Todo con el respaldo de una sólida plataforma local e internacional."
-      class="mb-12 lg:mb-16"
+      class="mb-12 lg:mb-20"
     />
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      {
+        divisions.map((division) => (
+          <div id={division.id} data-division class="flex flex-col">
+            <div
+              data-division-image
+              class="relative aspect-4/3 w-full overflow-hidden mb-8 lg:mb-10"
+            >
+              <Image
+                src={division.image}
+                alt={division.imageAlt}
+                widths={[480, 768, 1024]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+
+            <p
+              data-division-badge
+              class="text-primary! uppercase font-bold mb-8 lg:mb-10"
+            >
+              {division.badge}
+            </p>
+
+            <div class="division-list">
+              {division.features.map((feature) => (
+                <div data-division-item class="division-list__item">
+                  <div class="flex items-start gap-4 mb-2">
+                    <span class="division-list__square" aria-hidden="true" />
+                    <p
+                      class="font-bold uppercase text-black"
+                      set:html={feature.title}
+                    />
+                  </div>
+                  <p class="text-p-small!" set:html={feature.text} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
   </div>
-
-  <FeaturesGrid
-    id="cliente-individual"
-    title="Cliente individual"
-    items={individual}
-  />
-
-  <FeaturesGrid
-    id="cliente-corporativo"
-    title="Cliente corporativo"
-    items={corporativo}
-    class="mt-16 lg:mt-24"
-  />
 </Section>
+
+<style>
+  .division-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .division-list {
+      row-gap: 2.5rem;
+    }
+  }
+
+  /* Brand square marker, aligned to the first line of the label. */
+  .division-list__square {
+    width: 0.9rem;
+    height: 0.9rem;
+    background-color: var(--color-primary);
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 0.3rem;
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const columns = document.querySelectorAll<HTMLElement>("[data-division]");
+
+  if (columns.length && !prefersReduced) {
+    columns.forEach((column) => {
+      const image = column.querySelector<HTMLElement>("[data-division-image]");
+      const badge = column.querySelector<HTMLElement>("[data-division-badge]");
+      const items = column.querySelectorAll<HTMLElement>("[data-division-item]");
+
+      if (image) gsap.set(image, { opacity: 0, y: 24 });
+      if (badge) gsap.set(badge, { opacity: 0, y: 20 });
+      if (items.length) gsap.set(items, { opacity: 0, y: 24 });
+
+      const createTrigger = () => {
+        ScrollTrigger.create({
+          trigger: column,
+          start: "top 75%",
+          once: true,
+          onEnter: () => {
+            const tl = gsap.timeline();
+            if (image)
+              tl.to(
+                image,
+                { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+                0,
+              );
+            if (badge)
+              tl.to(
+                badge,
+                { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+                0.1,
+              );
+            if (items.length)
+              tl.to(
+                items,
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.7,
+                  stagger: 0.1,
+                  ease: "power3.out",
+                },
+                0.2,
+              );
+          },
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      const init = () =>
+        requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+      if ((window as any).heroScrollTriggerInitialized) init();
+      else
+        window.addEventListener("hero-scroll-trigger-init", init, {
+          once: true,
+        });
+    });
+  }
+</script>
