@@ -55,6 +55,7 @@
   /* Colors */
   --color-cream: #F2EFEE;
   --color-light-green: #A6E2B9;
+  --color-ultra-light-green: #E4F9EB;
   --color-primary: #00AC69;
   --color-darker-green: #124734;
   --color-super-dark-green: #08291C;
@@ -151,6 +152,7 @@
   /* Colors */
   --color-cream: var(--color-cream);
   --color-light-green: var(--color-light-green);
+  --color-ultra-light-green: var(--color-ultra-light-green);
   --color-primary: var(--color-primary);
   --color-darker-green: var(--color-darker-green);
   --color-super-dark-green: var(--color-super-dark-green);

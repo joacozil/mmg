@@ -99,7 +99,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
 
   <Section spacing="tight">
     <MediaCards
-      cardBackground="cream"
+      cardBackground="white"
       image={financiamientosImg}
       imageAlt="Iniciativas de finanzas sostenibles de MMG Bank"
       items={[
@@ -210,7 +210,7 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
   <Section spacing="tight">
     <MediaCards
       title="Programas"
-      cardBackground="cream"
+      cardBackground="white"
       image={programasImg}
       imageAlt="Programas sociales de MMG Bank"
       items={[
@@ -343,18 +343,19 @@ import iconEnergiaOptimizada from "@/assets/img/energia-optimizada.svg?raw";
   <Footer />
 </Layout>
 
-<!-- This page uses a white background instead of the site-wide cream, so cards
-     and the contact form (kept cream) stand out. Contact keeps its cream bg. -->
+<!-- This page uses an ultra-light-green background instead of the site-wide
+     cream, so the white cards stand out. Contact keeps its cream bg. -->
 <style is:global>
   body {
-    background-color: #ffffff;
+    background-color: var(--color-ultra-light-green);
   }
   section.bg-cream:not([data-contact-section]) {
-    background-color: #ffffff !important;
+    background-color: var(--color-ultra-light-green) !important;
   }
   /* Contact normally flows seamlessly under a cream section (pt-0); on this
-     white page its cream band needs its own top padding. */
+     page its band gets a white background and its own top padding. */
   section[data-contact-section] {
+    background-color: #ffffff !important;
     padding-top: var(--section-gap);
   }
 </style>
