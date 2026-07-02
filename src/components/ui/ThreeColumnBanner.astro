@@ -147,15 +147,8 @@ const { items, id, class: className = "" } = Astro.props;
      dividers at the true 1/3 & 2/3 track edges via border-left. This keeps both
      the cells (divider-to-divider) and the text blocks identical. */
 
-  /* Tablet: 2 columns */
-  @media (min-width: 640px) and (max-width: 1023.98px) {
-    .banner-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .banner-grid__item {
-      padding: 0 1.5rem;
-    }
-  }
+  /* Mobile + tablet stay 1 column — 3 items split into 2 columns leaves the
+     third orphaned, so we go straight from 1 to 3. */
 
   /* Desktop: 3 columns */
   @media (min-width: 1024px) {

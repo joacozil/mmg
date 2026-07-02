@@ -149,6 +149,16 @@
  * Tailwind Theme Extensions (Tailwind v4 syntax)
  * ------------------------------------------------------------- */
 @theme {
+  /* Responsive system — exactly two breakpoints, three sizes:
+   *   mobile  (base)     → < 640px
+   *   tablet  (sm:)      → ≥ 640px
+   *   desktop (lg:)      → ≥ 1024px
+   * The intermediate defaults are disabled so only sm: and lg: compile;
+   * any stray md:/xl:/2xl: class becomes a no-op and is caught in review. */
+  --breakpoint-md: initial;
+  --breakpoint-xl: initial;
+  --breakpoint-2xl: initial;
+
   /* Colors */
   --color-cream: var(--color-cream);
   --color-light-green: var(--color-light-green);

@@ -35,27 +35,27 @@ const services = [
 <Section data-services-section>
   <div class="container-custom">
     
-    <!-- Desktop/Tablet Layout: Vertical stack of horizontal banner cards (768px and wider) -->
-    <div class="hidden md:flex flex-col gap-6">
+    <!-- Desktop Layout: Vertical stack of horizontal banner cards (desktop only) -->
+    <div class="hidden lg:flex flex-col gap-6">
       {
         services.map((service, i) => (
           <div
             id={i === 0 ? "soluciones" : i === 1 ? "servicios" : "consultoria"}
             data-service-row
-            class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch"
+            class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch"
           >
             <!-- Image Container -->
-            <div data-service-image class={`md:col-span-8 relative min-h-[220px] md:min-h-0 overflow-hidden ${i === 1 ? "md:order-2" : ""}`}>
+            <div data-service-image class={`lg:col-span-8 relative min-h-[220px] lg:min-h-0 overflow-hidden ${i === 1 ? "lg:order-2" : ""}`}>
               <Image
                 src={service.image}
                 alt={service.title}
-                class={`w-full h-full object-cover md:absolute md:inset-0 ${service.position || "object-center"}`}
+                class={`w-full h-full object-cover lg:absolute lg:inset-0 ${service.position || "object-center"}`}
               />
             </div>
 
             <!-- Content Card -->
-            <div data-service-card class={`md:col-span-4 flex ${i === 1 ? "md:order-1" : ""}`}>
-              <div class="bg-white p-6 md:p-8 flex flex-col justify-between w-full h-full">
+            <div data-service-card class={`lg:col-span-4 flex ${i === 1 ? "lg:order-1" : ""}`}>
+              <div class="bg-white p-6 lg:p-8 flex flex-col justify-between w-full h-full">
                 <div>
                   <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
                     {service.title}
@@ -72,8 +72,8 @@ const services = [
       }
     </div>
 
-    <!-- Mobile Layout: Swipeable Swiper Slider (below 768px) -->
-    <div class="block md:hidden">
+    <!-- Mobile + Tablet Layout: Swipeable Swiper Slider (below desktop) -->
+    <div class="block lg:hidden">
       <div data-services-mobile-swiper class="swiper services-swiper overflow-visible!">
         <div class="swiper-wrapper">
           {

@@ -50,7 +50,7 @@ const cardBgClass = cardBackground === "cream" ? "bg-cream" : "bg-white";
       <!-- Image (or placeholder block when no image is provided) -->
       <div
         data-media-image
-        class="lg:col-span-8 relative overflow-hidden min-h-75 lg:min-h-0"
+        class="lg:col-span-8 relative overflow-hidden min-h-100 lg:min-h-0"
       >
         {
           image ? (
@@ -75,7 +75,7 @@ const cardBgClass = cardBackground === "cream" ? "bg-cream" : "bg-white";
       <div class="lg:col-span-4 flex flex-col gap-6">
         {
           items.map((card) => (
-            <div data-media-card class:list={["p-6 md:p-8", cardBgClass]}>
+            <div data-media-card class:list={["p-6 sm:p-8", cardBgClass]}>
               <p class="text-darker-green uppercase font-bold text-p-large! mb-3">
                 {card.title}
               </p>

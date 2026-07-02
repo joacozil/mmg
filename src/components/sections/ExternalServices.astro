@@ -68,8 +68,8 @@ const blocks = [
               <p class="text-p-small!">{block.text}</p>
             </div>
 
-            {/* Center: coin */}
-            <div class="lg:col-span-4 flex justify-center">
+            {/* Center: coin — centered on mobile, left-aligned on tablet, centered on desktop */}
+            <div class="lg:col-span-4 flex justify-center sm:justify-start lg:justify-center">
               <Image
                 src={block.coin}
                 alt={block.title}

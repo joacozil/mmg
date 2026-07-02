@@ -22,7 +22,7 @@ const { items, id, class: className = "" } = Astro.props;
     {
       items.map((item) => (
         <div data-process-item class="process-grid__item">
-          <div class="flex items-center gap-3 mb-3">
+          <div class="flex items-start gap-3 mb-3">
             <span class="process-grid__square" aria-hidden="true" />
             <p class="text-p-small! font-bold uppercase text-darker-green">
               {item.title}
@@ -52,6 +52,9 @@ const { items, id, class: className = "" } = Astro.props;
     height: 0.9rem;
     background-color: var(--color-primary);
     flex-shrink: 0;
+    /* Align the square to the first line of the heading (text-p-small: 14px ×
+       1.6 line-height = 22.4px) so multi-line titles don't center it. */
+    margin-top: 0.25rem;
   }
 
   /* Equal-width columns: each track is minmax(0, 1fr) so all columns are

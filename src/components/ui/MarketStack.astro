@@ -10,12 +10,15 @@ interface Props {
 const { class: className = "" } = Astro.props;
 ---
 
-<div data-market-stack class={`relative ${className}`}>
+<div
+  data-market-stack
+  class={`relative sm:flex sm:items-center sm:justify-center sm:gap-10 lg:block ${className}`}
+>
   <!-- Tiered disc stack. Widths are each SVG's native width as a fraction of
        the bottom disc (267/400, 201/400); --spread drives the assemble. -->
   <div
     data-disc-stack
-    class="relative mx-auto w-full max-w-60 sm:max-w-72 lg:max-w-90 aspect-400/304"
+    class="relative mx-auto sm:mx-0 sm:shrink-0 lg:mx-auto w-full max-w-60 sm:max-w-72 lg:max-w-90 aspect-400/304"
   >
     <Image
       data-disc="bottom"
@@ -42,7 +45,7 @@ const { class: className = "" } = Astro.props;
   <!-- Legend (same format as Sostenibilidad): below on mobile, pinned right on desktop -->
   <div
     data-market-legend
-    class="market-legend mt-10 w-fit mx-auto lg:mt-0 lg:mx-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
+    class="market-legend mt-10 w-fit mx-auto sm:mt-0 sm:mx-0 sm:shrink-0 lg:mt-0 lg:mx-0 lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
   >
     <div class="legend-item">
       <span class="uppercase text-p-small">Mercado local</span>
@@ -97,6 +100,10 @@ const { class: className = "" } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.65rem;
+  }
+  /* Keep multi-word labels (e.g. "Principales bolsas del mundo") on one line. */
+  .legend-item span:not(.legend-swatch) {
+    white-space: nowrap;
   }
   .legend-swatch {
     width: 14px;

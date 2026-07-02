@@ -281,7 +281,7 @@ export default function HeroSection({
       {/* Main Gallery Area (Pinned) */}
       <div
         ref={galleryWrapperRef}
-        className="gradient-bg relative w-full h-dvh overflow-hidden flex flex-col pt-16 pb-6 px-4 md:pt-16 md:pb-8 md:px-6 lg:p-8 z-10"
+        className="gradient-bg relative w-full h-dvh overflow-hidden flex flex-col pt-16 pb-6 px-4 sm:pb-8 sm:px-6 lg:p-8 z-10"
       >
         <div className="gradient-bg__canvas" aria-hidden="true"></div>
         <div
@@ -322,7 +322,7 @@ export default function HeroSection({
             {/* Text Content overlay */}
             <div
               ref={textContentRef}
-              className="absolute inset-8 md:inset-12 lg:inset-auto lg:bottom-16 lg:left-16 lg:right-16 flex flex-col justify-between lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8"
+              className="absolute inset-8 sm:inset-12 lg:inset-auto lg:bottom-16 lg:left-16 lg:right-16 flex flex-col justify-between lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8"
             >
               <div className="max-w-3xl ">
                 <span className="hero-subtitle font-bold uppercase text-white! block">
