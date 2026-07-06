@@ -4,7 +4,7 @@ Working conventions for this repo. See [README.md](README.md) for stack & comman
 
 ## What this is
 
-Static Astro 6 marketing site for MMG Bank — Spanish (`lang="es"`), 5 routes,
+Static Astro 6 marketing site for MMG Bank — Spanish (`lang="es"`), 7 routes,
 React 19 islands for animation (GSAP) and carousels (Swiper), Tailwind v4,
 deployed to Cloudflare Pages.
 
@@ -18,8 +18,11 @@ deployed to Cloudflare Pages.
 
 - **`layout/`** — site chrome on every page: `Header`, `Footer`, `EnLineaDropdown`.
 - **`sections/`** — composed page blocks with their content baked in (`Hero`, `Stats`,
-  `CreditFacilities`, …). React islands live here next to the `.astro` wrapper that
-  feeds them (`Hero.astro` ↔ `HeroSection.tsx`).
+  `CreditFacilities`, `Banners`, `ClientDivisions`, `Team`, …). React islands live here
+  next to the `.astro` wrapper that feeds them (`Hero.astro` ↔ `HeroSection.tsx`).
+  For symmetric multi-variant content (e.g. `ClientDivisions`'s "cliente individual" /
+  "cliente corporativo" split), drive repeated `ui/` blocks (like `SplitRow`) off a
+  data array instead of duplicating markup per variant.
 - **`ui/`** — reusable, prop-driven building blocks: `Section`, `SplitRow`, `MediaCards`,
   `ThreeColumnBanner`, `FeaturesGrid`, `MarketStack`, `ProcessSteps`, `IntroList`,
   `PageHero`, `LinkMore`.
@@ -61,10 +64,10 @@ raw `<section>` — don't force it into `<Section>`.
 
 - Tailwind v4, config-less: tokens & theme live in `@theme`/`:root` in
   [`global.css`](src/styles/global.css). No `tailwind.config.js`.
-- Prefer **semantic type utilities** (`text-h1`, `text-h2`, `text-p`, `text-p-small`,
-  `text-btn`) over raw `text-[size]` classes; override with `!` when needed.
+- Prefer **semantic type utilities** (`text-h1`, `text-h2`, `text-p`, `text-p-large`,
+  `text-p-small`, `text-btn`) over raw `text-[size]` classes; override with `!` when needed.
 - Brand colors as Tailwind classes: `bg-cream`, `text-primary`, `bg-darker-green`,
-  `text-light-green`. Spacing: `py-section-gap`, `p-element-padding`.
+  `text-light-green`, `bg-ultra-light-green`. Spacing: `py-section-gap`, `p-element-padding`.
 - Fonts: **Bornia**, WOFF2 only, weights 300/400/500/600/700 (no italics, no 800/900).
   Add a weight back to `global.css` `@font-face` before using it.
 
