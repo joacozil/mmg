@@ -181,57 +181,19 @@ import EnLineaDropdown from "./EnLineaDropdown.astro";
       box-shadow 0.4s ease;
   }
 
+  /* Header content spans the full viewport width (no container), in both the
+     transparent and sticky states. */
   .header-container {
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    transition:
-      max-width 0.4s ease,
-      padding-left 0.4s ease,
-      padding-right 0.4s ease;
-  }
-
-  /* Default transparent header state - aligns with hero card width */
-  .main-header:not(.is-sticky) .header-container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  @media (max-width: 639.98px) {
-    .main-header:not(.is-sticky) .header-container {
-      max-width: calc(100% - 2rem);
-    }
-  }
-  @media (min-width: 640px) and (max-width: 1023.98px) {
-    .main-header:not(.is-sticky) .header-container {
-      max-width: calc(100% - 3rem);
-    }
-  }
-  @media (min-width: 1024px) {
-    .main-header:not(.is-sticky) .header-container {
-      max-width: min(calc(100% - 4rem), 1400px);
-    }
-  }
-
-  /* Sticky header state (white background) - aligns with standard container-custom */
-  .main-header.is-sticky .header-container {
-    max-width: 400px;
     padding-left: var(--element-padding);
     padding-right: var(--element-padding);
-  }
-  @media (min-width: 640px) {
-    .main-header.is-sticky .header-container {
-      max-width: 800px;
-    }
-  }
-  @media (min-width: 1024px) {
-    .main-header.is-sticky .header-container {
-      max-width: 1400px;
-    }
   }
 
   .logo-link {
     color: var(--color-white);
-    transition: color 0.4s ease;
+    transition:
+      color 0.4s ease,
+      opacity 0.4s ease;
   }
 
   /* Hamburger button default states */

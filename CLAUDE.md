@@ -78,5 +78,6 @@ raw `<section>` — don't force it into `<Section>`.
   `GradientBg` component. Don't delete that CSS as "unused".
 - `Layout.astro` disables browser scroll restoration and restores scroll manually
   (GSAP pin spacers change document height). Interior pages drive header sticky-state
-  from `PageHero.astro`; the homepage drives it from `HeroSection.tsx`.
+  from `PageHero.astro`; the homepage drives it from `HomeHero.astro` (the previous
+  animated `Hero.astro`/`HeroSection.tsx` is kept but not mounted).
 - Verify changes with `pnpm build` (static build catches broken imports & types).

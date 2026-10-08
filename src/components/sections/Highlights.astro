@@ -1,0 +1,110 @@
+---
+import { Image } from "astro:assets";
+import Section from "@/components/ui/Section.astro";
+
+import reportImg from "@/assets/img/report.jpg";
+import serviciosImg from "@/assets/img/servicios-bancarios.jpg";
+import asesoriaImg from "@/assets/img/asesoria-corporativa-y-estrategica.jpg";
+import airportImg from "@/assets/img/beautiful-girl-standing-airport 6.jpg";
+
+const items = [
+  {
+    image: reportImg,
+    imageAlt: "Clienta firmando documentos en una carpeta verde de MMG",
+    title: "Gestioná tus activos con facilidad, de manera 100% online.",
+    text: "Accedé a fondos de inversión administrados por expertos y portafolios diseñados para vos.",
+  },
+  {
+    image: serviciosImg,
+    imageAlt: "Asesora de MMG reunida con dos clientes en una oficina",
+    title: "Hacete cliente MMG. Es fácil, 100% online y 100% bonificado.",
+    text: "Tenés un 50% de ahorro en tu primera compra y accedés a cientos de beneficios todo el año.",
+  },
+  {
+    image: asesoriaImg,
+    imageAlt: "Dos ejecutivos revisando documentos junto a una tablet",
+    title: "Ahora podés recomendar MMG y llevarte hasta $1.500.000.",
+    text: "Es fácil, rápido y 100% online, ¡conocé cómo hacerlo en simples pasos!",
+  },
+  {
+    image: airportImg,
+    imageAlt: "Viajera con su equipaje en un aeropuerto",
+    title: "Todo lo que necesitás saber antes de tu viaje.",
+    text: "Conocé toda la información para viajar con tranquilidad y operar con tus tarjetas MMG.",
+  },
+];
+---
+
+<Section data-highlights>
+  <div class="container-custom">
+    <div
+      class="grid grid-cols-1 gap-x-(--element-padding) gap-y-12 sm:grid-cols-2 lg:grid-cols-4"
+    >
+      {
+        items.map((item) => (
+          <article data-highlights-item class="flex flex-col">
+            <div class="relative aspect-[10/7] overflow-hidden">
+              <Image
+                src={item.image}
+                alt={item.imageAlt}
+                widths={[400, 600, 800]}
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+            <h2 class="mt-6 text-p! font-bold! text-darker-green">
+              {item.title}
+            </h2>
+            <p class="mt-4 text-p-small!">{item.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Section>
+
+<script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const section = document.querySelector<HTMLElement>("[data-highlights]");
+  const items = section?.querySelectorAll<HTMLElement>("[data-highlights-item]");
+
+  if (section && items?.length && !prefersReduced) {
+    gsap.set(items, { opacity: 0, y: 24 });
+
+    const createTrigger = () => {
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 75%",
+        once: true,
+        onEnter: () => {
+          gsap.to(items, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+          });
+        },
+      });
+
+      ScrollTrigger.refresh();
+    };
+
+    const init = () =>
+      requestAnimationFrame(() => setTimeout(createTrigger, 100));
+
+    if ((window as any).heroScrollTriggerInitialized) init();
+    else
+      window.addEventListener("hero-scroll-trigger-init", init, {
+        once: true,
+      });
+  }
+</script>

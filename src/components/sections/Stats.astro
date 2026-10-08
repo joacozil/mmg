@@ -1,7 +1,4 @@
 ---
-import { Image } from "astro:assets";
-import textureImage from "@/assets/img/building-texture-2.svg";
-
 const metrics = [
   { value: "+ 210", label: "Profesionales" },
   { value: "+ 3425", label: "Clientes" },
@@ -16,18 +13,6 @@ const metrics = [
   data-stats-section
   class="w-full bg-darker-green! text-white py-section-gap relative overflow-hidden"
 >
-  <!-- Absolute texture image anchored to the bottom-left, desktop only. -->
-  <div
-    class="absolute bottom-0 left-0 hidden lg:block w-[280px] pointer-events-none z-0 select-none"
-  >
-    <Image
-      src={textureImage}
-      alt="Textura de arquitectura de fondo"
-      data-stats-texture
-      class="w-full h-auto object-contain"
-    />
-  </div>
-
   <div class="container-custom relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <!-- Left Column: Copy & Link -->
@@ -168,15 +153,11 @@ const metrics = [
     section.classList.add("js-stats-animated");
 
     const leftCol = section.querySelector<HTMLElement>("[data-stats-left]");
-    const texture = section.querySelector<HTMLElement>("[data-stats-texture]");
     const statRows = section.querySelectorAll<HTMLElement>("[data-stat-row]");
 
     // Set initial states
     if (leftCol) {
       gsap.set(leftCol, { x: -40, opacity: 0 });
-    }
-    if (texture) {
-      gsap.set(texture, { opacity: 0, y: 20 });
     }
 
     statRows.forEach((row) => {
@@ -210,15 +191,6 @@ const metrics = [
               duration: 0.9,
               ease: "power3.out",
             });
-            if (texture) {
-              gsap.to(texture, {
-                opacity: 1,
-                y: 0,
-                duration: 1.1,
-                ease: "power3.out",
-                delay: 0.2,
-              });
-            }
           },
         });
       }

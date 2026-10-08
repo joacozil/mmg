@@ -1,0 +1,162 @@
+---
+import { Image } from "astro:assets";
+import LinkMore from "@/components/ui/LinkMore.astro";
+
+import heroImg from "@/assets/img/hero-img.avif";
+import logo from "@/assets/img/logo.svg";
+import textureImage from "@/assets/img/building-texture-2.svg";
+---
+
+<!-- Simplified homepage hero: building photo (wider) + Deep Forest copy panel.
+     Replaces the pinned/animated HeroSection on the homepage; that one is kept
+     in Hero.astro / HeroSection.tsx. -->
+<section
+  data-home-hero
+  class="relative flex min-h-svh w-full flex-col bg-darker-green lg:grid lg:min-h-dvh lg:grid-cols-[63fr_37fr]"
+>
+  <!-- Image column -->
+  <div class="relative min-h-[30svh] flex-1 overflow-hidden lg:min-h-0">
+    <Image
+      src={heroImg}
+      alt="Fachada de vidrio de la sede de MMG Bank iluminada al atardecer"
+      widths={[768, 1200, 1600, 1920]}
+      sizes="(min-width: 1024px) 63vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+      data-home-hero-img
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+    <!-- The logo is the page's h1 (alt text gives it its accessible name).
+         Desktop only visually; below lg the header's own logo is shown instead
+         (kept as sr-only so the page still has its h1). -->
+    <h1
+      data-home-hero-logo
+      class="max-lg:sr-only lg:absolute lg:top-24 lg:left-[8%] lg:w-[min(21vw,300px)]"
+    >
+      <Image src={logo} alt="MMG Bank" loading="eager" class="h-auto w-full" />
+    </h1>
+  </div>
+
+  <!-- Copy column -->
+  <div
+    class="relative flex flex-col overflow-hidden px-(--element-padding) py-8 sm:py-12 lg:px-[4.5vw] lg:pt-24 lg:pb-16"
+  >
+    <!-- Architectural texture anchored bottom-left. -->
+    <div
+      data-home-hero-texture
+      class="pointer-events-none absolute bottom-0 left-0 z-0 hidden w-[35%] select-none lg:block"
+      aria-hidden="true"
+    >
+      <Image src={textureImage} alt="" class="h-auto w-full object-contain" />
+    </div>
+
+    <div data-home-hero-copy class="relative z-10 flex max-w-xl flex-col">
+      <p class="font-bold text-white!">
+        Nacimos para guiar a clientes institucionales y privados en el diseño de
+        su futuro financiero, simplificando lo complejo.
+      </p>
+      <p class="mt-6 text-white!">
+        A través de nuestra experiencia fiduciaria, de banca y de bolsa,
+        construimos un camino de confianza y solidez desde Panamá y Las Bahamas.
+        Nuestro compromiso es claro: ser el aliado estratégico que impulsa su
+        crecimiento y protege su legado en un entorno global en constante
+        cambio.
+      </p>
+      <LinkMore href="#cliente" lg class="mt-10 self-end">CONOCE MÁS +</LinkMore>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Desktop: while over the hero, the hero carries the logo — hide the
+     header's copy until the header turns sticky. Below lg the header logo
+     stays visible and just recolors (white → green) when it turns sticky. */
+  @media (min-width: 1024px) {
+    :global(html:has([data-home-hero]) .main-header:not(.is-sticky) .logo-link) {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  /* Entrance initial states — gated on `html.js` (visible for no-JS users)
+     and reduced motion, removed once revealed. Mirrors PageHero.astro. */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(html.js:not(.hero-revealed) .main-header),
+    :global(html.js:not(.hero-revealed) [data-home-hero-copy]),
+    :global(html.js:not(.hero-revealed) [data-home-hero-logo]),
+    :global(html.js:not(.hero-revealed) [data-home-hero-texture]) {
+      opacity: 0;
+    }
+    :global(html.js:not(.hero-revealed) [data-home-hero-img]) {
+      transform: scale(1.06);
+    }
+  }
+</style>
+
+<script>
+  import gsap from "gsap";
+
+  // Homepage header controller (replaces the one inside HeroSection.tsx):
+  // flips the header to sticky after the hero and signals the sections gated
+  // on `hero-scroll-trigger-init` (Stats, Contact, …).
+  const header = document.querySelector<HTMLElement>(".main-header");
+  const hero = document.querySelector<HTMLElement>("[data-home-hero]");
+
+  if (header && hero) {
+    const update = () => {
+      const threshold = Math.max(hero.offsetHeight - 80, 120);
+      header.classList.toggle("is-sticky", window.scrollY > threshold);
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    update();
+
+    if (!(window as any).heroScrollTriggerInitialized) {
+      (window as any).heroScrollTriggerInitialized = true;
+      window.dispatchEvent(new CustomEvent("hero-scroll-trigger-init"));
+    }
+
+    // --- Entrance animation ---
+    const img = hero.querySelector<HTMLElement>("[data-home-hero-img]");
+    const logo = hero.querySelector<HTMLElement>("[data-home-hero-logo]");
+    const copy = hero.querySelector<HTMLElement>("[data-home-hero-copy]");
+    const texture = hero.querySelector<HTMLElement>("[data-home-hero-texture]");
+    const targets = [header, img, logo, copy, texture].filter(
+      Boolean,
+    ) as HTMLElement[];
+
+    const reveal = () => {
+      document.documentElement.classList.add("hero-revealed");
+      gsap.set(targets, { clearProps: "opacity,transform" });
+    };
+
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const alreadyScrolled = window.scrollY > 4;
+
+    if (prefersReduced || alreadyScrolled) {
+      reveal();
+    } else {
+      gsap.set(header, { y: -16 });
+      if (logo) gsap.set(logo, { y: 16 });
+      if (copy) gsap.set(copy, { y: 24 });
+      if (texture) gsap.set(texture, { y: 12 });
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      if (img) tl.to(img, { scale: 1, duration: 1.6, ease: "power2.out" }, 0);
+      tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
+      if (logo) tl.to(logo, { y: 0, opacity: 1, duration: 1 }, 0.2);
+      if (copy) tl.to(copy, { y: 0, opacity: 1, duration: 1 }, 0.35);
+      // Texture settles in quietly, last.
+      if (texture)
+        tl.to(
+          texture,
+          { y: 0, opacity: 1, duration: 1.6, ease: "power2.out" },
+          0.6,
+        );
+      tl.add(reveal);
+    }
+  }
+</script>
