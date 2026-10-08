@@ -1,0 +1,60 @@
+---
+// Spanish / English flag switcher used in SiteHeader.
+// The site only exists in Spanish for now, so the EN link is a placeholder
+// (href="#") until an English version exists.
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+// Unique clipPath ids — the component renders twice (bar + mobile menu).
+const uid = Math.random().toString(36).slice(2, 8);
+
+// US flag: 13 stripes, red on the even rows.
+const usStripes = Array.from({ length: 7 }, (_, i) => i * 2);
+---
+
+<ul class:list={["flex items-center gap-3", className]} role="list">
+  <li>
+    <a
+      href="/"
+      hreflang="es"
+      lang="es"
+      aria-label="Español"
+      aria-current="true"
+      class="block transition-opacity hover:opacity-70"
+    >
+      <svg viewBox="0 0 20 14" class="h-3.5 w-5" aria-hidden="true">
+        <clipPath id={`flag-es-${uid}`}><rect width="20" height="14" rx="2" /></clipPath>
+        <g clip-path={`url(#flag-es-${uid})`}>
+          <rect width="20" height="14" fill="#AA151B" />
+          <rect y="3.5" width="20" height="7" fill="#F1BF00" />
+        </g>
+      </svg>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#"
+      hreflang="en"
+      lang="en"
+      aria-label="English"
+      class="block transition-opacity hover:opacity-70"
+    >
+      <svg viewBox="0 0 20 14" class="h-3.5 w-5" aria-hidden="true">
+        <clipPath id={`flag-us-${uid}`}><rect width="20" height="14" rx="2" /></clipPath>
+        <g clip-path={`url(#flag-us-${uid})`}>
+          <rect width="20" height="14" fill="#FFFFFF" />
+          {
+            usStripes.map((row) => (
+              <rect y={(row * 14) / 13} width="20" height={14 / 13} fill="#B22234" />
+            ))
+          }
+          <rect width="9" height={(7 * 14) / 13} fill="#3C3B6E" />
+        </g>
+      </svg>
+    </a>
+  </li>
+</ul>

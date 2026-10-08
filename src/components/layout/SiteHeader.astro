@@ -1,0 +1,329 @@
+---
+import { Image } from "astro:assets";
+
+import Logo from "@/assets/logo-green.svg";
+import LanguageFlags from "./LanguageFlags.astro";
+import linkedinIcon from "@/assets/img/linkedin.svg";
+import facebookIcon from "@/assets/img/facebook.svg";
+import instagramIcon from "@/assets/img/instagram.svg";
+
+// In-flow two-row header (alternative to the transparent overlay Header.astro).
+// Desktop: logo + socials, then nav links, both on cream split by a hairline.
+// Below lg: logo + menu toggle; links open in a panel under the bar.
+// Row heights are fixed (h-16 / lg:h-20 + lg:h-12, plus 1px hairlines) —
+// HomeHero subtracts them.
+// The bar is fixed inside a same-height spacer: it slides away while scrolling
+// down and slides back in on any scroll up.
+
+const links = [
+  { label: "Cliente", href: "/clientes" },
+  { label: "Soluciones de inversión", href: "/soluciones-de-inversion" },
+  { label: "Servicios bancarios", href: "/servicios-bancarios" },
+  { label: "Consultoría y asesoramiento", href: "/consultoria-y-asesoramiento" },
+  { label: "Gestores externos", href: "/asesores-externos" },
+  { label: "Sostenibilidad", href: "/sostenibilidad" },
+  { label: "Contacto", href: "/#contact-section" },
+];
+
+const bancaEnLinea = "https://www.mmgbank.com/scripts/mmg.dll?lang=1";
+
+const socials = [
+  { label: "LinkedIn", href: "https://www.linkedin.com", icon: linkedinIcon },
+  { label: "Facebook", href: "https://www.facebook.com", icon: facebookIcon },
+  { label: "Instagram", href: "https://www.instagram.com", icon: instagramIcon },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, "");
+const isCurrent = (href: string) =>
+  !href.includes("#") && path === href.replace(/\/$/, "");
+---
+
+<div class="h-[calc(4rem+1px)] lg:h-[calc(8rem+2px)]">
+<header
+  data-site-header
+  class="site-header fixed inset-x-0 top-0 z-50 w-full border-b border-black/10 bg-cream"
+>
+  <!-- Row 1: logo + socials -->
+  <div class="container-custom flex h-16 items-center justify-between lg:h-20">
+    <a
+      href="/"
+      aria-label="MMG Bank, inicio"
+      class="site-header__logo shrink-0 text-darker-green"
+    >
+      <Logo aria-hidden="true" class="h-5 w-auto sm:h-6 lg:h-7" />
+    </a>
+
+    <div class="flex items-center gap-6">
+      <ul class="hidden items-center gap-4 sm:flex" role="list">
+        {
+          socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                class="block transition-opacity hover:opacity-70"
+              >
+                <Image src={s.icon} alt="" class="size-5" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <span class="hidden h-5 w-px bg-black/10 sm:block" aria-hidden="true"></span>
+      <LanguageFlags class="hidden sm:flex" />
+
+      <button
+        type="button"
+        data-site-header-toggle
+        aria-expanded="false"
+        aria-controls="site-header-menu"
+        aria-label="Abrir menú"
+        class="flex size-8 cursor-pointer items-center justify-center lg:hidden"
+      >
+        <span class="site-header__burger" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Row 2 (desktop): nav links -->
+  <nav aria-label="Principal" class="hidden border-t border-black/10 lg:block">
+    <div class="site-header__nav container-custom flex min-h-12 items-center justify-between gap-8 py-3">
+      <ul class="flex items-center gap-x-[clamp(0.75rem,1.2vw,2rem)] whitespace-nowrap" role="list">
+        {
+          links.map((l) => (
+            <li>
+              <a
+                href={l.href}
+                aria-current={isCurrent(l.href) ? "page" : undefined}
+                class="site-header__link uppercase text-black"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        href={bancaEnLinea}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="shrink-0 font-bold whitespace-nowrap uppercase text-primary underline underline-offset-4 hover:text-darker-green"
+      >
+        Banca en línea
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile / tablet menu panel -->
+  <div
+    id="site-header-menu"
+    data-site-header-menu
+    hidden
+    class="absolute inset-x-0 top-full max-h-[calc(100svh-4rem)] overflow-y-auto border-t border-black/10 bg-cream lg:hidden"
+  >
+    <nav aria-label="Principal" class="container-custom flex flex-col gap-5 py-8">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            aria-current={isCurrent(l.href) ? "page" : undefined}
+            class="site-header__link uppercase text-black"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+      <a
+        href={bancaEnLinea}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-2 font-bold uppercase text-primary underline underline-offset-4"
+      >
+        Banca en línea
+      </a>
+      <div class="mt-4 flex items-center justify-between border-t border-black/10 pt-6">
+      <ul class="flex items-center gap-5" role="list">
+        {
+          socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                class="block"
+              >
+                <Image src={s.icon} alt="" class="size-6" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <LanguageFlags />
+      </div>
+    </nav>
+  </div>
+</header>
+</div>
+
+<style>
+  /* The logo SVG ships with a hard-coded green fill; recolor it to the
+     link's color (Deep Forest). */
+  .site-header__logo :global(path) {
+    fill: currentColor;
+  }
+
+  /* Hide on scroll down / reveal on scroll up (toggled by the script). */
+  .site-header {
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .site-header.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  /* Desktop nav type: scales from 11px at 1024px to the p-small size (14px)
+     at ~1280px, so all links fit on one line without wrapping. */
+  .site-header__nav {
+    font-size: clamp(0.6875rem, 1.17vw - 1px, var(--fs-p-small));
+    line-height: var(--lh-body);
+  }
+
+  /* Nav link hover / current underline (grows from the left, like LinkMore). */
+  .site-header__link {
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .site-header__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .site-header__link:hover::after,
+  .site-header__link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Hamburger → X */
+  .site-header__burger,
+  .site-header__burger::before,
+  .site-header__burger::after {
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background-color: var(--color-darker-green);
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+  .site-header__burger {
+    position: relative;
+  }
+  .site-header__burger::before,
+  .site-header__burger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+  .site-header__burger::before {
+    transform: translateY(-7px);
+  }
+  .site-header__burger::after {
+    transform: translateY(7px);
+  }
+  [aria-expanded="true"] .site-header__burger {
+    background-color: transparent;
+  }
+  [aria-expanded="true"] .site-header__burger::before {
+    transform: rotate(45deg);
+  }
+  [aria-expanded="true"] .site-header__burger::after {
+    transform: rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-header__link::after,
+    .site-header__burger,
+    .site-header__burger::before,
+    .site-header__burger::after {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(
+    "[data-site-header-toggle]",
+  );
+  const menu = document.querySelector<HTMLElement>("[data-site-header-menu]");
+
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+
+  // --- Hide on scroll down, reveal on scroll up ---
+  if (header) {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      const y = Math.max(window.scrollY, 0);
+      const menuOpen = toggle?.getAttribute("aria-expanded") === "true";
+      if (menuOpen || y <= header.offsetHeight) {
+        header.classList.remove("is-hidden");
+      } else if (y > lastY + 4) {
+        header.classList.add("is-hidden");
+      } else if (y < lastY - 4) {
+        header.classList.remove("is-hidden");
+      }
+      // Small jitter (≤4px) keeps the current state.
+      if (Math.abs(y - lastY) > 4) lastY = y;
+      ticking = false;
+    };
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+    // Keyboard users tabbing into a hidden header get it back.
+    header.addEventListener("focusin", () =>
+      header.classList.remove("is-hidden"),
+    );
+  }
+
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      menu.hidden = !open;
+    };
+
+    toggle.addEventListener("click", () =>
+      setOpen(toggle.getAttribute("aria-expanded") !== "true"),
+    );
+    // Close after following an in-page link (e.g. Contacto) or on Escape.
+    menu.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) setOpen(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") setOpen(false);
+    });
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

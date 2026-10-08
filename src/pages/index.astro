@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/layout/Header.astro";
+// import Header from "@/components/layout/Header.astro"; // overlay header, kept for now
+import SiteHeader from "@/components/layout/SiteHeader.astro";
 // import Hero from "@/components/sections/Hero.astro"; // previous animated hero, kept for now
 import HomeHero from "@/components/sections/HomeHero.astro";
 import Highlights from "@/components/sections/Highlights.astro";
@@ -21,7 +22,7 @@ import Footer from "@/components/layout/Footer.astro";
   title="MMG Bank | Soluciones globales para clientes ambiciosos"
   description="En MMG Bank somos su socio estratégico en asesoría financiera, diseñados para acompañarle en su evolución y expansión con estrategias sólidas y diversificadas."
 >
-  <Header />
+  <SiteHeader />
   <HomeHero />
   <Highlights />
   <Stats />

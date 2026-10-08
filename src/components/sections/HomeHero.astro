@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import LinkMore from "@/components/ui/LinkMore.astro";
 
 import heroImg from "@/assets/img/hero-img.avif";
-import logo from "@/assets/img/logo.svg";
 import textureImage from "@/assets/img/building-texture-2.svg";
 ---
 
@@ -12,10 +11,10 @@ import textureImage from "@/assets/img/building-texture-2.svg";
      in Hero.astro / HeroSection.tsx. -->
 <section
   data-home-hero
-  class="relative flex min-h-svh w-full flex-col bg-darker-green lg:grid lg:min-h-dvh lg:grid-cols-[63fr_37fr]"
+  class="home-hero relative flex min-h-[calc(100svh-4rem)] w-full flex-col bg-darker-green lg:grid lg:min-h-[calc(80dvh-8rem)]"
 >
   <!-- Image column -->
-  <div class="relative min-h-[30svh] flex-1 overflow-hidden lg:min-h-0">
+  <div class="relative min-h-[25svh] flex-1 overflow-hidden lg:min-h-0">
     <Image
       src={heroImg}
       alt="Fachada de vidrio de la sede de MMG Bank iluminada al atardecer"
@@ -26,31 +25,16 @@ import textureImage from "@/assets/img/building-texture-2.svg";
       data-home-hero-img
       class="absolute inset-0 h-full w-full object-cover"
     />
-    <!-- The logo is the page's h1 (alt text gives it its accessible name).
-         Desktop only visually; below lg the header's own logo is shown instead
-         (kept as sr-only so the page still has its h1). -->
-    <h1
-      data-home-hero-logo
-      class="max-lg:sr-only lg:absolute lg:top-24 lg:left-[8%] lg:w-[min(21vw,300px)]"
-    >
-      <Image src={logo} alt="MMG Bank" loading="eager" class="h-auto w-full" />
-    </h1>
+    <!-- Page h1: not shown (the header carries the logo), kept for SEO and
+         screen readers. -->
+    <h1 class="sr-only">MMG Bank</h1>
   </div>
 
   <!-- Copy column -->
   <div
-    class="relative flex flex-col overflow-hidden px-(--element-padding) py-8 sm:py-12 lg:px-[4.5vw] lg:pt-24 lg:pb-16"
+    class="home-hero__panel relative flex flex-col overflow-hidden px-(--element-padding) py-6 sm:py-12 lg:pt-16 lg:pb-16"
   >
-    <!-- Architectural texture anchored bottom-left. -->
-    <div
-      data-home-hero-texture
-      class="pointer-events-none absolute bottom-0 left-0 z-0 hidden w-[35%] select-none lg:block"
-      aria-hidden="true"
-    >
-      <Image src={textureImage} alt="" class="h-auto w-full object-contain" />
-    </div>
-
-    <div data-home-hero-copy class="relative z-10 flex max-w-xl flex-col">
+    <div data-home-hero-copy class="relative z-10 flex max-w-xl flex-col lg:max-w-[40rem]">
       <p class="font-bold text-white!">
         Nacimos para guiar a clientes institucionales y privados en el diseño de
         su futuro financiero, simplificando lo complejo.
@@ -62,20 +46,68 @@ import textureImage from "@/assets/img/building-texture-2.svg";
         crecimiento y protege su legado en un entorno global en constante
         cambio.
       </p>
-      <LinkMore href="#cliente" lg class="mt-10 self-end">CONOCE MÁS +</LinkMore>
+    </div>
+
+    <!-- Bottom row: link on the right, texture filling the bottom-left corner
+         from the end of the copy down to the panel edge. The texture only
+         uses the left part of the row (clear of the link), so it never
+         overlaps text; the row keeps a minimum height on desktop so the
+         texture doesn't get squeezed when the hero is short. -->
+    <div
+      class="relative mt-6 flex w-full max-w-xl flex-1 flex-col lg:max-w-[40rem] sm:mt-10 lg:min-h-[clamp(7rem,15dvh,13rem)]"
+    >
+      <LinkMore
+        href="#cliente"
+        lg
+        data-home-hero-copy
+        class="relative z-10 self-end">CONOCE MÁS +</LinkMore
+      >
+      <div
+        data-home-hero-texture
+        class="home-hero__texture pointer-events-none absolute top-0 -bottom-16 left-[calc(-1*var(--hero-pl))] hidden select-none lg:block"
+        aria-hidden="true"
+      >
+        <Image
+          src={textureImage}
+          alt=""
+          class="h-full w-full object-contain object-left-bottom"
+        />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Desktop: while over the hero, the hero carries the logo — hide the
-     header's copy until the header turns sticky. Below lg the header logo
-     stays visible and just recolors (white → green) when it turns sticky. */
+  /* Desktop split, container-aware. Backgrounds stay full-bleed; the text
+     column ends where the site container ends (lined up with the header and
+     cards) and its width grows with the screen — ~29.5% of the viewport, as
+     on a laptop, capped at 40rem (~75ch, the body-text line-length limit).
+     The image takes the rest.
+       --hero-o = outer margin beside .container-custom (max 1400px). */
   @media (min-width: 1024px) {
-    :global(html:has([data-home-hero]) .main-header:not(.is-sticky) .logo-link) {
-      opacity: 0;
-      pointer-events: none;
+    .home-hero {
+      container-type: inline-size;
+      --hero-o: calc((100cqw - min(100cqw, 1400px)) / 2);
+      --hero-pl: clamp(2rem, 4.5cqw, 6rem);
+      /* Own columns use % (its own width); cqw only resolves in children. */
+      grid-template-columns:
+        minmax(0, 1fr)
+        calc(
+          (100% - min(100%, 1400px)) / 2 + var(--element-padding) +
+            min(40rem, 29.5%) + clamp(2rem, 4.5%, 6rem)
+        );
     }
+    .home-hero__panel {
+      padding-left: var(--hero-pl);
+      /* Text ends exactly where the container content ends. */
+      padding-right: calc(var(--hero-o) + var(--element-padding));
+    }
+  }
+
+  /* Texture box: from the panel's left edge, up to ~45% of the text row,
+     always leaving room for the right-aligned link (~13rem at its lg size). */
+  .home-hero__texture {
+    width: calc(min(45%, 100% - 13rem) + var(--hero-pl, 0px));
   }
 
   /* Entrance initial states — gated on `html.js` (visible for no-JS users)
@@ -83,7 +115,6 @@ import textureImage from "@/assets/img/building-texture-2.svg";
   @media (prefers-reduced-motion: no-preference) {
     :global(html.js:not(.hero-revealed) .main-header),
     :global(html.js:not(.hero-revealed) [data-home-hero-copy]),
-    :global(html.js:not(.hero-revealed) [data-home-hero-logo]),
     :global(html.js:not(.hero-revealed) [data-home-hero-texture]) {
       opacity: 0;
     }
@@ -96,21 +127,25 @@ import textureImage from "@/assets/img/building-texture-2.svg";
 <script>
   import gsap from "gsap";
 
-  // Homepage header controller (replaces the one inside HeroSection.tsx):
-  // flips the header to sticky after the hero and signals the sections gated
-  // on `hero-scroll-trigger-init` (Stats, Contact, …).
+  // Homepage hero controller (replaces the one inside HeroSection.tsx):
+  // signals the sections gated on `hero-scroll-trigger-init` (Stats,
+  // Contact, …) and, when the overlay `.main-header` is used, flips it to
+  // sticky after the hero. With the in-flow SiteHeader there is no overlay
+  // header, so that part is skipped.
   const header = document.querySelector<HTMLElement>(".main-header");
   const hero = document.querySelector<HTMLElement>("[data-home-hero]");
 
-  if (header && hero) {
-    const update = () => {
-      const threshold = Math.max(hero.offsetHeight - 80, 120);
-      header.classList.toggle("is-sticky", window.scrollY > threshold);
-    };
+  if (hero) {
+    if (header) {
+      const update = () => {
+        const threshold = Math.max(hero.offsetHeight - 80, 120);
+        header.classList.toggle("is-sticky", window.scrollY > threshold);
+      };
 
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
-    update();
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update, { passive: true });
+      update();
+    }
 
     if (!(window as any).heroScrollTriggerInitialized) {
       (window as any).heroScrollTriggerInitialized = true;
@@ -119,10 +154,11 @@ import textureImage from "@/assets/img/building-texture-2.svg";
 
     // --- Entrance animation ---
     const img = hero.querySelector<HTMLElement>("[data-home-hero-img]");
-    const logo = hero.querySelector<HTMLElement>("[data-home-hero-logo]");
-    const copy = hero.querySelector<HTMLElement>("[data-home-hero-copy]");
+    const copy = [
+      ...hero.querySelectorAll<HTMLElement>("[data-home-hero-copy]"),
+    ];
     const texture = hero.querySelector<HTMLElement>("[data-home-hero-texture]");
-    const targets = [header, img, logo, copy, texture].filter(
+    const targets = [header, img, ...copy, texture].filter(
       Boolean,
     ) as HTMLElement[];
 
@@ -139,16 +175,14 @@ import textureImage from "@/assets/img/building-texture-2.svg";
     if (prefersReduced || alreadyScrolled) {
       reveal();
     } else {
-      gsap.set(header, { y: -16 });
-      if (logo) gsap.set(logo, { y: 16 });
-      if (copy) gsap.set(copy, { y: 24 });
+      if (header) gsap.set(header, { y: -16 });
+      if (copy.length) gsap.set(copy, { y: 24 });
       if (texture) gsap.set(texture, { y: 12 });
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       if (img) tl.to(img, { scale: 1, duration: 1.6, ease: "power2.out" }, 0);
-      tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
-      if (logo) tl.to(logo, { y: 0, opacity: 1, duration: 1 }, 0.2);
-      if (copy) tl.to(copy, { y: 0, opacity: 1, duration: 1 }, 0.35);
+      if (header) tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
+      if (copy.length) tl.to(copy, { y: 0, opacity: 1, duration: 1 }, 0.35);
       // Texture settles in quietly, last.
       if (texture)
         tl.to(
