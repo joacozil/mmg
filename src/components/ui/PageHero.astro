@@ -103,16 +103,20 @@ const {
   const header = document.querySelector<HTMLElement>(".main-header");
   const hero = document.querySelector<HTMLElement>("[data-page-hero]");
 
-  if (header && hero) {
-    const update = () => {
-      // Flip to sticky as the hero scrolls out (stay transparent while over it).
-      const threshold = Math.max(hero.offsetHeight - 80, 120);
-      header.classList.toggle("is-sticky", window.scrollY > threshold);
-    };
+  // With the in-flow SiteHeader there is no overlay `.main-header`: the
+  // sticky handling is skipped, but the init signal and entrance still run.
+  if (hero) {
+    if (header) {
+      const update = () => {
+        // Flip to sticky as the hero scrolls out (stay transparent while over it).
+        const threshold = Math.max(hero.offsetHeight - 80, 120);
+        header.classList.toggle("is-sticky", window.scrollY > threshold);
+      };
 
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update, { passive: true });
-    update();
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update, { passive: true });
+      update();
+    }
 
     // Signal readiness once so gated section animations (Contact, etc.) run.
     if (!(window as any).heroScrollTriggerInitialized) {
@@ -144,11 +148,11 @@ const {
     if (prefersReduced || alreadyScrolled) {
       reveal();
     } else {
-      gsap.set(header, { y: -16 });
+      if (header) gsap.set(header, { y: -16 });
       if (heroTitle) gsap.set(heroTitle, { y: 24 });
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
+      if (header) tl.to(header, { y: 0, opacity: 1, duration: 0.9 }, 0);
       if (heroImg)
         tl.to(heroImg, { scale: 1, duration: 1.6, ease: "power2.out" }, 0);
       if (heroTitle)

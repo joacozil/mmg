@@ -16,7 +16,8 @@ deployed to Cloudflare Pages.
 
 ## Component taxonomy (`src/components/`)
 
-- **`layout/`** — site chrome on every page: `Header`, `Footer`, `EnLineaDropdown`.
+- **`layout/`** — site chrome on every page: `SiteHeader` (+ `LanguageFlags`), `Footer`.
+  The old overlay `Header` / `EnLineaDropdown` are kept but no longer mounted.
 - **`sections/`** — composed page blocks with their content baked in (`Hero`, `Stats`,
   `CreditFacilities`, `Banners`, `ClientDivisions`, `Team`, …). React islands live here
   next to the `.astro` wrapper that feeds them (`Hero.astro` ↔ `HeroSection.tsx`).
@@ -77,7 +78,10 @@ raw `<section>` — don't force it into `<Section>`.
   CSS classes (defined in `global.css`) directly from `HeroSection.tsx` — there is no
   `GradientBg` component. Don't delete that CSS as "unused".
 - `Layout.astro` disables browser scroll restoration and restores scroll manually
-  (GSAP pin spacers change document height). Interior pages drive header sticky-state
-  from `PageHero.astro`; the homepage drives it from `HomeHero.astro` (the previous
-  animated `Hero.astro`/`HeroSection.tsx` is kept but not mounted).
+  (GSAP pin spacers change document height).
+- `SiteHeader` is fixed inside a same-height spacer and hides on scroll down /
+  reveals on scroll up. `HomeHero` subtracts its height (`4rem` / `8rem` + hairlines).
+  `HomeHero` (homepage) and `PageHero` (interior pages) dispatch
+  `hero-scroll-trigger-init`, which gated section animations wait for; they only
+  touch the overlay `.main-header` if it is present.
 - Verify changes with `pnpm build` (static build catches broken imports & types).
